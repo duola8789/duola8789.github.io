@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Vue3学习笔记-01 组合式API">
+<meta name="keywords" content="Vue,Vue3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3-01 组合式API">
+<meta property="og:url" content="http://oldzhou.cn/2021/05/19/01 前端笔记/04 Vue/06 Vue3/Vue3-01 API学习/index.html">
+<meta property="og:site_name" content="不负好时光">
+<meta property="og:description" content="Vue3学习笔记-01 组合式API">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FkSOv8v0no7J-Hp3VxfrL-GF-qoj">
+<meta property="og:image" content="http://image.oldzhou.cn/Fk7zo_E1Y0zYdzdz9xVr-RHH2NYy">
+<meta property="og:updated_time" content="2021-05-19T17:14:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue3-01 组合式API">
+<meta name="twitter:description" content="Vue3学习笔记-01 组合式API">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FkSOv8v0no7J-Hp3VxfrL-GF-qoj">
+
+
+
+
+
+
+  <link rel="canonical" href="http://oldzhou.cn/2021/05/19/01 前端笔记/04 Vue/06 Vue3/Vue3-01 API学习/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Vue3-01 组合式API | 不负好时光</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不负好时光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">没什么才华，就剩一点坚持</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.oldzhou.cn/pages/page1.html" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oldzhou.cn/2021/05/19/01 前端笔记/04 Vue/06 Vue3/Vue3-01 API学习/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哆啦斯基周">
+      <meta itemprop="description" content="一个大龄前端程序员的技术博客">
+      <meta itemprop="image" content="/images/avatar3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负好时光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Vue3-01 组合式API
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+         
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-05-19 17:14:18" itemprop="dateCreated datePublished" datetime="2021-05-19T17:14:18+00:00">2021-05-19</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/05/19/01 前端笔记/04 Vue/06 Vue3/Vue3-01 API学习/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2021/05/19/01 前端笔记/04 Vue/06 Vue3/Vue3-01 API学习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Vue3学习笔记-01 组合式API</p>
+<a id="more"></a>
+<h1 id="升级到Vue3"><a href="#升级到Vue3" class="headerlink" title="升级到Vue3"></a>升级到Vue3</h1><h2 id="升级VueCLI"><a href="#升级VueCLI" class="headerlink" title="升级VueCLI"></a>升级VueCLI</h2><p>VueCLI需要在4.3.1以上才可以支持Vue3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm update -g @vue/cli</span><br><span class="line"></span><br><span class="line">vue -V</span><br><span class="line">@vue/cli 4.4.6</span><br></pre></td></tr></table></figure>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vue create vue3-learning</span><br><span class="line">vue add vue-next <span class="comment"># 添加 vue3 插件升级为 vue3</span></span><br></pre></td></tr></table></figure>
+<p>在创建项目时选择手动添加配置，选择vue-router和Vuex，这样创建完的项目各个插件也都会升级为支持Vue3的版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"core-js"</span>: <span class="string">"^3.6.5"</span>,</span><br><span class="line">    <span class="string">"vue"</span>: <span class="string">"^3.0.0-beta.1"</span>,</span><br><span class="line">    <span class="string">"vue-router"</span>: <span class="string">"^4.0.0-alpha.6"</span>,</span><br><span class="line">    <span class="string">"vuex"</span>: <span class="string">"^4.0.0-alpha.1"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建Vue实例"><a href="#创建Vue实例" class="headerlink" title="创建Vue实例"></a>创建Vue实例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createApp&#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App)</span><br><span class="line">  .use(router)</span><br><span class="line">  .use(store)</span><br><span class="line">  .mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="创建Router"><a href="#创建Router" class="headerlink" title="创建Router"></a>创建Router</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createRouter, createWebHistory&#125; <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">  history: createWebHistory(process.env.BASE_URL),</span><br><span class="line">  routes</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router;</span><br></pre></td></tr></table></figure>
+<p>创建路由的方式与以前有所变化，路由模式除了Hash模式（<code>createWebHashHistory</code>）和History模式（<code>createWebHistory</code>），还多了带缓存的History路由（<code>createMemoryHistory</code>）</p>
+<p>使用路由跳转的API也有所变化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;useRouter&#125; <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> router = useRouter();</span><br><span class="line">    <span class="keyword">const</span> goHome = <span class="function"><span class="params">()</span> =&gt;</span> router.push(<span class="string">'/'</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;goHome&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于router的具体变化，后面再单独学习</p>
+<h2 id="创建Store"><a href="#创建Store" class="headerlink" title="创建Store"></a>创建Store</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore&#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> createStore(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    changeCount(state, isAdd) &#123;</span><br><span class="line">      state.count = isAdd ? state.count + <span class="number">1</span> : state.count - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;&#125;,</span><br><span class="line">  modules: &#123;&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;useStore&#125; <span class="keyword">from</span> <span class="string">'vuex'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> store = useStore();</span><br><span class="line">    <span class="keyword">const</span> storeState = store.state;</span><br><span class="line">    <span class="keyword">return</span> &#123;storeState&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出来，Vuex和vue-router，API都有了一些变化，与React Hooks的API很类似，但是基本原理没有太大变化</p>
+<h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a><code>setup</code></h1><p><code>setup</code>函数是新的Composition API的入口点</p>
+<h2 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h2><p><code>setup</code>在创建组件之前调用（在<code>beforeCreate</code>之前），Props初始化后就会调用<code>setup</code>函数，在<code>beforeCreate</code>钩子前被调用</p>
+<h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p><code>setup</code>返回的对象的属性将被合并到组件模板的渲染上下文，也可以返回一个渲染函数</p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>接受两个参数：</p>
+<ul>
+<li><code>props</code></li>
+<li><code>context</code></li>
+</ul>
+<h3 id="props"><a href="#props" class="headerlink" title="props"></a><code>props</code></h3><p>接受<code>props</code>作为第一个参数，使用的时候，需要首先声明<code>props</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  setup(props) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(props.name)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==<code>props</code>是响应式的，前提是不对<code>props</code>进行解构，解构后会失去响应性==</p>
+<p>如果需要结构<code>props</code>，可以通过使用<code>roRefs</code>来完成解构操作，并且保持响应式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; toRefs &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">setup(props) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; title &#125; = toRefs(props)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(title.value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果<code>title</code>是一个可选的Prop，此时<code>toRefs</code>不会为<code>title</code>创建一个<code>ref</code>，需要使用<code>toRef</code>来创建响应式变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; toRef &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">setup(props) &#123;</span><br><span class="line">  <span class="keyword">const</span> title = toRef(props, <span class="string">'title'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(title.value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="context"><a href="#context" class="headerlink" title="context"></a><code>context</code></h3><p><code>setup</code>第二个参数是上下文对象<code>context</code>，从2.x中的<code>this</code>选择性地暴露出三个组件的属性<code>attrs</code>、<code>slots</code>、<code>emit</code>。<code>context</code>就是一个普通的JavaScript对象，它不是响应式的，所以可以对<code>context</code>进行解构，不需要担心失去响应性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup(props, context) &#123;</span><br><span class="line">    <span class="comment">// Attribute (非响应式对象)</span></span><br><span class="line">    <span class="built_in">console</span>.log(context.attrs)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 插槽 (非响应式对象)</span></span><br><span class="line">    <span class="built_in">console</span>.log(context.slots)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 触发事件 (方法)</span></span><br><span class="line">    <span class="built_in">console</span>.log(context.emit)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup(props, &#123; attrs, slots, emit &#125;) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="this的用法"><a href="#this的用法" class="headerlink" title="this的用法"></a><code>this</code>的用法</h2><p><code>this</code>在<code>setup</code>中不可用，它并不会指向该组件实例</p>
+<h2 id="访问组件的Property"><a href="#访问组件的Property" class="headerlink" title="访问组件的Property"></a>访问组件的Property</h2><p>执行<code>setup</code>时，==组件实例尚未被创建==，因此只能访问<code>slots</code>/<code>props</code>/<code>attrs</code>/<code>emit</code>这些组件属性，无法访问<code>computed</code>、<code>data</code>、<code>methods</code>组件选项</p>
+<h2 id="结合模板使用"><a href="#结合模板使用" class="headerlink" title="结合模板使用"></a>结合模板使用</h2><p>如果<code>setup</code>返回一个对象，那么可以在组件模板中直接使用，就如同使用Props一样</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; readersNumber &#125;&#125; &#123;&#123; book.title &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> &#123; ref, reactive &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    setup() &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> readersNumber = ref(<span class="number">0</span>)</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> book = reactive(&#123; <span class="attr">title</span>: <span class="string">'Vue 3 Guide'</span> &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="comment">// expose to template</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line">        readersNumber,</span><br><span class="line">        book</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>setup</code>返回的<code>refs</code>在模板中访问是被自动解开的，不需要在模板中使用<code>.value</code></p>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p>生命周期钩子函数只能在<code>setup</code>期间同步使用，在组件卸载时，生命周期内部创建的侦听器和计算状态也会被自动删除</p>
+<p>与Vue2.x相比，<code>beforeCreated</code>和<code>created</code>被删除了，对应的逻辑在<code>setup</code>内部完成，其他的生命周期钩子都改为了<code>onXxx</code>的形式（<code>beforeDestoryed</code>改为了<code>onBeforeUnmount</code>，<code>destroyed</code>改为了<code>onUnmounted</code>）</p>
+<p><img src="http://image.oldzhou.cn/FkSOv8v0no7J-Hp3VxfrL-GF-qoj" alt=""></p>
+<p>两个新增的调试钩子函数<code>onRenderTracked</code>和<code>onRenderTriggered</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  onRenderTriggered(e) &#123;</span><br><span class="line">    <span class="keyword">debugger</span></span><br><span class="line">    <span class="comment">// 检查哪个依赖性导致组件重新渲染</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数接受一个回调函数，当钩子被组件调用时将会被执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="comment">// mounted</span></span><br><span class="line">    onMounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Component is mounted!'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h1><h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>使用<code>provide</code>和<code>inject</code>实现依赖注入，与2.x版本中基本一致，只能在<code>setup</code>中使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; provide, inject &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ThemeSymbol = <span class="built_in">Symbol</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Ancestor = &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    provide(ThemeSymbol, ref(<span class="string">'dark'</span>))</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Descendent = &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> theme = inject(ThemeSymbol, ref(<span class="string">'light'</span>) <span class="comment">/* optional default value */</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      theme,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<code>ref</code>传值可以保证<code>provided</code>和<code>injected</code>之间值的响应性</p>
+<h2 id="响应式修改"><a href="#响应式修改" class="headerlink" title="响应式修改"></a>响应式修改</h2><p>在使用响应式<code>provide</code>/<code>inject</code>时，建议尽可能，==在提供者内保持响应式Property的任何更改==</p>
+<p>如果需要在注入数据的组件内部更新<code>inject</code>的数据，在这种情况下，建议<code>provide</code>一个方法来负责改变响应式Property的方法，让注入方调用</p>
+<p>如果要确保通过<code>provide</code>传递的数据不会被<code>inject</code>的组件更改，可以对提供者的Property使用<code>readonly</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; provide, reactive, readonly, ref &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> location = ref(<span class="string">'North Pole'</span>)</span><br><span class="line">    <span class="keyword">const</span> geolocation = reactive(&#123;</span><br><span class="line">      longitude: <span class="number">90</span>,</span><br><span class="line">      latitude: <span class="number">135</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> updateLocation = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      location.value = <span class="string">'South Pole'</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    provide(<span class="string">'location'</span>, readonly(location))</span><br><span class="line">    provide(<span class="string">'geolocation'</span>, readonly(geolocation))</span><br><span class="line">    provide(<span class="string">'updateLocation'</span>, updateLocation)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="getCurrentInstance"><a href="#getCurrentInstance" class="headerlink" title="getCurrentInstance"></a><code>getCurrentInstance</code></h1><p>如果在<code>setup</code>中要访问组件实例，需要使用这个方法来访问，例如在<code>app.config.globalProperties</code>定义了全局变量，如果希望在<code>setup</code>中访问，就要用到这个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line">app.config.globalProperties.$http = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">123</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件中</span></span><br><span class="line"><span class="keyword">import</span> &#123; getCurrentInstance &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MyComponent = &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> internalInstance = getCurrentInstance()</span><br><span class="line"></span><br><span class="line">    internalInstance.appContext.config.globalProperties.$http(); <span class="comment">// 访问 globalProperties</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，它只能在<code>setup</code>和生命周期钩子中调用，如果在其外调用（例如Event Listener中）需要在<code>setup</code>中调用<code>getCurrentInstance()</code>获取实例后传入对应的函数中使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MyComponent = &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> internalInstance = getCurrentInstance(); <span class="comment">// works</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在组合式函数中调用也可以正常执行</span></span><br><span class="line">    <span class="keyword">const</span> id = useComponentId();<span class="comment">// works</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> handleClick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      getCurrentInstance(); <span class="comment">// doesn't work</span></span><br><span class="line">      useComponentId(); <span class="comment">// doesn't work</span></span><br><span class="line"></span><br><span class="line">      internalInstance; <span class="comment">// works</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    onMounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      getCurrentInstance() <span class="comment">// works</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">      h(</span><br><span class="line">        <span class="string">'button'</span>,</span><br><span class="line">        &#123;</span><br><span class="line">          onClick: handleClick</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">`uid: <span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">      )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useComponentId</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> getCurrentInstance().uid</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="模板Refs"><a href="#模板Refs" class="headerlink" title="模板Refs"></a>模板Refs</h1><h2 id="常规使用"><a href="#常规使用" class="headerlink" title="常规使用"></a>常规使用</h2><p>Vue2.x中的<code>ref</code>原本是用于获取DOM的， Vue3中<code>ref</code>不仅可以响应化数据，也可以实现获取DOM的功能</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">ref</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> &#123; ref, onMounted &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    setup() &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root = ref(<span class="literal">null</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">      onMounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 在渲染完成后, 这个 div DOM 会被赋值给 root ref 对象</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(root.value) <span class="comment">// &lt;div/&gt;</span></span></span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line">        root,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在<code>setup</code>中声明一个<code>ref</code>并返回，在模板中声明<code>ref</code>并且值与返回的<code>ref</code>相同，这时在渲染初始化后（<code>onMounted</code>）就可以获取分配的DOM或组件实例</p>
+<h2 id="在v-for中使用"><a href="#在v-for中使用" class="headerlink" title="在v-for中使用"></a>在<code>v-for</code>中使用</h2><p>在<code>v-for</code>中使用时，需要使用3.0新增的函数形的<code>ref</code>，为<code>ref</code>赋值：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">"(item, i) in list"</span> <span class="attr">:ref</span>=<span class="string">"el =&gt; &#123; divs[i] = el &#125;"</span>&gt;</span></span><br><span class="line">    &#123;&#123; item &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> &#123; ref, reactive, onBeforeUpdate &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">    setup() &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> list = reactive([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> divs = ref([])</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="comment">// 确保在每次变更之前重置引用</span></span></span><br><span class="line"><span class="javascript">      onBeforeUpdate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line">        divs.value = []</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line">        list,</span><br><span class="line">        divs,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="侦听模板引用"><a href="#侦听模板引用" class="headerlink" title="侦听模板引用"></a>侦听模板引用</h2><p>在<code>watch</code>或者<code>watchEffect</code>中引用Dom Ref，需要使用<code>flush: &#39;post&#39;</code>选项，因为默认情况下<code>watch</code>和<code>watchEffect</code>的副作用函数是在DOM被挂载或者更新之前运行的，此时模板引用还没有被更新</p>
+<p>使用了<code>flush: &#39;post&#39;</code> ，保证监听器在DOM更新后执行副作用，确保模板引用于DOM保持同步，引用正确元素</p>
+<h1 id="组合式API实现更灵活的复用"><a href="#组合式API实现更灵活的复用" class="headerlink" title="组合式API实现更灵活的复用"></a>组合式API实现更灵活的复用</h1><h1 id="Mixin的缺点"><a href="#Mixin的缺点" class="headerlink" title="Mixin的缺点"></a>Mixin的缺点</h1><ul>
+<li>容易发生冲突</li>
+<li>可复用性优先，不能向Mixin传递参数来改变逻辑，降低了在抽象逻辑方面的灵活行</li>
+</ul>
+<p>Vue3的组合式API就是为了解决这些问题而存在的</p>
+<h2 id="更多的灵活性来自更多的自我克制"><a href="#更多的灵活性来自更多的自我克制" class="headerlink" title="更多的灵活性来自更多的自我克制"></a>更多的灵活性来自更多的自我克制</h2><p>组合式API的初衷就是为了实现更有组织的代码，实现更灵活的逻辑提取与复用，在代码中会出现更多的、零碎的函数模块，在不同的位置、不同的组件间进行重复调用</p>
+<p>它可以避免Vue2.x时代逻辑复用的几种主要形式（Mixin/HOS/SLOT）的弊端，带来了比较明显的好处：</p>
+<p><img src="http://image.oldzhou.cn/Fk7zo_E1Y0zYdzdz9xVr-RHH2NYy" alt=""></p>
+<p>但是它在提到了代码质量的上限的同时，降低了下线，<code>setup</code>中会出现大量面条式的代码，避免这种糟糕情况的关键就是，将逻辑更合理的划分为单独的函数，将<code>setup</code>作为一个入口，在其中进行不同组合函数的调用。</p>
+<h2 id="与React-Hooks比较"><a href="#与React-Hooks比较" class="headerlink" title="与React Hooks比较"></a>与React Hooks比较</h2><p>Vue3的基于函数的组合式API受到了React Hooks的启发，在很多思维模型方面与React Hooks很类似，提供了同等级别的逻辑组合能力，但是也有着比较明显的不同，组合式API的<code>setup</code>函数只会被调用一次，也就意味着使用组合式API时：</p>
+<ol>
+<li>不需要考虑调用顺序，可以用在条件语句中（React Hooks不可以）</li>
+<li>不会再每次渲染时重复执行，降低垃圾回收的压力（React Hooks每次渲染都会重复执行）</li>
+<li>不存在内联处理函数导致子组件永远更新的问题，也不需要<code>useCallback</code>（React Hooks需要用<code>useCallback</code>进行性能优化）</li>
+<li>不存在忘记记录依赖的问题，也不需要<code>useEffecr</code>和<code>useMemo</code>并传入依赖数组以捕获过时的变量，Vue的自动以来可以确保侦听器和计算值总是准确无误的（React Hooks需要手动记录依赖）</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="哆啦斯基周 wechat" style="width: 200px; max-width: 100%;">
+  <div>我的公众号，看心情更新，欢迎订阅！</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+            <a href="/tags/Vue3/" rel="tag"># Vue3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/19/01 前端笔记/07 零散专题/零散专题02 正则表达式/" rel="next" title="零散专题02 正则表达式">
+                <i class="fa fa-chevron-left"></i> 零散专题02 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/19/01 前端笔记/04 Vue/06 Vue3/Vue3-02 响应式API/" rel="prev" title="Vue3-02 响应式API">
+                Vue3-02 响应式API <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar3.png" alt="哆啦斯基周">
+            
+              <p class="site-author-name" itemprop="name">哆啦斯基周</p>
+              <p class="site-description motion-element" itemprop="description">一个大龄前端程序员的技术博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">208</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">278</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/duola8789" title="GitHub &rarr; https://github.com/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="mailto:duola8789@126.com" title="E-Mail &rarr; mailto:duola8789@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/zhouhaozhouhao" title="Weibo &rarr; https://weibo.com/zhouhaozhouhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/duola8789" title="CSDN &rarr; https://blog.csdn.net/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-rss-square"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#升级到Vue3"><span class="nav-number">1.</span> <span class="nav-text">升级到Vue3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#升级VueCLI"><span class="nav-number">1.1.</span> <span class="nav-text">升级VueCLI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">1.2.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Vue实例"><span class="nav-number">1.3.</span> <span class="nav-text">创建Vue实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Router"><span class="nav-number">1.4.</span> <span class="nav-text">创建Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Store"><span class="nav-number">1.5.</span> <span class="nav-text">创建Store</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#setup"><span class="nav-number">2.</span> <span class="nav-text">setup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调用时机"><span class="nav-number">2.1.</span> <span class="nav-text">调用时机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回值"><span class="nav-number">2.2.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">2.3.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#props"><span class="nav-number">2.3.1.</span> <span class="nav-text">props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#context"><span class="nav-number">2.3.2.</span> <span class="nav-text">context</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this的用法"><span class="nav-number">2.4.</span> <span class="nav-text">this的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问组件的Property"><span class="nav-number">2.5.</span> <span class="nav-text">访问组件的Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合模板使用"><span class="nav-number">2.6.</span> <span class="nav-text">结合模板使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生命周期"><span class="nav-number">3.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#依赖注入"><span class="nav-number">4.</span> <span class="nav-text">依赖注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">4.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式修改"><span class="nav-number">4.2.</span> <span class="nav-text">响应式修改</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getCurrentInstance"><span class="nav-number">5.</span> <span class="nav-text">getCurrentInstance</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板Refs"><span class="nav-number">6.</span> <span class="nav-text">模板Refs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常规使用"><span class="nav-number">6.1.</span> <span class="nav-text">常规使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在v-for中使用"><span class="nav-number">6.2.</span> <span class="nav-text">在v-for中使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#侦听模板引用"><span class="nav-number">6.3.</span> <span class="nav-text">侦听模板引用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组合式API实现更灵活的复用"><span class="nav-number">7.</span> <span class="nav-text">组合式API实现更灵活的复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mixin的缺点"><span class="nav-number">8.</span> <span class="nav-text">Mixin的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更多的灵活性来自更多的自我克制"><span class="nav-number">8.1.</span> <span class="nav-text">更多的灵活性来自更多的自我克制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与React-Hooks比较"><span class="nav-number">8.2.</span> <span class="nav-text">与React Hooks比较</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哆啦斯基周</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+
+
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function (item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'Fg5UsXV9f7m1xb1SioXny6QN-gzGzoHsz',
+    appKey: 'DLV7a4oTpQynJCIelKn3L7Ja',
+    placeholder: '大侠留步，请留下您宝贵的意见',
+    avatar: 'retro',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
