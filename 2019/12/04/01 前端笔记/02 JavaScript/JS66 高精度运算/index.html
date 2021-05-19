@@ -534,7 +534,7 @@
 <p>但是能够精确进行运算的数字范围并没有这么大，能够准确计算的最大正整数可以通过<code>Number.MAX_SAFE_INTEGER</code>获得，是<code>9007199254740991</code>，能够准确计算的最大负整数可以通过<code>Number.MIN_SAFE_INTEGER</code>获得，是<code>-9007199254740991</code>，超出这个范围的运算是不准确的。</p>
 <p>如果要进行准确的大数运算，可以引入第三方库<a href="https://github.com/MikeMcl/bignumber.js//" target="_blank" rel="noopener">bigmuber.js</a>，它把所有的数字都当做字符串，重新实现了计算逻辑，但是性能相比原生的要差很多。</p>
 <p>在ES10的提案中提出了<code>BigInt</code>数据类型，它是第七种原始类型，它是一个任意精度的数字，可以表示超过<code>9007199254740991</code>的数字：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> b = <span class="number">1</span>n;  <span class="comment">// 追加 n 以创建 BigInt</span></span><br><span class="line"><span class="keyword">typeof</span> b;</span><br><span class="line"><span class="comment">// bigint</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> b = <span class="number">1n</span>;  <span class="comment">// 追加 n 以创建 BigInt</span></span><br><span class="line"><span class="keyword">typeof</span> b;</span><br><span class="line"><span class="comment">// bigint</span></span><br></pre></td></tr></table></figure>
 <p>如果需要进行准确的大数运算，可以根据需要支持的兼容性，来选择方案解决。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://github.com/camsong/blog/issues/9" target="_blank" rel="noopener">JavaScript 浮点数陷阱及解法@camsong/blog</a></li>
