@@ -9,7 +9,7 @@ categories: 偶尔记录
 
 ![](/images/hello-world.jpg)
 
-做出转行的决定，不知道是对是错1233337777
+做出转行的决定，不知道是对是错
 
 <!-- more -->
 
