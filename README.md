@@ -31,4 +31,4 @@ git clone https://github.com/theme-next/hexo-theme-next themes/next
 
 ## 评论系统
 
-[Valine](https://valine.js.org/)
+[hexo-next-giscus](https://github.com/next-theme/hexo-next-giscus)

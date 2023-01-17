@@ -106,3 +106,27 @@ deploy:
   repo: git@github.com:duola8789/duola8789.github.io.git
   branch: gh-pages
 
+# https://giscus.app/zh-CN 生成脚本中获取
+giscus:
+  enable: true
+  repo: duola8789/duola8789.github.io
+  repo_id: R_kgDOIyKHdQ
+  category: Announcements
+  category_id: DIC_kwDOIyKHdc4CTown
+  # Available values: pathname | url | title | og:title
+  mapping: pathname
+  # Available values: 0 | 1
+  reactions_enabled: 1
+  # Available values: 0 | 1
+  emit_metadata: 0
+  # Available values: light | dark | dark_high_contrast | transparent_dark | preferred-color-scheme
+  theme: light
+  # Available values: en | zh-C
+  lang: zh-C
+  # Available value: anonymous
+  crossorigin: anonymous
+  # Place the comment box above the comments
+  input_position: bottom
+  # Load the comments lazily
+  loading: lazy
+
