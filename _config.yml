@@ -108,7 +108,7 @@ deploy:
 
 # https://giscus.app/zh-CN 生成脚本中获取
 giscus:
-  enable: true
+  enable: false
   repo: duola8789/duola8789.github.io
   repo_id: R_kgDOIyKHdQ
   category: Announcements
