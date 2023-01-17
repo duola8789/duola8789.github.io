@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="正则表达式学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="零散专题02 正则表达式">
+<meta property="og:url" content="https://duola8789.github.io/2023/01/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9802%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="正则表达式学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FqTUh2pyIGKt5t7lZ_WFbJZyXRgL">
+<meta property="article:published_time" content="2023-01-17T05:07:43.687Z">
+<meta property="article:modified_time" content="2020-06-24T09:29:42.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FqTUh2pyIGKt5t7lZ_WFbJZyXRgL">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2023/01/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9802%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2023/01/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9802%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/","path":"2023/01/17/01 前端笔记/07 零散专题/零散专题02 正则表达式/","title":"零散专题02 正则表达式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>零散专题02 正则表达式 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">1.</span> <span class="nav-text">元操作符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E4%B9%89%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">反义操作符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%A4%8D%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">3.</span> <span class="nav-text">重复限定符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">分组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%8C%B9%E9%85%8D"><span class="nav-number">4.1.</span> <span class="nav-text">分组匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E7%BB%84"><span class="nav-number">4.2.</span> <span class="nav-text">捕获组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%BC%96%E5%8F%B7%E6%8D%95%E8%8E%B7%E7%BB%84"><span class="nav-number">4.2.1.</span> <span class="nav-text">数字编号捕获组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%BC%96%E5%8F%B7%E6%8D%95%E8%8E%B7%E7%BB%84"><span class="nav-number">4.2.2.</span> <span class="nav-text">命名编号捕获组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E6%8D%95%E8%8E%B7%E7%BB%84"><span class="nav-number">4.3.</span> <span class="nav-text">非捕获组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E5%BC%95%E7%94%A8"><span class="nav-number">4.4.</span> <span class="nav-text">反向引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="nav-number">4.4.1.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">4.4.2.</span> <span class="nav-text">字节跳动的面试题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80"><span class="nav-number">5.</span> <span class="nav-text">零宽断言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E5%85%88%E8%A1%8C%E6%96%AD%E8%A8%80"><span class="nav-number">5.1.</span> <span class="nav-text">正向先行断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E5%90%8E%E8%A1%8C%E6%96%AD%E8%A8%80"><span class="nav-number">5.2.</span> <span class="nav-text">正向后行断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E5%90%91%E5%85%88%E8%A1%8C%E6%96%AD%E8%A8%80"><span class="nav-number">5.3.</span> <span class="nav-text">负向先行断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E5%90%91%E5%90%8E%E8%A1%8C%E6%96%AD%E8%A8%80"><span class="nav-number">5.4.</span> <span class="nav-text">负向后行断言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D%E5%92%8C%E9%9D%9E%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D"><span class="nav-number">6.</span> <span class="nav-text">贪婪匹配和非贪婪匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D"><span class="nav-number">6.1.</span> <span class="nav-text">贪婪匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D"><span class="nav-number">6.2.</span> <span class="nav-text">非贪婪匹配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">JS中的正则表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">8.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E9%AA%8C%E8%AF%81%E7%A9%BA%E6%A0%BC"><span class="nav-number">8.1.</span> <span class="nav-text">正则验证空格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E7%A9%BA%E6%A0%BC"><span class="nav-number">8.2.</span> <span class="nav-text">去除空格</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2023/01/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9802%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="零散专题02 正则表达式 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          零散专题02 正则表达式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-01-17 13:07:43" itemprop="dateCreated datePublished" datetime="2023-01-17T13:07:43+08:00">2023-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-06-24 17:29:42" itemprop="dateModified" datetime="2020-06-24T17:29:42+08:00">2020-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>正则表达式学习笔记。</p>
+<span id="more"></span>
+
+<p>[TOC]</p>
+<h1 id="元操作符"><a href="#元操作符" class="headerlink" title="元操作符"></a>元操作符</h1><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.</code></td>
+<td>除换行符（<code>\n</code>）之外的任意字符</td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>匹配字母、下划线、数字、汉字</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>匹配任意空白字符</td>
+</tr>
+<tr>
+<td><code>\d</code></td>
+<td>任意数字</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>匹配字符串开始</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>匹配字符串结束</td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>单词分界处（单词的开头或结尾），用于限定单词范围</td>
+</tr>
+<tr>
+<td>&#96;</td>
+<td>&#96;</td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td>字符集，不关心顺序，使用<code>-</code>指定范围</td>
+</tr>
+</tbody></table>
+<h1 id="反义操作符"><a href="#反义操作符" class="headerlink" title="反义操作符"></a>反义操作符</h1><p>与某些元字符匹配相反的内容</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\W</code></td>
+<td>匹配字母、下划线、数字、汉字之外的任意字符</td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>匹配任意非空白字符</td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>任意非数字字符</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>匹配不是单词开头或者结尾的位置</td>
+</tr>
+<tr>
+<td><code>[^abc]</code></td>
+<td>匹配字符集之外的字符</td>
+</tr>
+</tbody></table>
+<h1 id="重复限定符"><a href="#重复限定符" class="headerlink" title="重复限定符"></a>重复限定符</h1><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code></td>
+<td>重复零次或更多次</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>重复零次或一次</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>重复一次或更多次</td>
+</tr>
+<tr>
+<td><code>&#123;n&#125;</code></td>
+<td>重复<code>n</code>次</td>
+</tr>
+<tr>
+<td><code>&#123;n,&#125;</code></td>
+<td>重复<code>n</code>次或更多次</td>
+</tr>
+<tr>
+<td><code>&#123;n,m&#125;</code></td>
+<td>重复<code>n</code>次至<code>m</code>次</td>
+</tr>
+</tbody></table>
+<h1 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h1><h2 id="分组匹配"><a href="#分组匹配" class="headerlink" title="分组匹配"></a>分组匹配</h2><p>重复限定符值限制它左边最近的一个字符，如果需要匹配多个字符，就需要使用<code>()</code>来将括号中的内容作为一个整体。</p>
+<p>例如，要匹配含有多个<code>ab</code>时：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(ab)*</span><br></pre></td></tr></table></figure>
+
+<h2 id="捕获组"><a href="#捕获组" class="headerlink" title="捕获组"></a>捕获组</h2><p>使用<code>()</code>来进行匹配时，<code>()</code>中的内容会保存到内存中用数字或者显示命名的组里，以深度优先进行编号，后面可以通过序号或者名称来使用匹配的结果</p>
+<p>捕获组存在的前提是整项已匹配</p>
+<h3 id="数字编号捕获组"><a href="#数字编号捕获组" class="headerlink" title="数字编号捕获组"></a>数字编号捕获组</h3><p>捕获组默认使用数字编号。例如，有这样一个表达式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(\d)(\d)</span><br></pre></td></tr></table></figure>
+
+<p>当用它来匹配<code>12</code>时，会有是三个分组：</p>
+<ol>
+<li><code>12</code>，整个表达式本身</li>
+<li><code>1</code>，第一个捕获组</li>
+<li><code>2</code>，第二个捕获组</li>
+</ol>
+<p>在JavaScript的<code>replace</code>方法的第二个参数中，就可以使用<code>$1</code>来访问第一个捕获组</p>
+<h3 id="命名编号捕获组"><a href="#命名编号捕获组" class="headerlink" title="命名编号捕获组"></a>命名编号捕获组</h3><p>语法：<code>(?&lt;name&gt;exp)</code></p>
+<p>作用：人为为捕获组添加名称，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?&lt;a&gt;\d)(?&lt;b&gt;\d)</span><br></pre></td></tr></table></figure>
+
+<p>上面的表达式，在<code>replace</code>方法中除了用<code>$1</code>来访问第一个捕获组外，还可以使用<code>$&lt;a&gt;</code>来访问</p>
+<h2 id="非捕获组"><a href="#非捕获组" class="headerlink" title="非捕获组"></a>非捕获组</h2><p>语法：<code>(?:exp)</code></p>
+<p>作用：与捕获组相反，如果指向进行分组匹配，而不需要保存到捕获分组中，就需要使用非捕获组</p>
+<h2 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h2><p>匹配到捕获组后，会保存到内存中，不仅可以在外部引用，也可以在正则表达式内部进行引用，这就是反向引用（也叫后向引用）</p>
+<p>反向引用会大大增加捕获组的能力，因为反向引用，引用的是匹配子表达式的<strong>内容</strong>，注意，不是子表达式本身，而是内容。这个内容可以用来查找一些重复的内容或者进行字符替换</p>
+<p>引用的方式是在正则表达式内部使用<code>\1</code>来引用第一个捕获组，<code>\2</code>引用第二个捕获组，以此类推，<code>\0</code>对应的是整个正则表示</p>
+<h3 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h3><p>举个例子，要查找<code>&#39;aabbbbgbddesddfiid&#39;</code>里面成对的字母</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;aabbbbgbddesddfiid&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/(\w)\1/g</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = str.<span class="title function_">match</span>(reg);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [&quot;aa&quot;, &quot;bb&quot;, &quot;bb&quot;, &quot;dd&quot;, &quot;dd&quot;, &quot;ii&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字节跳动的面试题"><a href="#字节跳动的面试题" class="headerlink" title="字节跳动的面试题"></a>字节跳动的面试题</h3><p>一个在字节跳动的面试题，找出一个字符串中出现次数最多的字符，当时脑子抽，非要计算出每个字符出现的次数，存起来，然后取最大的</p>
+<p>实际上使用反向引用根本就没有这么麻烦，使用<code>match</code>方法得到同一个字符串为一项组成的数组（就和上面的例子一样），然后按照树组成员的<code>length</code>排序即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;asdfaaaa&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = [...str]</span><br><span class="line">  .<span class="title function_">sort</span>()</span><br><span class="line">  .<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  .<span class="title function_">match</span>(<span class="regexp">/(\w)\1*/g</span>)</span><br><span class="line">  .<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> b.<span class="property">length</span> - a.<span class="property">length</span>)[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// a</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h1><p>零宽断言是为了判断一个位置，这个位置满足正则表达式的匹配，它不占字符，只匹配位置。零宽断言分为以下几种：</p>
+<ul>
+<li>正向先行断言</li>
+<li>正向后行断言</li>
+<li>负向先行断言</li>
+<li>负向后行断言</li>
+</ul>
+<p>里面的正、负向指的是与匹配正则表达式还是非匹配的区别，先行、后行的区别是匹配前面（右侧）还是后面（左侧）的内容</p>
+<h2 id="正向先行断言"><a href="#正向先行断言" class="headerlink" title="正向先行断言"></a>正向先行断言</h2><p>语法：<code>(?=pattern)</code></p>
+<p>作用：匹配<code>pattern</code>表达式前面的内容，返回这个位置。也就是说，此位置右侧的字符能满足<code>pattern</code>时条件为真，匹配此位置左侧的字符</p>
+<p>举个例子，有这样一段HTML代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;read-count&quot;</span>&gt;</span>阅读数：641<span class="tag">&lt;/<span class="name">span</span>&gt;</span>&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<p>我们希望匹配出<code>641</code>，就可以使用正向先行断言，<code>641</code>前面的字符是<code>&lt;/span&gt;</code>，匹配出这个位置即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;&lt;span class=&quot;read-count&quot;&gt;阅读数：641&lt;/span&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意，标签结束的 / 需要转义</span></span><br><span class="line"><span class="keyword">const</span> exp = <span class="regexp">/\d+(?=&lt;\/span\&gt;)/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = str.<span class="title function_">match</span>(exp)[<span class="number">0</span>]; <span class="comment">// 641</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="正向后行断言"><a href="#正向后行断言" class="headerlink" title="正向后行断言"></a>正向后行断言</h2><p>语法：<code>(?&lt;=pattern)</code></p>
+<p>作用：与正向先行断言的区别就是，匹配的是后面（即左侧）的内容满足表达式要求的位置。</p>
+<p>使用正向后行断言，也可以完成上面的例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;&lt;span class=&quot;read-count&quot;&gt;阅读数：641&lt;/span&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> exp = <span class="regexp">/(?&lt;=阅读数：)\d+/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = str.<span class="title function_">match</span>(exp)[<span class="number">0</span>]; <span class="comment">// 641</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="负向先行断言"><a href="#负向先行断言" class="headerlink" title="负向先行断言"></a>负向先行断言</h2><p>语法：<code>(?!pattern)</code></p>
+<p>作用：匹配非<code>pattern</code>表达式前面的内容，返回这个位置。</p>
+<p>举个例子，要匹配出<code>我爱祖国，我是祖国的花朵</code>中不是<code>的花朵</code>前面的祖国，正则可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">祖国(?!的花朵)</span><br></pre></td></tr></table></figure>
+
+<h2 id="负向后行断言"><a href="#负向后行断言" class="headerlink" title="负向后行断言"></a>负向后行断言</h2><p>语法：<code>(?&lt;!pattern)</code></p>
+<p>作用：匹配非<code>pattern</code>表达式后面的内容，返回这个位置。</p>
+<p>3 下面的表达式表示的意义任意2-8位数字，^表示后面的内容是字符串的开始，$表示前面的内容是字符串的结束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\d&#123;2,8&#125;$</span><br></pre></td></tr></table></figure>
+
+<h1 id="贪婪匹配和非贪婪匹配"><a href="#贪婪匹配和非贪婪匹配" class="headerlink" title="贪婪匹配和非贪婪匹配"></a>贪婪匹配和非贪婪匹配</h1><h2 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h2><p>当正则表达式中包含重复限定符时，在整个表达式得到匹配的前提下，匹配尽可能多的字符，这种匹配方式叫做贪婪匹配</p>
+<p>默认的限定符都是贪婪匹配的。</p>
+<p>当多个量词同时出现时，如果能满足各自最大程度的匹配，就会互不干扰。如果不能满足，会根据深度优先原则，也就是从左到右的每个贪婪量词，优先最大数量的满足，剩余的再分配给下一个量词匹配</p>
+<h2 id="非贪婪匹配"><a href="#非贪婪匹配" class="headerlink" title="非贪婪匹配"></a>非贪婪匹配</h2><p>与贪婪匹配相反的就是非贪婪匹配，它在满足整个表达式满足匹配的前提下，匹配尽可能少的字符。</p>
+<p>贪婪量词是在普通的贪婪量词后面加上<code>?</code>，例如<code>*?</code>、<code>+?</code>、<code>??</code>、<code>&#123;n,m&#125;?</code></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*?</code></td>
+<td>匹配字母、下划线、数字、汉字之外的任意字符</td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>匹配任意非空白字符</td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>任意非数字字符</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>匹配不是单词开头或者结尾的位置</td>
+</tr>
+<tr>
+<td><code>[^abc]</code></td>
+<td>匹配字符集之外的字符</td>
+</tr>
+</tbody></table>
+<h1 id="JS中的正则表达式"><a href="#JS中的正则表达式" class="headerlink" title="JS中的正则表达式"></a>JS中的正则表达式</h1><p>JS中表达式，默认区分大小写，找到第一个匹配项就结束，单行寻找：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/pattern/</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>/pattern/</code>后面添加标识符<code>g</code>，表示全局模式，应用于所有字符串</li>
+<li>加标识符<code>i</code>，表示不区分大小写</li>
+<li>加标识符<code>m</code>，表示多行模式，继续寻找下一行</li>
+</ul>
+<p>JS常用的正则表达式的几个方式有<code>replace</code>、<code>test</code>、<code>exec</code>、<code>match</code>，详细的介绍可以参考这篇笔记《JS46 JS中的match和exec方法》</p>
+<p><img src="http://image.oldzhou.cn/FqTUh2pyIGKt5t7lZ_WFbJZyXRgL"></p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><h2 id="正则验证空格"><a href="#正则验证空格" class="headerlink" title="正则验证空格"></a>正则验证空格</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\s/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">testEmpty</span> = str =&gt; reg.<span class="title function_">test</span>(str)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">testEmpty</span>(<span class="string">&#x27;a&#x27;</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">testEmpty</span>(<span class="string">&#x27;a b&#x27;</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">testEmpty</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">testEmpty</span>(<span class="string">&#x27; &#x27;</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="去除空格"><a href="#去除空格" class="headerlink" title="去除空格"></a>去除空格</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\s/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">replaceEmpty</span> = str =&gt; str.<span class="title function_">replace</span>(reg, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">replaceEmpty</span>(<span class="string">&#x27;a&#x27;</span>)); <span class="comment">// a</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">replaceEmpty</span>(<span class="string">&#x27;   a b  &#x27;</span>)); <span class="comment">// ab</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247489641&idx=1&sn=5fd41822e46dc471ec551b7901e8f2e7">正则表达式真的很6，可惜你不会写@前端之巅</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag"># 正则表达式</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JavaScript%E4%B8%AD%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86/" rel="prev" title="JavaScript中循环依赖的处理">
+                  <i class="fa fa-chevron-left"></i> JavaScript中循环依赖的处理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在调研BFF的过程中，看到蚂蚁金服自研的BFF的开发框架BFF Chair是基于Egg.js开发的。BFF Chair没有开源，但是Egg.js已经开源了，如果需要引入BFF，需要基于Egg.js的基础上开发自己的BFF开发框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Egg01 入门">
+<meta property="og:url" content="https://duola8789.github.io/2019/04/15/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg01%20%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="在调研BFF的过程中，看到蚂蚁金服自研的BFF的开发框架BFF Chair是基于Egg.js开发的。BFF Chair没有开源，但是Egg.js已经开源了，如果需要引入BFF，需要基于Egg.js的基础上开发自己的BFF开发框架。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67.png">
+<meta property="og:image" content="http://image.oldzhou.cn/middleware.gif">
+<meta property="article:published_time" content="2019-04-15T08:50:20.000Z">
+<meta property="article:modified_time" content="2019-04-15T08:50:20.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Egg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67.png">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/04/15/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg01%20%E5%85%A5%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/04/15/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg01%20%E5%85%A5%E9%97%A8/","path":"2019/04/15/05 全栈开发/03 Egg/Egg01 入门/","title":"Egg01 入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Egg01 入门 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Egg-js%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">1 Egg.js是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Egg%E4%B8%8E%E5%85%B6%E4%BB%96Web%E6%A1%86%E6%9E%B6%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">2.</span> <span class="nav-text">2 Egg与其他Web框架的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%8EExpress%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 与Express的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%B8%8EKoa%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 与Koa的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Egg%E7%BB%A7%E6%89%BF%E4%BA%8EKoa"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Egg继承于Koa</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-%E6%89%A9%E5%B1%95"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 插件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="nav-number">3.</span> <span class="nav-text">3 快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%B8%90%E8%BF%9B%E5%BC%8F%E5%BC%80%E5%8F%91"><span class="nav-number">4.</span> <span class="nav-text">4 渐进式开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Step1-%E5%8E%9F%E5%A7%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Step1 原始代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Step2-%E6%8F%92%E4%BB%B6%EF%BC%88path%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Step2 插件（path）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Step3-%E7%8B%AC%E7%AB%8B%E6%8F%92%E4%BB%B6%EF%BC%88package%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Step3 独立插件（package）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Step4-%E6%A1%86%E6%9E%B6"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Step4 框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E6%B8%90%E8%BF%9B%E5%BC%8F%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 渐进式开发总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%AE%8C%E6%95%B4%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">5 完整目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90"><span class="nav-number">6.</span> <span class="nav-text">6 静态资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 映射关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%BC%80%E5%8F%91%E3%80%81%E9%83%A8%E7%BD%B2%E3%80%81CDN"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 开发、部署、CDN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/04/15/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg01%20%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Egg01 入门 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Egg01 入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-04-15 16:50:20" itemprop="dateCreated datePublished" datetime="2019-04-15T16:50:20+08:00">2019-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Egg/" itemprop="url" rel="index"><span itemprop="name">Egg</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在调研BFF的过程中，看到蚂蚁金服自研的BFF的开发框架BFF Chair是基于Egg.js开发的。BFF Chair没有开源，但是Egg.js已经开源了，如果需要引入BFF，需要基于Egg.js的基础上开发自己的BFF开发框架。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>在调研BFF的过程中，看到蚂蚁金服自研的BFF的开发框架BFF Chair是基于Egg.js开发的。BFF Chair没有开源，但是Egg.js已经开源了，如果需要引入BFF，需要基于Egg.js的基础上开发自己的BFF开发框架。</p>
+</blockquote>
+<h2 id="1-Egg-js是什么"><a href="#1-Egg-js是什么" class="headerlink" title="1 Egg.js是什么"></a>1 Egg.js是什么</h2><p>Egg是一个为了开发企业级应用的框架，没有集成太多功能，值专注于提供Web开发的核心功能，并且提供了一套灵活可扩展的插件机制，来满足定制需求。</p>
+<p>Egg奉行『约定优于配置』，在团队内应当按照<strong>一套统一的约定</strong>进行应用开发，降低沟通成本和学习成本。但约定不等于扩展性差，可以按照团队的约定制定框架。</p>
+<h2 id="2-Egg与其他Web框架的比较"><a href="#2-Egg与其他Web框架的比较" class="headerlink" title="2 Egg与其他Web框架的比较"></a>2 Egg与其他Web框架的比较</h2><h3 id="2-1-与Express的差异"><a href="#2-1-与Express的差异" class="headerlink" title="2.1 与Express的差异"></a>2.1 与Express的差异</h3><p>Express应用很广泛，简单且扩展性强，适合做个人项目，但框架本身缺少约定，标准的MVC模型会有各种千奇百怪的写法。而Egg按照约定进行开发，团队协作成本低。</p>
+<h3 id="2-2-与Koa的关系"><a href="#2-2-与Koa的关系" class="headerlink" title="2.2 与Koa的关系"></a>2.2 与Koa的关系</h3><p>Koa和Express的设计风格类似，底层都是公用的同一套HTTP基础库，但是二者有一些区别：</p>
+<p>（1）异步解决方案</p>
+<p>Express的异步编程模型是callback形式的，而Koa使用了<code>async/await</code>的形式</p>
+<p>（2）Middleware中间件</p>
+<p>Koa的中间件模型是洋葱圈模型</p>
+<p><img src="http://image.oldzhou.cn/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67.png"></p>
+<p>当中间件在执行时：</p>
+<p><img src="http://image.oldzhou.cn/middleware.gif" alt="middleware.gif"></p>
+<p>所有的请求经过一个中间件的时候都会执行两次，可以很方便的话实现后置处理逻辑。</p>
+<p>（3）Context</p>
+<p>Express只有Request和Response两个对象，Koa增加了Context对象，作为当次请求的上下文对象（Koa1中为中间件的<code>this</code>，Koa2中作为中间件的第一个参数传入），可以将以此请求相关的上下文都挂载到这个对象，同时Context也挂在了Request和Response两个对象，这两个对象提供了大量的便捷方法辅助开发，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request.query</span><br><span class="line">request.hostname</span><br><span class="line">response.body</span><br><span class="line">response.status</span><br></pre></td></tr></table></figure>
+<p>（4）异常处理</p>
+<p>通过同步方式编写异步代码带来的另一个非常大的好处就是异常处理非常自然，使用<code>try/catch</code>就可以将按照规范编写的代码中的所有错误捕获到。可以很方便的编写一个自定义的错误处理中间件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">onerror</span>(<span class="params">ctx, next</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    ctx.<span class="property">app</span>.<span class="title function_">emit</span>(<span class="string">&#x27;error&#x27;</span>, err);</span><br><span class="line">    ctx.<span class="property">body</span> = <span class="string">&#x27;server error&#x27;</span>;</span><br><span class="line">    ctx.<span class="property">status</span> = err.<span class="property">status</span> || <span class="number">500</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只需要将这个中间件放在其他中间件之前，就可以捕获它们所有的同步或者异步代码中抛出的异常了。</p>
+<h3 id="2-3-Egg继承于Koa"><a href="#2-3-Egg继承于Koa" class="headerlink" title="2.3 Egg继承于Koa"></a>2.3 Egg继承于Koa</h3><p>Egg选择了Koa作为基础框架，在它的模型基础上，做了一些增强。</p>
+<h4 id="2-3-1-扩展"><a href="#2-3-1-扩展" class="headerlink" title="2.3.1 扩展"></a>2.3.1 扩展</h4><p>在基于Egg的框架或者应用中，可以通过定义<code>app/extend/&#123;application, context, request, response&#125;.js</code>中来扩展Koa中对应的四个对象的原型。通过这个功能，可以快速的增加更多的辅助方法。</p>
+<p>例如，在<code>app/extend/context.js</code>中写入以下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/extend/context.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">isIOS</span>() &#123;</span><br><span class="line">    <span class="keyword">const</span> iosReg = <span class="regexp">/iphone|ipad|ipod/i</span>;</span><br><span class="line">    <span class="keyword">return</span> iosReg.<span class="title function_">test</span>(<span class="variable language_">this</span>.<span class="title function_">get</span>(<span class="string">&#x27;user-agent&#x27;</span>));</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在Controller中，就可以使用刚才定义的便捷属性了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">handler</span> = <span class="function"><span class="params">ctx</span> =&gt;</span> &#123;</span><br><span class="line">  ctx.<span class="property">body</span> = ctx.<span class="property">isIOS</span></span><br><span class="line">    ? <span class="string">&#x27;Your operating system is iOS.&#x27;</span></span><br><span class="line">    : <span class="string">&#x27;Your operating system is not iOS.&#x27;</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-2-插件"><a href="#2-3-2-插件" class="headerlink" title="2.3.2 插件"></a>2.3.2 插件</h4><p>Egg和Koa一样，可以通过中间件来提供各种功能，Egg的插件机制更加强大，让独立领域的功能模块可以更加容易编写。</p>
+<p>一个插件可以包含：</p>
+<ul>
+<li><code>extend</code>：扩展基础对象的上下文，提供各种工具类、属性</li>
+<li><code>middleware</code>：增加一个或多个中间件，提供请求的前置、后置处理逻辑</li>
+<li><code>config</code>：配置各个环境下插件自身的默认配置项</li>
+</ul>
+<h2 id="3-快速入门"><a href="#3-快速入门" class="headerlink" title="3 快速入门"></a>3 快速入门</h2><p>可以直接使用脚手架快速生成项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm init egg --<span class="built_in">type</span>=simple</span><br><span class="line"><span class="comment"># 等同于 npx egg --type=simple</span></span><br><span class="line"></span><br><span class="line">npm i</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动项目</span></span><br><span class="line">npm run dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># open localhost:7001</span></span><br></pre></td></tr></table></figure>
+<p>生成项目后，可以编写Controller和对应的Router，可以在<code>config</code>文件夹下添加配置文件，此时目录结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">egg-example</span><br><span class="line">├── app</span><br><span class="line">│   ├── controller</span><br><span class="line">│   │   └── home.js</span><br><span class="line">│   └── router.js</span><br><span class="line">├── config</span><br><span class="line">│   └── config.default.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+<p>Egg内置了static插件，默认映射<code>/public/* -&gt; app/public/*</code></p>
+<p>Egg不强制使用某种模板引擎，只是约定了View插件开发规范，使用某种模板引擎需要在<code>config</code>目录下的<code>plugin.js</code>中开启：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">nunjucks</span> = &#123;</span><br><span class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">package</span>: <span class="string">&#x27;egg-view-nunjucks&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>config/config.default.js</code>中设置文件关联：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">keys</span> = &lt;此处改为你自己的 <span class="title class_">Cookie</span> 安全字符串&gt;;</span><br><span class="line"><span class="comment">// 添加 view 配置</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">view</span> = &#123;</span><br><span class="line">  <span class="attr">defaultViewEngine</span>: <span class="string">&#x27;nunjucks&#x27;</span>,</span><br><span class="line">  <span class="attr">mapping</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;.tpl&#x27;</span>: <span class="string">&#x27;nunjucks&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>实际应用中，Controller一般不会自己产出数据，也不会包含复杂的逻辑，复杂的过程应抽象为业务逻辑层Service</p>
+<p>可以使用中间件，完成一些独立的功能。</p>
+<p>Egg提供了强大的配置合并管理功能：</p>
+<ul>
+<li>支持按环境变量加载不同的配置文件，如<code>config.local.js</code>，<code>config.prod.js</code>等</li>
+<li>应用&#x2F;插件&#x2F;框架都可以配置自己的配置文件，框架将按顺序合并加载</li>
+</ul>
+<p>在项目根目录下，以<code>test.js</code>为后缀名，即<code>&#123;app_root&#125;/test/**/*.</code>(<code>test/app/middleware/robot.test.js</code>)</p>
+<h2 id="4-渐进式开发"><a href="#4-渐进式开发" class="headerlink" title="4 渐进式开发"></a>4 渐进式开发</h2><p>在Egg里面的渐进式开发路径是：</p>
+<p>插件（path） →  插件（package） → 框架</p>
+<h3 id="4-1-Step1-原始代码"><a href="#4-1-Step1-原始代码" class="headerlink" title="4.1 Step1 原始代码"></a>4.1 Step1 原始代码</h3><p>当我们编写了一段具有通用型逻辑的代码时，可以抽离成为插件，比如<code>context.js</code>中的内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">example-app</span><br><span class="line">├── app</span><br><span class="line">│   ├── extend</span><br><span class="line">│   │   └── context.js</span><br><span class="line">│   └── router.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── index.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-Step2-插件（path）"><a href="#4-2-Step2-插件（path）" class="headerlink" title="4.2 Step2 插件（path）"></a>4.2 Step2 插件（path）</h3><p>但是在一开始的时候，功能还没完善，直接独立成为插件，维护比较麻烦，这是可以把代码写成<strong>插件的形式，但不独立出去</strong>（即使用path来引用的插件形式的代码）</p>
+<p>这个时候新的目录结构为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">example-app</span><br><span class="line">├── app</span><br><span class="line">│   └── router.js</span><br><span class="line">├── config</span><br><span class="line">│   └── plugin.js</span><br><span class="line">├── lib</span><br><span class="line">│   └── plugin</span><br><span class="line">│       └── egg-ua</span><br><span class="line">│           ├── app</span><br><span class="line">│           │   └── extend</span><br><span class="line">│           │       └── context.js</span><br><span class="line">│           └── package.json</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── index.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<p>核心代码：</p>
+<p>（1）<code>app/extend/context.js</code>移动到<code>lib/plugin/egg-us/app/extend/context.js</code></p>
+<p>（2）<code>lib/plugin/egg-ua/package.json</code>声明插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;eggPlugin&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;ua&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）在<code>config/plugin.js</code>中通过<code>path</code>来挂载组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">ua</span> = &#123;</span><br><span class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">path</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;../lib/plugin/egg-ua&#x27;</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-Step3-独立插件（package）"><a href="#4-3-Step3-独立插件（package）" class="headerlink" title="4.3 Step3 独立插件（package）"></a>4.3 Step3 独立插件（package）</h3><p>经过一段时间开发后，该模块的功能成熟，此时可以抽离出来成为独立的插件</p>
+<p>首先抽离出一个<code>egg-ua</code>插件，具体的方法的需要看<a target="_blank" rel="noopener" href="https://eggjs.org/zh-cn/advanced/plugin.html">插件文档</a>学习。</p>
+<p>代码在<a target="_blank" rel="noopener" href="https://github.com/eggjs/examples/tree/master/progressive/step3/egg-ua">这里</a>，目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">egg-ua</span><br><span class="line">├── app</span><br><span class="line">│   └── extend</span><br><span class="line">│       └── context.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── fixtures</span><br><span class="line">│   │   └── test-app</span><br><span class="line">│   │       ├── app</span><br><span class="line">│   │       │   └── router.js</span><br><span class="line">│   │       └── package.json</span><br><span class="line">│   └── ua.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<p>然后对原有应用改造，代码参见<a target="_blank" rel="noopener" href="https://github.com/eggjs/examples/tree/master/progressive/step3/egg-ua">这里</a>。</p>
+<ul>
+<li>移除<code>lib/plugin/egg-ua</code>目录</li>
+<li><code>package.json</code>中声明对<code>egg-ua</code>的依赖</li>
+<li><code>config/plugin.js</code>中修改依赖声明为<code>package</code>方式</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">ua</span> = &#123;</span><br><span class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">package</span>: <span class="string">&#x27;egg-ua&#x27;</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在插件没发布前，可以通过<code>npm link</code>的方式进行本地测试，具体参见<a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/link">npm-link</a></p>
+<h3 id="4-4-Step4-框架"><a href="#4-4-Step4-框架" class="headerlink" title="4.4 Step4 框架"></a>4.4 Step4 框架</h3><p>当积累了插件和配置后我们会发现，团队的大部分项目都会用到这些插件。此时就可以考虑抽象出一个适合团队业务场景的框架。</p>
+<p>首先抽象出<code>example-framework</code>框架，具体的方法还是得看<a target="_blank" rel="noopener" href="https://eggjs.org/zh-cn/advanced/framework.html">文档</a>学习</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-framework">代码在这里</a>，目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">example-framework</span><br><span class="line">├── config</span><br><span class="line">│   ├── config.default.js</span><br><span class="line">│   └── plugin.js</span><br><span class="line">├── lib</span><br><span class="line">│   ├── agent.js</span><br><span class="line">│   └── application.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── fixtures</span><br><span class="line">│   │   └── test-app</span><br><span class="line">│   └── framework.test.js</span><br><span class="line">├── README.md</span><br><span class="line">├── index.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<p>把原来的<code>egg-ua</code>等插件的依赖从原来的应用中移除，配置到该框架的<code>package.json</code>和<code>config/plugin.js</code>中，然后改造原有的应用，对应的代码参考<a target="_blank" rel="noopener" href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-app">这里</a></p>
+<ul>
+<li>移除<code>config/plugin.js</code>中对<code>egg-ua</code>的依赖</li>
+<li><code>package.json</code>中移除对<code>egg-ua</code>的依赖</li>
+<li><code>package.json</code>中声明对<code>example-framework</code>的以阿里，并配置<code>egg.framework</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;progressive&quot;</span>,</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;private&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">&quot;egg&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;framework&quot;</span>: <span class="string">&quot;example-framework&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;example-framework&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样，在插件没发布前，可以通过<code>npm link</code>的方式进行本地测试</p>
+<h3 id="4-5-渐进式开发总结"><a href="#4-5-渐进式开发总结" class="headerlink" title="4.5 渐进式开发总结"></a>4.5 渐进式开发总结</h3><p>总的来说，Egg.js还是和适合一步步的渐进地去进行框架演进，具体流程如下：</p>
+<ol>
+<li>当应用中有可能会复用到的通用逻辑，抽离出来放到<code>lib/plugin</code>中</li>
+<li>当插件功能稳定后，独立出来作为一个<code>node moudle</code></li>
+<li>如此以往，应用中相对复用性较强的代码都会逐渐独立为单独的插件</li>
+<li>当应用逐渐进化到针对某类业务场景的解决方案时，将其抽象为独立的framework进行发布</li>
+<li>在新项目中抽象出的插件，下沉集成到框架后，其他项目只需要简单的重新<code>npm install</code>后就可以使用，可以提高团队效率</li>
+</ol>
+<h2 id="5-完整目录结构"><a href="#5-完整目录结构" class="headerlink" title="5 完整目录结构"></a>5 完整目录结构</h2><pre>egg-project
+├── package.json
+├── app.js (可选) ------------------------- # 用于自定义自动时的初始化工作
+├── agent.js (可选) ----------------------- # 用于 Agent 机制的配置
+├── app
+|   ├── router.js  ------------------------ # 用于配置 URL 路由规则
+│   ├── controller ------------------------ # 用于解析用户的输入
+│   |   └── home.js
+│   ├── service (可选) --------------------- # 用于编写业务逻辑层，建议使用
+│   |   └── user.js
+│   ├── middleware (可选) ------------------ # 用于编写中间件
+│   |   └── response_time.js
+│   ├── schedule (可选) -------------------- # 用于定时任务
+│   |   └── my_task.js
+│   ├── public (可选) ---------------------- # 用于放置静态资源
+│   |   └── reset.css
+│   ├── view (可选) ------------------------ # 用于放模板文件
+│   |   └── home.tpl
+│   ├── Modal (可选) ----------------------- # 用于放置领域模型，可选，由领域类相关插件约定
+│   |   └── mySQL.db
+│   └── extend (可选) ---------------------- # 用于框架的扩展
+│       ├── helper.js (可选)
+│       ├── request.js (可选)
+│       ├── response.js (可选)
+│       ├── context.js (可选)
+│       ├── application.js (可选)
+│       └── agent.js (可选)
+├── config
+|   ├── plugin.js -------------------------- # 用于配置需要加载的插件
+|   ├── config.default.js
+│   ├── config.prod.js --------------------- # 配置文件，根据不同环境加载
+|   ├── config.test.js (可选)
+|   ├── config.local.js (可选)
+|   └── config.unittest.js (可选)
+└── test ----------------------------------- # 用于单元测屙屎
+    ├── middleware
+    |   └── response_time.test.js
+    └── controller
+        └── home.test.js</pre>
+
+<h2 id="6-静态资源"><a href="#6-静态资源" class="headerlink" title="6 静态资源"></a>6 静态资源</h2><p><code>egg-view-assets</code>提供了通用的静态资源管理和本地开发，<a target="_blank" rel="noopener" href="https://github.com/eggjs/egg-view-assets">文档在这里</a>。</p>
+<p>可以配合基于Webpack封装的<a target="_blank" rel="noopener" href="https://github.com/sorrycc/roadhog">roadhog</a>、<a target="_blank" rel="noopener" href="https://umijs.org/zh/guide/">umi</a>，通过自动的方式添加静态资源。</p>
+<p>重要的是和构建工具整合，保证本地开发体验及自动部署，所以构建工具和框架有一层约定。</p>
+<h3 id="6-1-映射关系"><a href="#6-1-映射关系" class="headerlink" title="6.1 映射关系"></a>6.1 映射关系</h3><p>构建工具的Entry配置决定了映射关系，基于Webpack封装的roadhog、umi内置了映射关系，如果单独使用Webpack需要根据这层映射来选择使用哪种方式：</p>
+<ul>
+<li>文件源码<code>app/assets/index.js</code>，对应的Entry为<code>index.js</code></li>
+<li>本地静态服务接受以此为Entry，如请求<code>http://127.0.0.1:8000/index.js</code></li>
+<li>构建生成的文件需要有这层映射关系，如生成<code>index.&#123;hash&#125;.js</code>并生成Mainfest文件描述关系如：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;index.js&quot;: &quot;index.&#123;hash&#125;.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>roadhog完全满足这个映射关系，所以可以直接使用assets模板引擎，Umi不满足文件映射，所以选用其他模板引擎的方案。</p>
+<h3 id="6-2-开发、部署、CDN"><a href="#6-2-开发、部署、CDN" class="headerlink" title="6.2 开发、部署、CDN"></a>6.2 开发、部署、CDN</h3><p><a target="_blank" rel="noopener" href="https://eggjs.org/zh-cn/tutorials/assets.html">文档</a>的介绍多是基于roadhog的基础上进行的配置，如果使用Webpack需要自己配置，还是比较繁琐的。</p>
+<p>所以考虑使用Easy-Team提供的EGG + Vue工程化解决方案。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://eggjs.org/zh-cn/intro/">Egg文档</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Node/" rel="tag"># Node</a>
+              <a href="/tags/Egg/" rel="tag"># Egg</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9809%20Hooks/" rel="prev" title="React提高09 Hooks">
+                  <i class="fa fa-chevron-left"></i> React提高09 Hooks
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/16/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9827%20BFF%E8%B0%83%E7%A0%941/" rel="next" title="零散专题27 BFF调研1">
+                  零散专题27 BFF调研1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

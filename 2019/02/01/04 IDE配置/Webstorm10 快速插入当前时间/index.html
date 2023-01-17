@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Webstorm快速插入当前时间的小技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webstorm10 快速插入当前时间">
+<meta property="og:url" content="https://duola8789.github.io/2019/02/01/04%20IDE%E9%85%8D%E7%BD%AE/Webstorm10%20%E5%BF%AB%E9%80%9F%E6%8F%92%E5%85%A5%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Webstorm快速插入当前时间的小技巧">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/1.png">
+<meta property="og:image" content="http://image.oldzhou.cn/2.png">
+<meta property="og:image" content="http://image.oldzhou.cn/3.png">
+<meta property="og:image" content="http://image.oldzhou.cn/4.png">
+<meta property="article:published_time" content="2019-02-01T07:30:35.000Z">
+<meta property="article:modified_time" content="2019-02-01T07:30:35.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="IDE">
+<meta property="article:tag" content="WebStorm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/1.png">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/02/01/04%20IDE%E9%85%8D%E7%BD%AE/Webstorm10%20%E5%BF%AB%E9%80%9F%E6%8F%92%E5%85%A5%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/02/01/04%20IDE%E9%85%8D%E7%BD%AE/Webstorm10%20%E5%BF%AB%E9%80%9F%E6%8F%92%E5%85%A5%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4/","path":"2019/02/01/04 IDE配置/Webstorm10 快速插入当前时间/","title":"Webstorm10 快速插入当前时间"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Webstorm10 快速插入当前时间 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/02/01/04%20IDE%E9%85%8D%E7%BD%AE/Webstorm10%20%E5%BF%AB%E9%80%9F%E6%8F%92%E5%85%A5%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Webstorm10 快速插入当前时间 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Webstorm10 快速插入当前时间
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-01 15:30:35" itemprop="dateCreated datePublished" datetime="2019-02-01T15:30:35+08:00">2019-02-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/IDEp%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">IDEp配置</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Webstorm快速插入当前时间的小技巧</p>
+<span id="more"></span>
+
+<p>在Webstorm中通过自定义<code>Live Template</code>可以快速插入当前时间</p>
+<p>首先在设置中，<code>Editor</code> → <code>Live Template</code>，点击添加模板</p>
+<p><img src="http://image.oldzhou.cn/1.png"></p>
+<p>填写如下信息：</p>
+<ul>
+<li><code>Abbreviation</code>，在编辑器中输入的可以出发插入模板的缩写字符，这里填写<code>datetime</code></li>
+<li><code>Description</code>，对这个模板的介绍，可以不填写</li>
+<li><code>Template</code>，模版的样式，格式为<code>$datetime</code>，其中的<code>datetime</code>就是上面定义的模板字符，需要用<code>$</code>包裹</li>
+<li><code>Expand with</code>，出发插入模板的操作，默认点击<code>Tab</code>插入</li>
+<li><code>No applicable context yet</code>，定义这个模板应用的文件类型，这里选择全部</li>
+</ul>
+<p>填写完成后：</p>
+<p><img src="http://image.oldzhou.cn/2.png"></p>
+<p>然后点击<code>EDIT VARIABLES</code>，编写模板内容，选择<code>datetime</code>那一项，在<code>Expression</code>中输入<code>date(&quot;yyyy-MM-dd HH:mm:ss&quot;)</code></p>
+<p><img src="http://image.oldzhou.cn/3.png"></p>
+<p>现在在编辑器界面就可以快速插入当前时间了。</p>
+<p>输入<code>da</code>时，编辑器就会提示，按下<code>Tab</code>补全，插入成功。</p>
+<p><img src="http://image.oldzhou.cn/4.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/IDE/" rel="tag"># IDE</a>
+              <a href="/tags/WebStorm/" rel="tag"># WebStorm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/28/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/02%20Vue%E6%8F%90%E9%AB%98/Vue%E6%8F%90%E9%AB%9811%20%E7%BB%84%E4%BB%B6%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E5%85%A8%E5%B1%80%E6%B3%A8%E5%86%8C/" rel="prev" title="Vue提高11 组件的自动化全局注册">
+                  <i class="fa fa-chevron-left"></i> Vue提高11 组件的自动化全局注册
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A052%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%94%AF%E4%B8%80%E5%AD%97%E7%AC%A6/" rel="next" title="前端练习52 字符串中的第一个唯一字符">
+                  前端练习52 字符串中的第一个唯一字符 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Git分支管理策略学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git03 Git分支管理策略">
+<meta property="og:url" content="https://duola8789.github.io/2019/03/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/12%20Git/Git03%20Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Git分支管理策略学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FtDNEAit9UXkDRZxmvg2uj4Percs">
+<meta property="og:image" content="http://image.oldzhou.cn/Fm-aOAweu1P2wQS41gHFGzrPxioP">
+<meta property="og:image" content="http://image.oldzhou.cn/FgeFdR8bsbpSA9t6JXUmLVHdzRUy">
+<meta property="og:image" content="http://image.oldzhou.cn/Fj9dvKw67u4j5UZYrAfF4DlHvTrG">
+<meta property="og:image" content="http://image.oldzhou.cn/Fq8koWFV3zo_IBJtB2zzvquKIruf">
+<meta property="og:image" content="http://image.oldzhou.cn/FnsyeI6-7N6oGqNqT8O9S9xvtuJs">
+<meta property="og:image" content="http://image.oldzhou.cn/FjMXla8YRl8IxQ44CuFQnkEHFtx7">
+<meta property="og:image" content="http://image.oldzhou.cn/FuXD-HIQ4NrjEefzXCdvppXCRrGW">
+<meta property="og:image" content="http://image.oldzhou.cn/Fs-YGVKi7Ro_tL5ISWK0bH-uFQMT">
+<meta property="og:image" content="http://image.oldzhou.cn/FtK1mff22zp-WzhfzWoejeKB5UeU">
+<meta property="og:image" content="http://image.oldzhou.cn/FjtgjGeo7hhX5KDuMk8KfaKmeGzp">
+<meta property="og:image" content="http://image.oldzhou.cn/Fkd-PjXcm7s04D4OHmMzGLxOxKs-">
+<meta property="og:image" content="http://image.oldzhou.cn/Fh2rIG6IkHJTJbfPrJSmTpWNcqf-">
+<meta property="og:image" content="http://image.oldzhou.cn/FpOxTxsWSN2YLmooi_s8yYHr1_6I">
+<meta property="og:image" content="http://image.oldzhou.cn/Fr-cWgluU7JPlIu4ReEWL8X1TdF9">
+<meta property="article:published_time" content="2019-03-21T09:23:00.000Z">
+<meta property="article:modified_time" content="2019-07-05T03:15:00.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Git分支">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FtDNEAit9UXkDRZxmvg2uj4Percs">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/03/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/12%20Git/Git03%20Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/03/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/12%20Git/Git03%20Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/","path":"2019/03/21/01 前端笔记/12 Git/Git03 Git分支管理策略/","title":"Git03 Git分支管理策略"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git03 Git分支管理策略 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="nav-number">1.</span> <span class="nav-text">1 创建与合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="nav-number">2.</span> <span class="nav-text">2 解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-git-merge%E7%9A%84-no-ff%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3 git merge的--no-ff方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-git-stash"><span class="nav-number">4.</span> <span class="nav-text">4 git stash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%8E%A8%E9%80%81%E5%88%86%E6%94%AF"><span class="nav-number">5.</span> <span class="nav-text">5 推送分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%8A%93%E5%8F%96%E5%88%86%E6%94%AF"><span class="nav-number">6.</span> <span class="nav-text">6 抓取分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">7 分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E4%B8%BB%E5%88%86%E6%94%AFMaster"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 主分支Master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%BC%80%E5%8F%91%E5%88%86%E6%94%AFDevelop"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 开发分支Develop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E4%B8%B4%E6%97%B6%E6%80%A7%E5%88%86%E6%94%AF"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 临时性分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-%E5%8A%9F%E8%83%BD%E5%88%86%E6%94%AF"><span class="nav-number">7.4.</span> <span class="nav-text">7.4 功能分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5-%E9%A2%84%E5%8F%91%E5%B8%83%E5%88%86%E6%94%AF"><span class="nav-number">7.5.</span> <span class="nav-text">7.5 预发布分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-6-%E4%BF%AE%E8%A1%A5bug%E5%88%86%E6%94%AF"><span class="nav-number">7.6.</span> <span class="nav-text">7.6  修补bug分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/03/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/12%20Git/Git03%20Git%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git03 Git分支管理策略 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git03 Git分支管理策略
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-21 17:23:00" itemprop="dateCreated datePublished" datetime="2019-03-21T17:23:00+08:00">2019-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-07-05 11:15:00" itemprop="dateModified" datetime="2019-07-05T11:15:00+08:00">2019-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Git分支管理策略学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="1-创建与合并分支"><a href="#1-创建与合并分支" class="headerlink" title="1 创建与合并分支"></a>1 创建与合并分支</h2><p>在版本回退里，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。在Git里，这个分支叫主分支，即master分支。HEAD严格来说不是指向提交，而是指向master，master才是指向提交的，所以，HEAD指向的就是当前分支。</p>
+<p>一开始的时候，master分支是一条线，Git用master指向最新的提交，再用HEAD指向master，就能确定当前分支，以及当前分支的提交点：</p>
+<p><img src="http://image.oldzhou.cn/FtDNEAit9UXkDRZxmvg2uj4Percs"></p>
+<p>每次提交，master分支都会向前移动一步，这样，随着你不断提交，master分支的线也越来越长。</p>
+<p>当我们创建新的分支，例如dev时，Git新建了一个指针叫dev，指向master相同的提交，再把HEAD指向dev，就表示当前分支在dev上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建dev分支，然后切换到dev分支</span></span><br><span class="line"><span class="comment"># git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：</span></span><br><span class="line"><span class="comment"># $ git branch dev</span></span><br><span class="line"><span class="comment"># $ git checkout dev</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/Fm-aOAweu1P2wQS41gHFGzrPxioP"></p>
+<p>用<code>git branch</code>命令查看当前分支，<code>git branch</code>命令会列出所有分支，当前分支前面会标一个<code>*</code>号。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* dev</span><br><span class="line">  master</span><br></pre></td></tr></table></figure>
+
+<p>从现在开始，对工作区的修改和提交就是针对dev分支了，对<code>readme.txt</code>做个修改，新提交一次后，dev指针往前移动一步，而master指针不变：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt </span><br><span class="line"></span><br><span class="line">$ git commit -m &quot;branch test&quot;</span><br><span class="line"></span><br><span class="line">[dev fec145a] branch test</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FgeFdR8bsbpSA9t6JXUmLVHdzRUy"></p>
+<p>现在，dev分支的工作完成，我们就可以切换回master分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>切换回master分支后，再查看<code>readme.txt</code>文件，刚才添加的内容不见了！因为那个提交是在dev分支上，而master分支此刻的提交点并没有变：</p>
+<p><img src="http://image.oldzhou.cn/Fj9dvKw67u4j5UZYrAfF4DlHvTrG"></p>
+<p>现在，我们把dev分支的工作成果合并到master分支上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git merge dev</span><br><span class="line"></span><br><span class="line">Updating d17efd8..fec145a</span><br><span class="line">Fast-forward</span><br><span class="line"> readme.txt |    1 +</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
+
+<p><code>git merge</code>命令用于合并指定分支到当前分支。合并后，再查看<code>readme.txt</code>的内容，就可以看到，和dev分支的最新提交是完全一样的。</p>
+<p>注意到上面的Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快。</p>
+<p>当然，也不是每次合并都能Fast-forward。</p>
+<p><img src="http://image.oldzhou.cn/Fq8koWFV3zo_IBJtB2zzvquKIruf"></p>
+<p>合并完分支后，甚至可以删除dev分支。删除dev分支就是把dev指针给删掉，删掉后，我们就剩下了一条master分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d dev</span><br><span class="line">Deleted branch dev (was fec145a).</span><br></pre></td></tr></table></figure>
+
+<p>删除后，查看branch，就只剩下master分支了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br></pre></td></tr></table></figure>
+<h2 id="2-解决冲突"><a href="#2-解决冲突" class="headerlink" title="2 解决冲突"></a>2 解决冲突</h2><p>对master分支和feature1分支下面的<code>README.md</code>同时进行修改后<code>add</code>并且<code>commit</code>，返回master分支。</p>
+<p>现在，master分支和feature1分支各自都分别有新的提交，变成了这样：</p>
+<p><img src="http://image.oldzhou.cn/FnsyeI6-7N6oGqNqT8O9S9xvtuJs"></p>
+<p>这种情况下，Git无法执行“快速合并”，只能试图把各自的修改合并起来，但这种合并就可能会有冲突，我们试试看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git merge feature1</span><br><span class="line"></span><br><span class="line">Auto-merging readme.txt</span><br><span class="line">CONFLICT (content): Merge conflict <span class="keyword">in</span> readme.txt</span><br><span class="line">Automatic merge failed; fix conflicts and <span class="keyword">then</span> commit the result.</span><br></pre></td></tr></table></figure>
+
+<p>对冲突的文件进行手动修改后，再次提交</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt </span><br><span class="line">$ git commit -m <span class="string">&quot;conflict fixed&quot;</span></span><br><span class="line">[master 59bc1cb] conflict fixed</span><br></pre></td></tr></table></figure>
+<p>现在，master分支和feature1分支变成了下图所示：</p>
+<p><img src="http://image.oldzhou.cn/FjMXla8YRl8IxQ44CuFQnkEHFtx7"></p>
+<p>用带参数的git log也可以看到分支的合并情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --graph --pretty=oneline --abbrev-commit</span><br><span class="line">*   59bc1cb conflict fixed</span><br><span class="line">|\</span><br><span class="line">| * 75a857c AND simple</span><br><span class="line">* | 400b400 &amp; simple</span><br><span class="line">|/</span><br><span class="line">* fec145a branch <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p>最后删除feature1分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d feature1</span><br><span class="line">Deleted branch feature1 (was 75a857c).</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-git-merge的-no-ff方式"><a href="#3-git-merge的-no-ff方式" class="headerlink" title="3 git merge的--no-ff方式"></a>3 <code>git merge</code>的<code>--no-ff</code>方式</h2><p>通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
+<p>如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。</p>
+<p>下面我们实战一下–no-ff方式的<code>git merge</code>：</p>
+<p>创建分支dev并进行修改<code>add</code>、<code>commit</code>后，准备合并dev分支，请注意<code>--no-ff</code>参数，表示禁用<code>Fast forward</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git merge --no-ff -m <span class="string">&quot;merge with no-ff&quot;</span> dev</span><br><span class="line"></span><br><span class="line">Merge made by the <span class="string">&#x27;recursive&#x27;</span> strategy.</span><br><span class="line"> readme.txt |    1 +</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
+<p>因为本次合并要创建一个新的commit，所以加上<code>-m</code>参数，把commit描述写进去。</p>
+<p>合并后，我们用git log看看分支历史：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --graph --pretty=oneline --abbrev-commit</span><br><span class="line"></span><br><span class="line">*   7825a50 merge with no-ff</span><br><span class="line">|\</span><br><span class="line">| * 6224937 add merge</span><br><span class="line">|/</span><br><span class="line">*   59bc1cb conflict fixed</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FuXD-HIQ4NrjEefzXCdvppXCRrGW"></p>
+<p>在实际开发中，应当注意，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活</p>
+<p>那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；</p>
+<p>你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。</p>
+<p>所以，团队合作的分支看起来就像这样：</p>
+<p><img src="http://image.oldzhou.cn/Fs-YGVKi7Ro_tL5ISWK0bH-uFQMT"></p>
+<h2 id="4-git-stash"><a href="#4-git-stash" class="headerlink" title="4 git stash"></a>4 <code>git stash</code></h2><p>Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">Saved working directory and index state WIP on dev: 6224937 add merge</span><br><span class="line">HEAD is now at 6224937 add merge</span><br></pre></td></tr></table></figure>
+
+<p>现在，用<code>git status</code>查看工作区，就是干净的（除非有没有被Git管理的文件），因此可以放心地创建分支来修复bug。</p>
+<p>首先确定要在哪个分支上修复bug，假定需要在master分支上修复，就从master创建临时分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">Your branch is ahead of <span class="string">&#x27;origin/master&#x27;</span> by 6 commits.</span><br><span class="line"></span><br><span class="line">$ git checkout -b issue-101</span><br><span class="line">Switched to a new branch <span class="string">&#x27;issue-101&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>现在修复bug，然后提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt </span><br><span class="line">$ git commit -m <span class="string">&quot;fix bug 101&quot;</span></span><br><span class="line"></span><br><span class="line">[issue-101 cc17032] fix bug 101</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
+<p>修复完成后，切换到master分支，并完成合并，最后删除issue-101分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">Your branch is ahead of <span class="string">&#x27;origin/master&#x27;</span> by 2 commits.</span><br><span class="line"></span><br><span class="line">$ git merge --no-ff -m <span class="string">&quot;merged bug fix 101&quot;</span> issue-101</span><br><span class="line">Merge made by the <span class="string">&#x27;recursive&#x27;</span> strategy.</span><br><span class="line"> readme.txt |    2 +-</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line">$ git branch -d issue-101</span><br><span class="line">Deleted branch issue-101 (was cc17032).</span><br></pre></td></tr></table></figure>
+<p>现在，是时候接着回到dev分支干活了！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span><br><span class="line">Switched to branch <span class="string">&#x27;dev&#x27;</span></span><br><span class="line"></span><br><span class="line">$ git status</span><br><span class="line"><span class="comment"># On branch dev</span></span><br><span class="line">nothing to commit (working directory clean)</span><br></pre></td></tr></table></figure>
+<p>工作区是干净的，刚才的工作现场存到哪去了？用<code>git stash list</code>命令看看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash list</span><br><span class="line">stash@&#123;0&#125;: WIP on dev: 6224937 add merge</span><br></pre></td></tr></table></figure>
+<p>工作现场还在，Git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：</p>
+<ol>
+<li>用<code>git stash apply</code>恢复，但是恢复后，stash内容并不删除，你需要用<code>git stash drop</code>来删除；</li>
+<li>用<code>git stash pop</code>，恢复的同时把stash内容也删了：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git stash pop</span><br><span class="line"></span><br><span class="line">On branch dev</span><br><span class="line">Changes to be committed:</span><br><span class="line">   (use <span class="string">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage)</span><br><span class="line"></span><br><span class="line">       new file:   hello.py</span><br><span class="line"></span><br><span class="line">Changes not staged <span class="keyword">for</span> commit:</span><br><span class="line">   (use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)</span><br><span class="line">   (use <span class="string">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes <span class="keyword">in</span> working directory)</span><br><span class="line"></span><br><span class="line">       modified:   readme.txt</span><br><span class="line"></span><br><span class="line">Dropped refs/stash@&#123;0&#125; (f624f8e5f082f2df2bed8a4e09c12fd2943bdd40)</span><br></pre></td></tr></table></figure>
+
+<p>再用·git stash list·查看，就看不到任何stash内容了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git stash list</span><br></pre></td></tr></table></figure>
+
+<p>你可以多次stash，恢复的时候，先用<code>git stash list</code>查看，然后恢复指定的stash，用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git stash apply stash@&#123;0&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-推送分支"><a href="#5-推送分支" class="headerlink" title="5 推送分支"></a>5 推送分支</h2><p>推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+
+<p>如果要推送其他分支，比如dev，就改成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin dev</span><br></pre></td></tr></table></figure>
+
+<p>但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？</p>
+<ul>
+<li>master分支是主分支，因此要时刻与远程同步；</li>
+<li>dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；</li>
+<li>bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；</li>
+<li>feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</li>
+</ul>
+<p>总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！</p>
+<h2 id="6-抓取分支"><a href="#6-抓取分支" class="headerlink" title="6 抓取分支"></a>6 抓取分支</h2><p>多人协作时，大家都会往master和dev分支上推送各自的修改。</p>
+<p>当从远程库clone时，默认情况下，只能看到本地的master分支。不信可以用git branch命令看看：、</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">master</span><br></pre></td></tr></table></figure>
+
+<p>现在要在dev分支上开发，就必须创建远程origin的dev分支到本地，用这个命令创建本地dev分支，本地和远程分支的名称最好一致：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev origin/dev</span><br></pre></td></tr></table></figure>
+
+<p>现在他就可以在dev上继续修改，然后，时不时地把dev分支push到远程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin branch-name</span><br></pre></td></tr></table></figure>
+
+<p>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+
+<p>如果<code>git pull</code>提示“no tracking information”，原因是没有指定本地dev分支与远程origin&#x2F;dev分支的链接，根据提示，设置dev和origin&#x2F;dev的链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch --set-upstream branch-name origin/branch-name</span><br></pre></td></tr></table></figure>
+
+<p>如果合并有冲突，则解决冲突，并在本地提交；</p>
+<p>没有冲突或者解决掉冲突后，再用<code>git push origin branch-name</code>推送就能成功！</p>
+<h2 id="7-分支管理"><a href="#7-分支管理" class="headerlink" title="7 分支管理"></a>7 分支管理</h2><h3 id="7-1-主分支Master"><a href="#7-1-主分支Master" class="headerlink" title="7.1 主分支Master"></a>7.1 主分支Master</h3><p>首先，代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。</p>
+<p><img src="http://image.oldzhou.cn/FtK1mff22zp-WzhfzWoejeKB5UeU"></p>
+<p>Git主分支的名字，默认叫做Master。它是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。</p>
+<h3 id="7-2-开发分支Develop"><a href="#7-2-开发分支Develop" class="headerlink" title="7.2 开发分支Develop"></a>7.2 开发分支Develop</h3><p>主分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做Develop。</p>
+<p><img src="http://image.oldzhou.cn/FjtgjGeo7hhX5KDuMk8KfaKmeGzp"></p>
+<p>这个分支可以用来生成代码的最新隔夜版本（nightly）。如果想正式对外发布，就在Master分支上，对Develop分支进行”合并”（merge）。</p>
+<p>Git创建Develop分支的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b develop master</span><br></pre></td></tr></table></figure>
+
+<p>将Develop分支发布到Master分支的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no-ff develop</span><br></pre></td></tr></table></figure>
+
+<p>上一条命令的<code>--no-ff</code>参数是什么意思。默认情况下，Git执行”快进式合并”（fast-farward merge），会直接将Master分支指向Develop分支。</p>
+<p><img src="http://image.oldzhou.cn/Fkd-PjXcm7s04D4OHmMzGLxOxKs-"></p>
+<p>使用<code>--no-ff</code>参数后，会执行正常合并，在Master分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法。</p>
+<p><img src="http://image.oldzhou.cn/Fh2rIG6IkHJTJbfPrJSmTpWNcqf-"></p>
+<h3 id="7-3-临时性分支"><a href="#7-3-临时性分支" class="headerlink" title="7.3 临时性分支"></a>7.3 临时性分支</h3><p>前面讲到版本库的两条主要分支：Master和Develop。前者用于正式发布，后者用于日常开发。其实，常设分支只需要这两条就够了，不需要其他了。</p>
+<p>但是，除了常设分支以外，还有一些临时性分支，用于应对一些特定目的的版本开发。临时性分支主要有三种：</p>
+<ul>
+<li>功能（feature）分支</li>
+<li>预发布（release）分支</li>
+<li>修补bug（fixbug）分支</li>
+</ul>
+<p>这三种分支都属于临时性需要，使用完以后，应该删除，使得代码库的常设分支始终只有Master和Develop。</p>
+<h3 id="7-4-功能分支"><a href="#7-4-功能分支" class="headerlink" title="7.4 功能分支"></a>7.4 功能分支</h3><p>接下来，一个个来看这三种”临时性分支”。</p>
+<p>第一种是功能分支，它是为了开发某种特定功能，从Develop分支上面分出来的。开发完成后，要再并入Develop。</p>
+<p><img src="http://image.oldzhou.cn/FpOxTxsWSN2YLmooi_s8yYHr1_6I"></p>
+<p>功能分支的名字，可以采用<code>feature-*</code>的形式命名。</p>
+<p>创建一个功能分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b feature-x develop</span><br></pre></td></tr></table></figure>
+
+<p>开发完成后，将功能分支合并到develop分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop</span><br><span class="line">git merge --no-ff feature-x</span><br></pre></td></tr></table></figure>
+
+<p>删除feature分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d feature-x</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-5-预发布分支"><a href="#7-5-预发布分支" class="headerlink" title="7.5 预发布分支"></a>7.5 预发布分支</h3><p>预发布分支是指发布正式版本之前（即合并到Master分支之前），我们可能需要有一个预发布的版本进行测试。</p>
+<p>预发布分支是从Develop分支上面分出来的，预发布结束以后，必须合并进Develop和Master分支。它的命名，可以采用<code>release-*</code>的形式。</p>
+<p>创建一个预发布分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b release-1.2 develop</span><br></pre></td></tr></table></figure>
+
+<p>确认没有问题后，合并到<code>master</code>分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no-ff release-1.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对合并生成的新节点，做一个标签</span></span><br><span class="line">git tag -a 1.2</span><br></pre></td></tr></table></figure>
+
+<p>开发完成后，合并到develop分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop</span><br><span class="line">git merge --no-ff release-1.2</span><br></pre></td></tr></table></figure>
+<p>删除预发布分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d release-1.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-6-修补bug分支"><a href="#7-6-修补bug分支" class="headerlink" title="7.6  修补bug分支"></a>7.6  修补bug分支</h3><p>最后一种是修补bug分支。软件正式发布以后，难免会出现bug。这时就需要创建一个分支，进行bug修补。</p>
+<p>修补bug分支是从Master分支上面分出来的。修补结束以后，再合并进Master和Develop分支。它的命名，可以采用<code>fixbug-*</code>的形式。</p>
+<p><img src="http://image.oldzhou.cn/Fr-cWgluU7JPlIu4ReEWL8X1TdF9"></p>
+<p>创建一个修补bug分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b fixbug-0.1 master</span><br></pre></td></tr></table></figure>
+
+<p>修补结束后，合并到master分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no-ff fixbug-0.1</span><br><span class="line">git tag -a 0.1.1</span><br></pre></td></tr></table></figure>
+
+<p>再合并到develop分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop</span><br><span class="line">git merge --no-ff fixbug-0.1</span><br></pre></td></tr></table></figure>
+
+<p>最后，删除”修补bug分支”：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d fixbug-0.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/07/git.html">Git分支管理策略@阮一峰的网络日志</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424">创建与合并分支@廖雪峰的官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/900004111093344">解决冲突@廖雪峰的官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/900005860592480">分支管理策略@廖雪峰的官方网站</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git%E5%88%86%E6%94%AF/" rel="tag"># Git分支</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux03%20React-Redux/" rel="prev" title="Redux03 React-Redux">
+                  <i class="fa fa-chevron-left"></i> Redux03 React-Redux
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9809%20Hooks/" rel="next" title="React提高09 Hooks">
+                  React提高09 Hooks <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

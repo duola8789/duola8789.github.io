@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JavaScript中循环依赖的处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中循环依赖的处理">
+<meta property="og:url" content="https://duola8789.github.io/2021/11/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JavaScript%E4%B8%AD%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="JavaScript中循环依赖的处理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.oldzhou.cn/FlMfpNJAjyy8qpyPHxW-Jru-ODBd">
+<meta property="article:published_time" content="2021-11-26T12:21:51.000Z">
+<meta property="article:modified_time" content="2021-11-26T12:21:54.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Webpack">
+<meta property="article:tag" content="CommonJS">
+<meta property="article:tag" content="ESM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.oldzhou.cn/FlMfpNJAjyy8qpyPHxW-Jru-ODBd">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2021/11/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JavaScript%E4%B8%AD%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2021/11/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JavaScript%E4%B8%AD%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86/","path":"2021/11/26/01 前端笔记/02 JavaScript/01 语言理解/JavaScript中循环依赖的处理/","title":"JavaScript中循环依赖的处理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript中循环依赖的处理 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="nav-number">1.</span> <span class="nav-text">什么是循环依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CommonJS%E4%B8%AD%E5%AF%B9%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">CommonJS中对循环依赖的处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ESM%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">ESM的处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack%E5%AF%B9%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Webpack对循环依赖的处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2021/11/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JavaScript%E4%B8%AD%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript中循环依赖的处理 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript中循环依赖的处理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-26 20:21:51 / 修改时间：20:21:54" itemprop="dateCreated datePublished" datetime="2021-11-26T20:21:51+08:00">2021-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JavaScript中循环依赖的处理。</p>
+<span id="more"></span>
+<h1 id="什么是循环依赖"><a href="#什么是循环依赖" class="headerlink" title="什么是循环依赖"></a>什么是循环依赖</h1><p>循环依赖一般会伴随模块化一起出现，就是在<code>a</code>模块中依赖<code>b</code>模块，而<code>b</code>模块又依赖<code>a</code>模块。</p>
+<p>在以前开发时就遇到过这种情况，在<code>store</code>初始化时使用了<code>utils</code>模块中的方法，而<code>utils</code>中有利用到了<code>store</code>中的数据</p>
+<p>在开发时没有问题，但是在打包后运行时就报错了，实际上就是遇到了循环依赖的问题。</p>
+<p>对于循环依赖，Node默认的CommonJS模块和ES6的模块以及Webpack打包时的处理各不相同</p>
+<h1 id="CommonJS中对循环依赖的处理"><a href="#CommonJS中对循环依赖的处理" class="headerlink" title="CommonJS中对循环依赖的处理"></a>CommonJS中对循环依赖的处理</h1><p>可以看Node官方对<a target="_blank" rel="noopener" href="https://nodejs.org/api/modules.html#modules_cycles">循环依赖的介绍</a>：</p>
+<p><code>a.js</code>，通过<code>require</code>，引用了<code>b</code>模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a start&#x27;</span>);</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">done</span> = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">require</span>(<span class="string">&#x27;./b.js&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;in a, b.done = %j&#x27;</span>, b.<span class="property">done</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">done</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a done&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在<code>b.js</code>中，通过<code>require</code>引用了<code>a</code>模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;b start&#x27;</span>);</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">done</span> = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = <span class="built_in">require</span>(<span class="string">&#x27;./a.js&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;in b, a.done = %j&#x27;</span>, a.<span class="property">done</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">done</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;b done&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在<code>main.js</code>中，先后引用<code>a</code>和<code>b</code>模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;main start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = <span class="built_in">require</span>(<span class="string">&#x27;./a.js&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> b = <span class="built_in">require</span>(<span class="string">&#x27;./b.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;in main, a.done = %j, b.done = %j&#x27;</span>, a.<span class="property">done</span>, b.<span class="property">done</span>);</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code>node main.js</code>，输出结果会是什么呢：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">main starting</span><br><span class="line"></span><br><span class="line">a starting</span><br><span class="line"></span><br><span class="line">b starting</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> b, a.done = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">b <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> a, b.done = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">a <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> main, a.done = <span class="literal">true</span>, b.done = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在运行<code>a</code>模块是，遇到了<code>require(&#39;b&#39;)</code>，就去运行<code>b.js</code>，在里面又遇到了<code>require(&#39;a&#39;)</code>，为了避免循环引用，一个未执行完成的<code>a.js</code>的<code>exports</code>的副本（<code>unfinished copy</code>）会作为<code>require(&#39;a&#39;)</code>的结果返回给<code>b</code></p>
+<p>所以这时候，在<code>b</code>中<code>a.done</code>是<code>false</code>，执行完成<code>b</code>后，继续执行<code>a</code>模块，<code>a</code>模块的<code>b.done</code>也就变成了<code>true</code></p>
+<p>从上面的例子可以看出来，CommonJS模块对循环依赖进行了很好的处理，主要依赖于它的两个特点：</p>
+<ol>
+<li>模块在运行时加载</li>
+<li>会缓存已加载（包括未完成的）模块</li>
+</ol>
+<h1 id="ESM的处理"><a href="#ESM的处理" class="headerlink" title="ESM的处理"></a>ESM的处理</h1><p>在<code>a.mjs</code>中通过<code>import</code>获取<code>b.mjs</code>中导出的<code>bar</code>，<code>b.mjs</code>通过<code>import</code>获取<code>a.mjs</code>中的<code>foo</code></p>
+<blockquote>
+<p><code>.mjs</code>用来标识使用了ES6 Modoule</p>
+</blockquote>
+<p><code>a.mjs</code>中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;bar&#125; <span class="keyword">from</span> <span class="string">&#x27;./b.mjs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a.mjs&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(bar);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> foo = <span class="string">&#x27;foo&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>b.mjs</code>中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">&#x27;./a.mjs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;b.mjs&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> bar = <span class="string">&#x27;bar&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后在Node环境下执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node --experimental-modules a.mjs</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b.mjs</span><br><span class="line">console.log(foo);</span><br><span class="line">            ^</span><br><span class="line">ReferenceError: Cannot access <span class="string">&#x27;foo&#x27;</span> before initialization</span><br></pre></td></tr></table></figure>
+
+<p>根据阮一峰老师的讲解，在执行<code>a.mjs</code>后，引擎发现加载了<code>b.mjs</code>，然后优先执行<code>b.mjs</code>。</p>
+<p>在执行<code>b.mjs</code>时，发现从<code>a</code>中导入了<code>foo</code>，这时不会去执行<code>a.mjs</code>，会认为<code>foo</code>已经存在，继续完成执行，直到运行到<code>console.log(foo)</code>时，才发现<code>foo</code>根本没定义，所以报错了</p>
+<p>如果将<code>a.mjs</code>中的最后一个变量的声明有<code>const</code>改为<code>var</code>，由于<code>foo</code>拥有了变量提升，输出结果就发生了变化，不在报错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b.<span class="property">mjs</span></span><br><span class="line"><span class="literal">undefined</span></span><br><span class="line">a.<span class="property">mjs</span></span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+
+<p>上面的结果也是符合ESM的特性：</p>
+<ol>
+<li>ESM模块输出的是值的引用</li>
+<li>输出接口动态执行</li>
+<li>静态接口</li>
+</ol>
+<h1 id="Webpack对循环依赖的处理"><a href="#Webpack对循环依赖的处理" class="headerlink" title="Webpack对循环依赖的处理"></a>Webpack对循环依赖的处理</h1><p>首先安装了<code>Webpack</code>和<code>Webpack-CLI</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack webpack-cli -D</span><br></pre></td></tr></table></figure>
+
+<p>然后在项目中新建了<code>webpack.config.js</code>配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;demo12/commonjs/index.js&#x27;</span>),</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;demo12/dist&#x27;</span>),</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;my-first-webpack.bundle.js&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>配置了一个最简单的打包配置，然后运行<code>package.json</code>中配置好的<code>webpack</code>命令后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; webpack</span><br><span class="line"></span><br><span class="line">asset my-first-webpack.bundle.js 533 bytes [compared <span class="keyword">for</span> emit] [minimized] (name: main)</span><br><span class="line">./demo12/commonjs/index.js 193 bytes [built] [code generated]</span><br><span class="line">./demo12/commonjs/a.js 203 bytes [built] [code generated]</span><br><span class="line">./demo12/commonjs/b.js 203 bytes [built] [code generated]</span><br></pre></td></tr></table></figure>
+
+<p>Webpack没有对循环依赖做出任何检测，打包过程也没有任何报错，在浏览器中执行打包后的结果，与CommonJS的结果完全相同</p>
+<p>如果需要让Webpack对循环依赖做出检测，需要使用<a href="hhttps://github.com/aackerman/circular-dependency-plugin">circular-dependency-plugin</a>这个插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i circular-dependency-plugin -D</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>webpack.config.js</code>中添加如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">CircularDependencyPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;circular-dependency-plugin&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;demo12/commonjs/index.js&#x27;</span>),</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;demo12/dist&#x27;</span>),</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;my-first-webpack.bundle.js&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">CircularDependencyPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span><br><span class="line">      <span class="attr">include</span>: <span class="regexp">/demo12/</span>,</span><br><span class="line">      <span class="attr">failOnError</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">allowAsyncCycles</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">cwd</span>: process.<span class="title function_">cwd</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>再执行打包，结果插件对循环依赖做出了检测，并根据我们的配置让打包失败了：</p>
+<p><img src="https://image.oldzhou.cn/FlMfpNJAjyy8qpyPHxW-Jru-ODBd"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://sirius-desktop-web.cowork.netease.com/#?writeMailToContact=maobuyi@lx.elysys.net"> webpack模块化原理解析（五）—— webpack对循环依赖的处理@Zachary’s blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/api/modules.html#modules_cycles">Cycles@Node.js</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Node/" rel="tag"># Node</a>
+              <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+              <a href="/tags/CommonJS/" rel="tag"># CommonJS</a>
+              <a href="/tags/ESM/" rel="tag"># ESM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/19/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS09%20unknow%E4%B8%8Eany/" rel="prev" title="TS09 unknow与any">
+                  <i class="fa fa-chevron-left"></i> TS09 unknow与any
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9802%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="next" title="零散专题02 正则表达式">
+                  零散专题02 正则表达式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

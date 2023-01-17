@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="TypeScript中声明文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TS07 声明文件">
+<meta property="og:url" content="https://duola8789.github.io/2020/06/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS07%20%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="TypeScript中声明文件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/Fn-Dbxv-3DSJCSm6Zd3DVpUeO6oP">
+<meta property="og:image" content="http://image.oldzhou.cn/Fuu_1rseZAwKLPRMDo1GQn8aFXgV">
+<meta property="article:published_time" content="2020-06-24T10:23:03.000Z">
+<meta property="article:modified_time" content="2020-06-24T10:23:05.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/Fn-Dbxv-3DSJCSm6Zd3DVpUeO6oP">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2020/06/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS07%20%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2020/06/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS07%20%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6/","path":"2020/06/24/01 前端笔记/15 TypeScript/TS07 声明文件/","title":"TS07 声明文件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TS07 声明文件 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">声明语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">声明文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">第三方声明文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%A6%E5%86%99%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">书写全局变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">声明变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">声明函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E7%B1%BB"><span class="nav-number">4.3.</span> <span class="nav-text">声明类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.4.</span> <span class="nav-text">声明枚举类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">4.5.</span> <span class="nav-text">声明命名空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%85%A8%E5%B1%80%E7%9A%84%E6%8E%A5%E5%8F%A3%E6%88%96%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.6.</span> <span class="nav-text">声明全局的接口或类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%90%88%E5%B9%B6"><span class="nav-number">4.7.</span> <span class="nav-text">声明合并</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BANPM%E5%8C%85%E5%88%9B%E5%BB%BA%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">为NPM包创建声明文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">找到已存在的声明文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">编写声明文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#export%E5%AF%BC%E5%87%BA%E5%8F%98%E9%87%8F"><span class="nav-number">5.2.1.</span> <span class="nav-text">export导出变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#export-namesapce"><span class="nav-number">5.2.2.</span> <span class="nav-text">export namesapce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UMD"><span class="nav-number">5.2.3.</span> <span class="nav-text">UMD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.2.4.</span> <span class="nav-text">扩展全局变量的类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">自动生成声明文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">发布声明文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2020/06/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS07%20%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TS07 声明文件 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TS07 声明文件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-06-24 18:23:03 / 修改时间：18:23:05" itemprop="dateCreated datePublished" datetime="2020-06-24T18:23:03+08:00">2020-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>TypeScript中声明文件。</p>
+<span id="more"></span>
+
+<h1 id="声明语句"><a href="#声明语句" class="headerlink" title="声明语句"></a>声明语句</h1><p>当使用第三方库时，我们需要引用它的声明文件，才能获得对应的代码补全、接口提示等功能</p>
+<p>比如使用jQuery时，我们获取一个元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">jQuery</span>(<span class="string">&#x27;#foo&#x27;</span>);</span><br><span class="line"><span class="comment">// ERROR: Cannot find name &#x27;jQuery&#x27;.</span></span><br></pre></td></tr></table></figure>
+
+<p>但是这时编译器并不知道<code>$</code>或者<code>jQuery</code>是什么，所以我们需要使用<code>declare</code>定义它的类型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare <span class="keyword">var</span> <span class="attr">jQuery</span>: <span class="function">(<span class="params">selector: string</span>) =&gt;</span> any;</span><br><span class="line"></span><br><span class="line"><span class="title function_">jQuery</span>(<span class="string">&#x27;#foo&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上面的<code>declare var</code>就是声明语句，它并没有定义一个变量，只是定义了<code>jQuery</code>的类型，仅仅用于编译时的检查，编译结果中会删除。</p>
+<h1 id="声明文件"><a href="#声明文件" class="headerlink" title="声明文件"></a>声明文件</h1><p>通常情况，我们会将声明语句放到单独的文件中（<code>jQuery.d.ts</code>），这个文件就是声明文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/jQuery.d.ts</span></span><br><span class="line"></span><br><span class="line">declare <span class="keyword">var</span> <span class="attr">jQuery</span>: <span class="function">(<span class="params">selector: string</span>) =&gt;</span> any;</span><br></pre></td></tr></table></figure>
+
+<p>声明文件必须以<code>.d.ts</code>为后缀，当我们将<code>jQuery.d.ts</code>放入项目中，其他所有的<code>*.ts</code>文件就都可以获得<code>jQuery</code>的类型定义了</p>
+<p>如果无法解析，可以检查一下<code>tsconfig.json</code>中的<code>files</code>、<code>include</code>、<code>exclude</code>配置，确保包含了声明文件</p>
+<h1 id="第三方声明文件"><a href="#第三方声明文件" class="headerlink" title="第三方声明文件"></a>第三方声明文件</h1><p>大部分热门的第三方库的声明文件都不需要我们自己定义了，我们可以直接使用<code>@types</code>统一管理第三方库的声明文件。</p>
+<p>可以在<a target="_blank" rel="noopener" href="https://microsoft.github.io/TypeSearch/">这个页面</a>搜索需要的声明文件，然后使用<code>npm</code>安装对应的声明模块即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @types/jquery --save-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="书写全局变量"><a href="#书写全局变量" class="headerlink" title="书写全局变量"></a>书写全局变量</h1><p>如果第三方库没有提供声明文件，我们需要自己书写声明了，在不同的场景下，声明文件的内容和使用方式有所区别</p>
+<p>当通过<code>&lt;script&gt;</code>标签引入第三方库的时候，会注入全局变量，就像上面的例子一样。建议将声明文件和源码一起放到<code>scr</code>目录下。</p>
+<p>注意，声明全局变量时，文件中不能包括<code>export</code>关键字，否则就会报错。</p>
+<h2 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h2><p>可以使用<code>declare var</code>和<code>declare let</code>和<code>declare const</code>来声明变量，一般来说全局变量都是禁止修改的常量，所以大部分情况都应该使用<code>const</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">declare <span class="keyword">const</span> <span class="attr">jQuery</span>: <span class="function">(<span class="params">selector: string</span>) =&gt;</span> any;</span><br></pre></td></tr></table></figure>
+
+<p>要注意的是，声明语句中只能定义类型，<strong>不要在声明语句中定义具体的实现</strong>。</p>
+<h2 id="声明函数"><a href="#声明函数" class="headerlink" title="声明函数"></a>声明函数</h2><p>使用<code>declare function</code>来声明全局函数的类型，<code>jQuery</code>其实就是一个函数，所以也可以使用<code>function</code>来定义。在函数类型的声明语句中，也支持函数重载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">declare <span class="keyword">function</span> <span class="title function_">jQuery</span>(<span class="params">cb: () =&gt; any</span>)</span><br><span class="line">declare <span class="keyword">function</span> <span class="title function_">jQuery</span>(<span class="params">selector: string</span>): any;</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明类"><a href="#声明类" class="headerlink" title="声明类"></a>声明类</h2><p>使用<code>declare class</code>定义一个类：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">declare <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: string</span>) ;</span><br><span class="line">  <span class="title function_">sayHi</span>(): string;</span><br><span class="line">  <span class="attr">sayBye</span>: <span class="function">(<span class="params">msg: string</span>) =&gt;</span> string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样的，<code>declare class</code>也只能定义类型，不能定义具体实现</p>
+<h2 id="声明枚举类型"><a href="#声明枚举类型" class="headerlink" title="声明枚举类型"></a>声明枚举类型</h2><p>JS中是没有枚举类型的，TypeScript中使用<code>declare enum</code>声明的枚举类型也成为外部枚举，定义后的变量不能包含枚举值之外的属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">declare enum <span class="title class_">Direction</span> &#123;</span><br><span class="line">  up,</span><br><span class="line">  down,</span><br><span class="line">  left,</span><br><span class="line">  right,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> d1 = <span class="title class_">Direction</span>.<span class="property">down</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> d2 = <span class="title class_">Direction</span>.<span class="property">south</span>;</span><br><span class="line"><span class="comment">// Error:(17, 22) TS2339: Property &#x27;south&#x27; does not exist on type &#x27;typeof Direction&#x27;.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="声明命名空间"><a href="#声明命名空间" class="headerlink" title="声明命名空间"></a>声明命名空间</h2><p>使用<code>declare namespace</code>声明命名空间，用来表示全局变量是一个对象，包含很多子属性。</p>
+<p>比如<code>jQuery</code>是一个全局变量，它是一个对象，提供了一个<code>jQuery.ajax</code>的方法可以调用，那么我们就可以通过<code>declare namespace</code>来声明这个拥有很多个子属性的全局变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare namespace jQuery &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url: string, settings?: any</span>): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>declare namespace</code>内部，直接使用<code>function</code>来声明函数，而不是使用<code>declare function</code>，类似的也可以使用<code>class</code>、<code>enum</code>、<code>const</code>等语句</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">declare namespace jQuery &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url: string, settings?: any</span>): <span class="keyword">void</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">version</span>: number;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Event</span> &#123;</span><br><span class="line">    <span class="title function_">blur</span>(<span class="attr">eventType</span>: <span class="title class_">EventType</span>): <span class="keyword">void</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  enum <span class="title class_">EventType</span> &#123;</span><br><span class="line">    <span class="title class_">CustomClick</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果对象有深层的层级，则需要使用嵌套的<code>namespace</code>来声明深层的属性的类型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">declare namespace jQuery &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url: string, settings?: any</span>): <span class="keyword">void</span>;</span><br><span class="line"></span><br><span class="line">  namespace fn &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">extend</span>(<span class="params">object: any</span>): <span class="keyword">void</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>假如<code>jQuery</code>下仅有<code>fn</code>这一个属性（没有<code>ajax</code>等其他属性或方法），则可以不需要嵌套<code>namespace</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare namespace jQuery.<span class="property">fn</span> &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">extend</span>(<span class="params">object: any</span>): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明全局的接口或类型"><a href="#声明全局的接口或类型" class="headerlink" title="声明全局的接口或类型"></a>声明全局的接口或类型</h2><p>我们可以将接口和其他的类型放到类型声明文件中，这样声明的接口或者类型就暴露成为全局的接口或类型，可以被其他文件使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface <span class="title class_">AjaxSettings</span> &#123;</span><br><span class="line">  method?: <span class="string">&#x27;GET&#x27;</span> | <span class="string">&#x27;POST&#x27;</span></span><br><span class="line">  data?: any;</span><br><span class="line">&#125;</span><br><span class="line">declare namespace jQuery &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url: string, settings?: AjaxSettings</span>): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要注意，暴露在全局的<code>interface</code>或者<code>type</code>会作为全局类型作用域整个项目中，存在命名冲突的可能性，所以应该尽量减少全局变量或全局类型的数量，所以应该将他们放到<code>namespace</code>下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">declare namespace jQuery &#123;</span><br><span class="line">  interface <span class="title class_">AjaxSettings</span> &#123;</span><br><span class="line">    method?: <span class="string">&#x27;GET&#x27;</span> | <span class="string">&#x27;POST&#x27;</span></span><br><span class="line">    data?: any;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url: string, settings?: AjaxSettings</span>): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用这个<code>interface</code>的时候，应该加上命名空间的前缀：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">settings</span>: jQuery.<span class="property">AjaxSettings</span> = &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;foo&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明合并"><a href="#声明合并" class="headerlink" title="声明合并"></a>声明合并</h2><p>如果一个对象即是一个函数，可以直接调用<code>jquery(&#39;#foo&#39;)</code>，又是一个对象，有子属性<code>jQuery.ajax()</code>，那么可以组合多了个声明语句，他们会不冲突的合并：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">declare <span class="keyword">function</span> <span class="title function_">jQuery</span>(<span class="params">selector: string</span>): any;</span><br><span class="line">declare namespace jQuery &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ajax</span>(<span class="params">url: string, settings?: any</span>): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>合并规则后面单独学习。</p>
+<h1 id="为NPM包创建声明文件"><a href="#为NPM包创建声明文件" class="headerlink" title="为NPM包创建声明文件"></a>为NPM包创建声明文件</h1><h2 id="找到已存在的声明文件"><a href="#找到已存在的声明文件" class="headerlink" title="找到已存在的声明文件"></a>找到已存在的声明文件</h2><p>在给引入的NPM包创建声明文件之前，先看它的声明文件是否存在，一般来说可能存在于：</p>
+<p>（1）与包绑定在一起，看<code>package.json</code>的<code>types</code>字段，或者看包中是否有<code>index.d.ts</code>声明文件。</p>
+<p>推荐这种模式，因为不需要安装额外的其他包。我们自己创建NPM包的时候，最好也将声明与包绑定在一起</p>
+<p>（2）发布到<code>@types</code>里，可以去上面提到的<a target="_blank" rel="noopener" href="https://microsoft.github.io/TypeSearch/">页面</a>搜索对应的声明文件，然后安装即可。</p>
+<p>这种模式一般是由第三方提供的声明文件，发布到<code>@types</code>中。</p>
+<h2 id="编写声明文件"><a href="#编写声明文件" class="headerlink" title="编写声明文件"></a>编写声明文件</h2><p>如果没有找到声明文件，我们可以自己编写。由于一般是通过<code>import</code>来引入一个NPM包（假设为<code>foo</code>），所以声明文件的存放位置有要求。</p>
+<p>最常用的方案是，创建一个<code>types</code>目录，专门用来管理自己写的声明文件，将自己编写的声明文件放到<code>types/foo/index.d.ts</code>中。</p>
+<p><img src="http://image.oldzhou.cn/Fn-Dbxv-3DSJCSm6Zd3DVpUeO6oP"></p>
+<p>这种方式还需要配置<code>tsconfig.json</code>中的<code>paths</code>和<code>baseUrl</code>字段。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;module&quot;</span>: <span class="string">&quot;commonjs&quot;</span>,</span><br><span class="line">    <span class="string">&quot;baseUrl&quot;</span>: <span class="string">&quot;./&quot;</span>,</span><br><span class="line">    <span class="string">&quot;paths&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;*&quot;</span>: [<span class="string">&quot;types/*&quot;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>NPM声明文件包含下面几种语法：</p>
+<h3 id="export导出变量"><a href="#export导出变量" class="headerlink" title="export导出变量"></a><code>export</code>导出变量</h3><p>在NPM包的声明文件中，如果使用<code>declare</code>不会再声明全局变量，只会在当前文件中声明局部变量。局部变量需要使用<code>export</code>导出，然后由使用方<code>import</code>导入后，才会被应用。</p>
+<p>同样，声明文件中不能定义具体的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/foo/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getName</span>(<span class="params"></span>): string;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: string</span>);</span><br><span class="line">  <span class="title function_">sayHi</span>(): string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> enum <span class="title class_">Directions</span> &#123;</span><br><span class="line">  <span class="title class_">Up</span>,</span><br><span class="line">  <span class="title class_">Down</span>,</span><br><span class="line">  <span class="title class_">Left</span>,</span><br><span class="line">  <span class="title class_">Right</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> interface <span class="title class_">Options</span> &#123;</span><br><span class="line">  <span class="attr">data</span>: any;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用<code>declare</code>先声明多个变量，然后再用<code>export</code>一次性导出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/foo/index.d.ts</span></span><br><span class="line"></span><br><span class="line">declare <span class="keyword">const</span> <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">declare <span class="keyword">function</span> <span class="title function_">getName</span>(<span class="params"></span>): string;</span><br><span class="line"></span><br><span class="line">declare <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: string</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">sayHi</span>(): string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">declare enum <span class="title class_">Directions</span> &#123;</span><br><span class="line">  <span class="title class_">Up</span>,</span><br><span class="line">  <span class="title class_">Down</span>,</span><br><span class="line">  <span class="title class_">Left</span>,</span><br><span class="line">  <span class="title class_">Right</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">Options</span> &#123;</span><br><span class="line">  <span class="attr">data</span>: any;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;name, getName, <span class="title class_">Animal</span>, <span class="title class_">Directions</span>, <span class="title class_">Options</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="export-namesapce"><a href="#export-namesapce" class="headerlink" title="export namesapce"></a><code>export namesapce</code></h3><p>与<code>declare namspace</code>一样，<code>export namespace</code>导出一个拥有子属性的对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/foo/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> namespace foo &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">name</span>: string;</span><br><span class="line">  namespace bar &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">baz</span>(<span class="params"></span>): string;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用<code>export default</code>导出默认的<code>function</code>、<code>class</code>和<code>interface</code>，这三者可以直接导出，其他的类型需要先定义，然后在使用<code>export default</code>导出，一般会将这种导出放在整个声明文件的最前面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/foo/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Directions</span>;</span><br><span class="line"></span><br><span class="line">declare enum <span class="title class_">Directions</span> &#123;</span><br><span class="line">  <span class="title class_">Up</span>,</span><br><span class="line">  <span class="title class_">Down</span>,</span><br><span class="line">  <span class="title class_">Left</span>,</span><br><span class="line">  <span class="title class_">Right</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h3><p>针对UMD格式的模块，使用<code>export as namespace</code>进行导出，一般使用时，都是先有了NPM包的声明文件，再基于它添加<code>export as namespace</code>语句，就可以将声明好的一个变量声明为全局变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/foo/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">as</span> namespace foo;</span><br><span class="line"><span class="keyword">export</span> = foo;</span><br><span class="line"></span><br><span class="line">declare <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>): string;</span><br><span class="line">declare namespace foo &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">bar</span>: number;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展全局变量的类型"><a href="#扩展全局变量的类型" class="headerlink" title="扩展全局变量的类型"></a>扩展全局变量的类型</h3><p>可以使用<code>declare global</code>来在已有的声明文件中扩展全局变量的类型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/foo/index.d.ts</span></span><br><span class="line"></span><br><span class="line">declare <span class="variable language_">global</span> &#123;</span><br><span class="line">  interface <span class="title class_">String</span> &#123;</span><br><span class="line">    <span class="title function_">prependHello</span>(): string;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>要注意，此声明文件不需要导出任何东西，但是仍然导出了一个空对象，<strong>用来告诉编译器这是一个模块的声明文件，而不是全局变量的声明文件</strong></p>
+<p>可以使用<code>declare module</code>来扩展模块插件</p>
+<h1 id="自动生成声明文件"><a href="#自动生成声明文件" class="headerlink" title="自动生成声明文件"></a>自动生成声明文件</h1><p>如果库的源码本身就是TypeScript编写的，那么使用<code>tsc</code>来将<code>.ts</code>编译为JS的过程中，可以添加<code>declaration</code>选项（简写<code>-d</code>，同时生成<code>.d.ts</code>声明文件</p>
+<p>也可以在<code>ts.config</code>中添加<code>declaration</code>选项来实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;module&quot;</span>: <span class="string">&quot;commonjs&quot;</span>,</span><br><span class="line">    <span class="string">&quot;outDir&quot;</span>: <span class="string">&quot;lib&quot;</span>,</span><br><span class="line">    <span class="string">&quot;declaration&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就会由<code>.ts</code>文件生成<code>.d.ts</code>声明文件，并且输出到<code>lib</code>目录下：</p>
+<p><img src="http://image.oldzhou.cn/Fuu_1rseZAwKLPRMDo1GQn8aFXgV"></p>
+<p>这样做的时候，每个<code>.ts</code>文件都会对应一个<code>.d.ts</code>声明文件，这样使用方就可以再使用<code>import</code>导入时获得类型提示</p>
+<p>此外，<code>tsconfig.json</code>中还有其他选项与自动生成声明文件相关：</p>
+<ul>
+<li><code>declarationDir</code>，设置生成<code>.d.ts</code>文件的目录</li>
+<li><code>declarationsMap</code>，对每个<code>.d.ts</code>文件都生成对应的<code>.d.ts.map</code>（sourcemap）文件</li>
+<li><code>emitDeclarationOnly</code>，仅仅生成<code>.d.ts</code>文件，不生成<code>.js</code>文件</li>
+</ul>
+<h1 id="发布声明文件"><a href="#发布声明文件" class="headerlink" title="发布声明文件"></a>发布声明文件</h1><p>如果是<code>tsc</code>命令自动生成的声明文件，不需要做任何其他配置，直接发布到NPM即可</p>
+<p>如果是手动编写的，需要满足下面条件之一，才能被正确识别：</p>
+<ul>
+<li>给<code>package.json</code>的<code>types</code>或者<code>typings</code>字段指定一个类型声明文件地址</li>
+<li>在项目根目录下，编写<code>index.d.ts</code>文件</li>
+<li>针对入口文件（<code>package.json</code>中的<code>main</code>字段指定的入口文件）编写一个同名不同后缀的<code>.d.ts</code>文件</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://ts.xcatliu.com/">TypeScript入门教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5e05caff51882512227388e6">Typescript 书写声明文件（可能是最全的）@掘金</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/22/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS06%20TypeScript%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" rel="prev" title="TS06 TypeScript高级用法">
+                  <i class="fa fa-chevron-left"></i> TS06 TypeScript高级用法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/27/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/06%20NGINX/Nginx02%20Nginx%E4%B8%8E%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="next" title="Nginx02 Nginx与前端开发">
+                  Nginx02 Nginx与前端开发 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

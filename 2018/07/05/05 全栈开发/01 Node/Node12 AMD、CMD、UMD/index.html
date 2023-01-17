@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="重新学习Node，整理以前的日志。AMD&#x2F;CMD&#x2F;UMD学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node12 AMD、CMD、UMD">
+<meta property="og:url" content="https://duola8789.github.io/2018/07/05/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node12%20AMD%E3%80%81CMD%E3%80%81UMD/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="重新学习Node，整理以前的日志。AMD&#x2F;CMD&#x2F;UMD学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-05T09:49:17.000Z">
+<meta property="article:modified_time" content="2019-04-30T03:10:46.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="AMD">
+<meta property="article:tag" content="CMD">
+<meta property="article:tag" content="UMD">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/07/05/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node12%20AMD%E3%80%81CMD%E3%80%81UMD/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/07/05/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node12%20AMD%E3%80%81CMD%E3%80%81UMD/","path":"2018/07/05/05 全栈开发/01 Node/Node12 AMD、CMD、UMD/","title":"Node12 AMD、CMD、UMD"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Node12 AMD、CMD、UMD | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD"><span class="nav-number">1.</span> <span class="nav-text">AMD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">定义模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.</span> <span class="nav-text">加载模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS"><span class="nav-number">2.</span> <span class="nav-text">CommonJS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeJS%E4%B8%AD"><span class="nav-number">2.2.</span> <span class="nav-text">NodeJS中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UMD%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83"><span class="nav-number">3.</span> <span class="nav-text">UMD通用模块规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/07/05/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node12%20AMD%E3%80%81CMD%E3%80%81UMD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Node12 AMD、CMD、UMD | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node12 AMD、CMD、UMD
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-05 17:49:17" itemprop="dateCreated datePublished" datetime="2018-07-05T17:49:17+08:00">2018-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-04-30 11:10:46" itemprop="dateModified" datetime="2019-04-30T11:10:46+08:00">2019-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Node/" itemprop="url" rel="index"><span itemprop="name">Node</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>重新学习Node，整理以前的日志。AMD&#x2F;CMD&#x2F;UMD学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD 是”Asynchronous Module Definition”的缩写，意思就是”异步模块定义”，也是由RequireJS定义的模块形式。</p>
+<p>它采用异步方式加载模块，模块的加载不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。</p>
+<h3 id="定义模块"><a href="#定义模块" class="headerlink" title="定义模块"></a>定义模块</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件名: foo.js</span></span><br><span class="line"><span class="title function_">define</span>([<span class="string">&#x27;jquery&#x27;</span>], <span class="keyword">function</span> (<span class="params">$</span>) &#123;</span><br><span class="line">  <span class="comment">// 方法</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">myFunc</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 暴露公共方法</span></span><br><span class="line">  <span class="keyword">return</span> myFunc;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>定义的第一个部分是一个依赖数组，第二部分是回调函数，只有当依赖的组件可用时回调函数才会执行。</p>
+<h3 id="加载模块"><a href="#加载模块" class="headerlink" title="加载模块"></a>加载模块</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">&#x27;foo&#x27;</span>], <span class="keyword">function</span>(<span class="params">foo</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(foo)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>Node.js的模块和包机制的实现参照了CommonJS的标准，但并未完全遵循。不过两者的区别不大。</p>
+<p>CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。</p>
+<h3 id="定义模块-1"><a href="#定义模块-1" class="headerlink" title="定义模块"></a>定义模块</h3><p>在CMD规范中，一个模块就是一个文件。<code>define</code>是一个全局函数，用来定义模块。</p>
+<p><code>define</code>接受<code>factory</code>参数，<code>factory</code>可以是一个函数，也可以是一个对象或字符串。</p>
+<p>比如可以定义一个JSON数据模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(&#123;&quot;foo&quot;: &quot;bar&quot;&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>factory</code>是一个函数，有三个参数，<code>function(require, exports, module)</code></p>
+<ol>
+<li><code>require</code>是一个方法，接受模块标识作为唯一参数，用来获取其他模块提供的接口：<code>require(id)</code></li>
+<li><code>exports</code>是一个对象，用来向外提供模块接口</li>
+<li><code>module</code>是一个对象，上面存储了与当前模块相关联的一些属性和方法</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">define</span>(<span class="keyword">function</span>(<span class="params"><span class="built_in">require</span>, <span class="built_in">exports</span>, <span class="variable language_">module</span></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">&#x27;./a&#x27;</span>);</span><br><span class="line">  a.<span class="title function_">doSomething</span>();</span><br><span class="line">  <span class="comment">// 依赖就近书写，什么时候用到什么时候引入</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">&#x27;./b&#x27;</span>);</span><br><span class="line">  b.<span class="title function_">doSomething</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="NodeJS中"><a href="#NodeJS中" class="headerlink" title="NodeJS中"></a>NodeJS中</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件名: foo.js</span></span><br><span class="line"><span class="comment">// 依赖</span></span><br><span class="line"><span class="keyword">var</span> $ = <span class="built_in">require</span>(<span class="string">&#x27;jquery&#x27;</span>);</span><br><span class="line"><span class="comment">// 方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">myFunc</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 暴露公共方法（一个）</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = myFunc;</span><br></pre></td></tr></table></figure>
+<h2 id="UMD通用模块规范"><a href="#UMD通用模块规范" class="headerlink" title="UMD通用模块规范"></a>UMD通用模块规范</h2><p>UMD是AMD和CommonJS的糅合。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function">(<span class="params">root, factory</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">&#x27;function&#x27;</span> &amp;&amp; define.<span class="property">amd</span>) &#123;</span><br><span class="line">    <span class="comment">//AMD</span></span><br><span class="line">    <span class="title function_">define</span>([<span class="string">&#x27;jquery&#x27;</span>], factory);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">exports</span> === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">//CommonJS</span></span><br><span class="line">    <span class="keyword">var</span> $ = <span class="title function_">requie</span>(<span class="string">&#x27;jquery&#x27;</span>);</span><br><span class="line">    <span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">factory</span>($);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">//都不是，浏览器全局定义</span></span><br><span class="line">    root.<span class="property">testModule</span> = <span class="title function_">factory</span>(root.<span class="property">jQuery</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(<span class="variable language_">this</span>, <span class="function">(<span class="params">$</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//do something...  这里是真正的函数体</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>更详细的内容看<a target="_blank" rel="noopener" href="http://javascript.ruanyifeng.com/tool/requirejs.html#toc3">这个教程</a>。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/hstarorg/HstarDoc/blob/master/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3/%E8%AE%A4%E8%AF%86AMD%E3%80%81CMD%E3%80%81UMD%E3%80%81CommonJS.md">https://github.com/hstarorg/HstarDoc/blob/master/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3/%E8%AE%A4%E8%AF%86AMD%E3%80%81CMD%E3%80%81UMD%E3%80%81CommonJS.md</a></li>
+<li><a target="_blank" rel="noopener" href="http://web.jobbole.com/82238/">http://web.jobbole.com/82238/</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/WG_n9t4E4q0kBWczkSEdEA">https://mp.weixin.qq.com/s/WG_n9t4E4q0kBWczkSEdEA</a></li>
+<li><a target="_blank" rel="noopener" href="https://neveryu.github.io/2017/03/20/amd-cmd/">https://neveryu.github.io/2017/03/20/amd-cmd/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AMD/" rel="tag"># AMD</a>
+              <a href="/tags/CMD/" rel="tag"># CMD</a>
+              <a href="/tags/UMD/" rel="tag"># UMD</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/05/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node11%20process.env%E5%AF%B9%E8%B1%A1/" rel="prev" title="Node11 process.env对象">
+                  <i class="fa fa-chevron-left"></i> Node11 process.env对象
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/07/11/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node13%20%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/" rel="next" title="Node13 文件路径">
+                  Node13 文件路径 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录一次全栈的尝试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全栈01 Koa2+Vue2+MySQL 全栈的入门尝试">
+<meta property="og:url" content="https://duola8789.github.io/2018/06/07/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/%E5%85%A8%E6%A0%8801%20Koa2+Vue2+MySQL%20%E5%85%A8%E6%A0%88%E7%9A%84%E5%85%A5%E9%97%A8%E5%B0%9D%E8%AF%95/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="记录一次全栈的尝试。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/A05307DD406B44BF88DD0B1F55066E44/58682">
+<meta property="og:image" content="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/C5CA49CB993B4F10B4C96EFB72C8527D/58707">
+<meta property="og:image" content="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/73A9E6AEC919425DA3BCD0FDCACA04F9/58753">
+<meta property="og:image" content="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/6B0109B2316F412ABF9699794879F887/58780">
+<meta property="og:image" content="https://note.youdao.com/yws/public/resource/368ee58425e2a7f1a0a6c11d42f2bf58/xmlnote/6B4F1765A7F24E0C90F6B41008A3CAB2/58836">
+<meta property="og:image" content="https://note.youdao.com/yws/public/resource/368ee58425e2a7f1a0a6c11d42f2bf58/xmlnote/9FC4BD909A824F778D174490EC9E28BA/58859">
+<meta property="article:published_time" content="2018-06-07T09:45:22.000Z">
+<meta property="article:modified_time" content="2019-10-16T11:02:23.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Koa2">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/A05307DD406B44BF88DD0B1F55066E44/58682">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/06/07/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/%E5%85%A8%E6%A0%8801%20Koa2+Vue2+MySQL%20%E5%85%A8%E6%A0%88%E7%9A%84%E5%85%A5%E9%97%A8%E5%B0%9D%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/06/07/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/%E5%85%A8%E6%A0%8801%20Koa2+Vue2+MySQL%20%E5%85%A8%E6%A0%88%E7%9A%84%E5%85%A5%E9%97%A8%E5%B0%9D%E8%AF%95/","path":"2018/06/07/05 全栈开发/全栈01 Koa2+Vue2+MySQL 全栈的入门尝试/","title":"全栈01 Koa2+Vue2+MySQL 全栈的入门尝试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>全栈01 Koa2+Vue2+MySQL 全栈的入门尝试 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">0 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">1 项目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">2 入口文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Koa%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">3 Koa中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-koa-router"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 koa-router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-koa-bodyparser"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 koa-bodyparser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-koa-logger"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 koa-logger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-koa-json"><span class="nav-number">4.4.</span> <span class="nav-text">3.4 koa-json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-kcors"><span class="nav-number">4.5.</span> <span class="nav-text">3.5 kcors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-koa-jwt"><span class="nav-number">4.6.</span> <span class="nav-text">3.6 koa-jwt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-koa-compress"><span class="nav-number">4.7.</span> <span class="nav-text">3.7 koa-compress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-koa-static"><span class="nav-number">4.8.</span> <span class="nav-text">3.8 koa-static</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">5.</span> <span class="nav-text">4 后端服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2"><span class="nav-number">6.</span> <span class="nav-text">5 前端页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F"><span class="nav-number">7.</span> <span class="nav-text">6 登录系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-JSON-WEB-TOKEN"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 JSON-WEB-TOKEN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-token%E7%9A%84%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%8F%91%E6%94%BE"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 token的请求与发放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-token%E7%9A%84%E9%AA%8C%E8%AF%81"><span class="nav-number">7.3.</span> <span class="nav-text">6.3 token的验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-%E8%B7%B3%E8%BD%AC%E6%8B%A6%E6%88%AA"><span class="nav-number">7.4.</span> <span class="nav-text">6.4 跳转拦截</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E9%83%A8%E7%BD%B2"><span class="nav-number">8.</span> <span class="nav-text">7 部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 配置环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-1NodeJS"><span class="nav-number">8.1.1.</span> <span class="nav-text">7.1.1NodeJS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-2-MySQ%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">8.1.2.</span> <span class="nav-text">7.1.2 MySQ客户端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-3-%E5%85%B6%E4%BB%96"><span class="nav-number">8.1.3.</span> <span class="nav-text">7.1.3 其他</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-4-%E4%BF%9D%E5%AD%98%E9%95%9C%E5%83%8F"><span class="nav-number">8.1.4.</span> <span class="nav-text">7.1.4 保存镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%89%98%E7%AE%A1"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 静态资源托管</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E9%83%A8%E7%BD%B2%E8%BF%90%E8%A1%8C"><span class="nav-number">8.3.</span> <span class="nav-text">7.3 部署运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="nav-number">8.4.</span> <span class="nav-text">7.4 二级域名解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-webpack%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96"><span class="nav-number">9.</span> <span class="nav-text">8 webpack打包优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-%E5%BC%80%E5%90%AFGzip"><span class="nav-number">9.1.</span> <span class="nav-text">8.1 开启Gzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-%E5%AE%9A%E4%BD%8D%E5%8E%9F%E5%9B%A0"><span class="nav-number">9.2.</span> <span class="nav-text">8.2 定位原因</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-1-element%E7%9A%84%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD"><span class="nav-number">9.2.1.</span> <span class="nav-text">8.2.1 element的按需加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-2-%E5%A4%96%E9%83%A8%E5%BC%95%E5%85%A5%E6%A8%A1%E5%9D%97"><span class="nav-number">9.2.2.</span> <span class="nav-text">8.2.2 外部引入模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="nav-number">10.</span> <span class="nav-text">9 写在最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/06/07/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/%E5%85%A8%E6%A0%8801%20Koa2+Vue2+MySQL%20%E5%85%A8%E6%A0%88%E7%9A%84%E5%85%A5%E9%97%A8%E5%B0%9D%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="全栈01 Koa2+Vue2+MySQL 全栈的入门尝试 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          全栈01 Koa2+Vue2+MySQL 全栈的入门尝试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-07 17:45:22" itemprop="dateCreated datePublished" datetime="2018-06-07T17:45:22+08:00">2018-06-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-10-16 19:02:23" itemprop="dateModified" datetime="2019-10-16T19:02:23+08:00">2019-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">全栈开发</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>记录一次全栈的尝试。</p>
+<span id="more"></span>
+
+<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h2><p>其实并没有想要成为全栈工程师的想法，因为我觉得自己作为一个半路出家、至今全职前端开发经验不到两年的程序猿来说，把前端稍微深入一点的东西搞明白就算不错。</p>
+<p>但是心里其实一直有一些疑惑，比如，每次后台提供的接口到底是怎么工作的？数据是怎么存放到数据库中的？数据库是怎么维护的？等等。这些问题总不时的在我<del>全心全意的</del>码代码的过程中冒出来。</p>
+<p>幸好，我们前端有了NodeJS这个利器，让我可以在现有的技能树上去简单的探讨这些问题，而不用完全新开一门技能。这让我能够降低难度的去<strong>初步</strong>了解后台乃至整个网站的开发流程，让我有一些明白在以前的工作中接触过的后台代码“啊，原来是这么回事”。</p>
+<p>想着通过尝试实现一个小小的登陆+后台管理系统，了解后台接口的实现、对数据库的操作以及代码部署。这次尝试对于我自己而言还是有意义的，补上了一些短板，解决了一些疑惑，但是这次尝试也仅仅是初步的、浅尝辄止的，很多更深的问题我目前没有经历和能力去深入的研究，所以本文也可能仅仅适用于有一些前端基础、对全栈技能有一些好奇的小伙伴，前端骨干、后端精英、全栈大神们，咱们说好，不要鄙视我好么？</p>
+<p>确定了这个基本的约定后，让我们开始全栈开发的初次尝试吧。</p>
+<p>P.S. 这篇文章尝试的主要思路来自于<a target="_blank" rel="noopener" href="https://molunerfinn.com/Vue+Koa/#%E7%AE%80%E4%BB%8B">这篇文章</a>，具体代码、实现有所不同，特此致谢。</p>
+<h2 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1 项目简介"></a>1 项目简介</h2><p>整个项目的技术栈，前端是Vue+Vue-Router+Element，后端的话主要是Koa2+MySQL。</p>
+<p>前端的话不用说了，后端的话主要就是两个方面，一是为前端提供API，二是操作数据库。</p>
+<h2 id="2-入口文件"><a href="#2-入口文件" class="headerlink" title="2 入口文件"></a>2 入口文件</h2><p>首先建立项目的入口文件<code>index.js</code>，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;babel-polyfill&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;babel-register&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;development&#x27;</span>) &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">&#x27;./server/dev&#x27;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">&#x27;./server/app&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个入口文件作用有两个，一个是区分开发模式和生产模式，两个模式下面主要的区别就是监听给的端口不同并且生产模式下会将webpack打包好的项目目录作为Koa静态文件服务。</p>
+<p>另一个作用是引入<code>babel-register</code>和<code>babel-polyfill</code></p>
+<p><code>babel-register</code>的目的主要是为了在文件中兼容ES6的<code>import</code>和<code>export</code>，但是注意：在入口文件（即本项目中的index.js）中仍然不能使用。</p>
+<p><code>babel-polyfill</code>的目的就是为ES6的一些API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）提供转码。这个我考虑在后面进行优化，减小webpack打包体积，后面再说。</p>
+<h2 id="3-Koa中间件"><a href="#3-Koa中间件" class="headerlink" title="3 Koa中间件"></a>3 Koa中间件</h2><p>首先看一下后端服务的真正的启动文件，以<code>app.js</code>为例吧，使用的框架是Koa2，在此基础上引用了很多的Koa2的中间件</p>
+<h3 id="3-1-koa-router"><a href="#3-1-koa-router" class="headerlink" title="3.1 koa-router"></a>3.1 koa-router</h3><p>对路由进行处理控制的中间件，使用的时候我们现在<code>server</code>文件夹下面新建一个<code>router</code>文件夹，用存放所有子路由的文件</p>
+<p>现在我们建立了两个文件，<code>api.js</code>用来管理所有的api，<code>auth.js</code>用来专门处理权限相关的路由：</p>
+<p>看<code>auth.js</code>，很简单，引用koa-router，然后声明相关的路由并且对应处理方法，最后将路由模块导出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> userController <span class="keyword">from</span> <span class="string">&#x27;../controller/userController&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">KoaRouter</span> <span class="keyword">from</span> <span class="string">&#x27;koa-router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">KoaRouter</span>();</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user/:id&#x27;</span>, userController.<span class="property">getUserInfo</span>);</span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/user&#x27;</span>, userController.<span class="property">postUserAuth</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span>  &#123;</span><br><span class="line">  router</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>里面引入的<code>userController</code>就是所有MVC中的C，controller层，我的理解就是对路由进行处理，对api请求进行处理，<code>getUserInfo</code>和<code>postUserAuth</code>都是在其中定义好的方法，具体一会再看。</p>
+<p><code>auth.js</code>作为子路由导出之后，在<code>app.js</code>中引入并且使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">KoaRouter</span> <span class="keyword">from</span> <span class="string">&#x27;koa-router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> auth <span class="keyword">from</span> <span class="string">&#x27;./router/auth&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">KoaRouter</span>();</span><br><span class="line"><span class="keyword">const</span> authRouter = auth.<span class="property">router</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挂载auth子路由</span></span><br><span class="line">router.<span class="title function_">use</span>(<span class="string">&#x27;/auth&#x27;</span>, authRouter.<span class="title function_">routes</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挂载所有路由</span></span><br><span class="line">app.<span class="title function_">use</span>(router.<span class="title function_">routes</span>());</span><br></pre></td></tr></table></figure>
+<p>这样层层传递下来，当我们使用<code>get</code>请求访问<code>/auth/user</code>时，就会触发预定义的<code>userController.getUserInfo</code>方法</p>
+<p>其他api请求也是同样的处理。</p>
+<h3 id="3-2-koa-bodyparser"><a href="#3-2-koa-bodyparser" class="headerlink" title="3.2 koa-bodyparser"></a>3.2 koa-bodyparser</h3><p>koa-bodyparser用来解析body的中间件，比方说你通过<code>post</code>来传递表单，json数据，或者上传文件，在koa中是不容易获取的，通过koa-bodyparser解析之后，在koa中<code>this.body</code>就能直接获取到数据。</p>
+<h3 id="3-3-koa-logger"><a href="#3-3-koa-logger" class="headerlink" title="3.3 koa-logger"></a>3.3 koa-logger</h3><p>koa-logger是koa的日志模块，在安装、挂载之后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">KoaLogger</span> <span class="keyword">from</span> <span class="string">&#x27;koa-logger&#x27;</span>;</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title class_">KoaLogger</span>());</span><br></pre></td></tr></table></figure>
+<p>命令程序就会在控制台自动打印日志</p>
+<h3 id="3-4-koa-json"><a href="#3-4-koa-json" class="headerlink" title="3.4 koa-json"></a>3.4 koa-json</h3><p>用来美观的输出JSON response，有两种使用方式：</p>
+<p>一种是总是返回美化了的json数据，本文就采用的这种</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">KoaJson</span> <span class="keyword">from</span> <span class="string">&#x27;koa-json&#x27;</span>;</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title class_">KoaJson</span>());</span><br></pre></td></tr></table></figure>
+<p>另一种是默认不进行美化，但是当地址栏传入pretty参数的时候，则返回的结果是进行了美化的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(<span class="title function_">json</span>(&#123; <span class="attr">pretty</span>: <span class="literal">false</span>, <span class="attr">param</span>: <span class="string">&#x27;pretty&#x27;</span> &#125;));</span><br></pre></td></tr></table></figure>
+<h3 id="3-5-kcors"><a href="#3-5-kcors" class="headerlink" title="3.5 kcors"></a>3.5 kcors</h3><p>用来处理跨域的中间件，简化了我们处理CORS跨院的设置步骤，为我们在请求头上加上CORS，客户端即可跨域发送请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Kcors</span> <span class="keyword">from</span> <span class="string">&#x27;kcors&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 跨域设置</span></span><br><span class="line"><span class="keyword">const</span> corsOptions = &#123;</span><br><span class="line">  <span class="string">&#x27;origin&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;credentials&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">&#x27;maxAge&#x27;</span>: <span class="number">3600</span></span><br><span class="line">&#125;;</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title class_">Kcors</span>(corsOptions));</span><br></pre></td></tr></table></figure>
+<h3 id="3-6-koa-jwt"><a href="#3-6-koa-jwt" class="headerlink" title="3.6 koa-jwt"></a>3.6 koa-jwt</h3><p>用来实现JSON-WEB-TOKEN的中间件，具体的后面关于登录的章节进行展开</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jwt <span class="keyword">from</span> <span class="string">&#x27;koa-jwt&#x27;</span>;</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, <span class="title function_">jwt</span>(&#123; <span class="attr">secret</span>: db.<span class="property">jwtSecret</span> &#125;), apiRouter.<span class="title function_">routes</span>()); <span class="comment">// 所有走/api/打头的请求都需要经过jwt验证。</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-7-koa-compress"><a href="#3-7-koa-compress" class="headerlink" title="3.7 koa-compress"></a>3.7 koa-compress</h3><p>用来为服务端的静态文件开启压缩</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Compress</span> <span class="keyword">from</span> <span class="string">&#x27;koa-compress&#x27;</span>;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title class_">Compress</span>(&#123; </span><br><span class="line">  <span class="attr">threshold</span>: <span class="number">2048</span> <span class="comment">// 要压缩的最小响应字节</span></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-8-koa-static"><a href="#3-8-koa-static" class="headerlink" title="3.8 koa-static"></a>3.8 koa-static</h3><p>用来实现访问静态资源，当我们使用webpack进行生产模式的打包之后，都放到了<code>dist</code>目录下，这个目录就作为Koa静态文件服务的目录：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> staticServer <span class="keyword">from</span> <span class="string">&#x27;koa-static&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将webpack打包好的项目目录作为Koa静态文件服务的目录</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">staticServer</span>(path.<span class="title function_">resolve</span>(<span class="string">&#x27;dist&#x27;</span>))); </span><br></pre></td></tr></table></figure>
+<h2 id="4-后端服务"><a href="#4-后端服务" class="headerlink" title="4 后端服务"></a>4 后端服务</h2><p>对数据库的设计这里就不讲了，因为我也不会，只是简单的设计了两个表，一个是user，用来存放用户名和密码：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>int(自增)</td>
+<td>用户的id</td>
+</tr>
+<tr>
+<td>username</td>
+<td>varchar(50)</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td>char(128)</td>
+<td>进行bcrypt加密后的密码</td>
+</tr>
+</tbody></table>
+<p>另一张表是example，用来显示一些主要的数据</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>int(自增)</td>
+<td>数据id</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar(50)</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>image</td>
+<td>varchar(50)</td>
+<td>插入时间</td>
+</tr>
+</tbody></table>
+<p>有了数据库的基本结构后，我们需要使用NodeJS来操作数据库，对数据库进行增删改查，对于Mongodb以前公司的同时使用的是Mongoose，对于MySQL我使用了Sequelize，关于Sequelize的基本使用可以参考我的<a target="_blank" rel="noopener" href="https://blog.csdn.net/duola8789/article/details/80843065">另一篇总结</a></p>
+<p>在使用Sequelize之前我们需要把数据库的表结构导出来，当然我们可以手动的导出，但是如果表很多的情况下，手动导出的效率太低了，可以使用<a target="_blank" rel="noopener" href="https://github.com/sequelize/sequelize-auto">sequelize-auto</a>导出</p>
+<p>这之前我们需要全局安装sequelize-auto：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install sequelize-auto -g</span><br></pre></td></tr></table></figure>
+<p>然后安装MySQL在NodeJS下的驱动mysql：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mysql --save-dev</span><br></pre></td></tr></table></figure>
+<p>安装完成之后，进入<code>server</code>目录，执行下面的语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequelize-auto -o &quot;./schema&quot; -d zhou -h 127.0.0.1 -u root -p 3306 -x XXXXX -e mysql</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-o</code> 参数后面的是输出的文件夹目录</li>
+<li><code>-d</code> 参数后面的是数据库名</li>
+<li><code>-h</code> 参数后面是数据库地址</li>
+<li><code>-u</code> 参数后面是数据库用户名</li>
+<li><code>-p</code> 参数后面是端口号</li>
+<li><code>-x</code> 参数后面是数据库密码，</li>
+<li><code>-e</code> 参数后面指定数据库为mysql</li>
+</ul>
+<p>完成之后再schema下面就会生成对应各个表的JS文件</p>
+<p>user.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> (<span class="params">sequelize, DataTypes</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> sequelize.<span class="title function_">define</span>(<span class="string">&#x27;user&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">id</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="title function_">INTEGER</span>(<span class="number">10</span>),</span><br><span class="line">      <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">primaryKey</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">username</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="title function_">STRING</span>(<span class="number">50</span>),</span><br><span class="line">      <span class="attr">allowNull</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">defaultValue</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">password</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="title function_">CHAR</span>(<span class="number">128</span>),</span><br><span class="line">      <span class="attr">allowNull</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">defaultValue</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    <span class="attr">tableName</span>: <span class="string">&#x27;user&#x27;</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>example.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params">sequelize, DataTypes</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> sequelize.<span class="title function_">define</span>(<span class="string">&#x27;example&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">id</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="title function_">INTEGER</span>(<span class="number">10</span>),</span><br><span class="line">      <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">primaryKey</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">autoIncrement</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">title</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="title function_">STRING</span>(<span class="number">50</span>),</span><br><span class="line">      <span class="attr">allowNull</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">image</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="title function_">STRING</span>(<span class="number">100</span>),</span><br><span class="line">      <span class="attr">allowNull</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    <span class="attr">tableName</span>: <span class="string">&#x27;example&#x27;</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们在<code>server</code>下建立<code>config</code>文件夹，在其中创建<code>db.js</code>文件，用来存放数据库地址、用户名、密码等信息，在这个文件中我通过对环境的判断，让代码操纵不同的数据库，在开发环境下想测试库写入信息，生产环境下操作的则是线上库</p>
+<p>然后再在<code>server</code>下面创建<code>common</code>文件夹，创建<code>mysql.js</code>文件，用来连接我们上面定义好的数据库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Sequelize</span> <span class="keyword">from</span> <span class="string">&#x27;sequelize&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> config <span class="keyword">from</span> <span class="string">&#x27;../config/db&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mysql = <span class="keyword">new</span> <span class="title class_">Sequelize</span>(config.<span class="property">mysql</span>.<span class="property">default</span>, &#123;</span><br><span class="line">  <span class="attr">define</span>: &#123;</span><br><span class="line">    <span class="attr">timestamps</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">operatorsAliases</span>: <span class="literal">false</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> mysql;</span><br></pre></td></tr></table></figure>
+<p>在连接好数据库并且导出<code>mysql</code>这个对象后，我们对数据库的增删改查都是基于这个对象上完成的。</p>
+<p>创建<code>model</code>文件夹，用来存放对数据库处理的Model层的代码文件，创建<code>userModel.js</code>，对user表进行处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Mysql</span> <span class="keyword">from</span> <span class="string">&#x27;../common/mysql&#x27;</span>; <span class="comment">// 引入MySQL数据库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> userSchema = <span class="string">&#x27;../schema/user&#x27;</span>; <span class="comment">// 引入user的表结构</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">User</span> = <span class="title class_">Mysql</span>.<span class="keyword">import</span>(userSchema);<span class="comment">// 将Sequelize与表结构对应</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getUserById</span>(<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> <span class="title class_">User</span>.<span class="title function_">findOne</span>(&#123;</span><br><span class="line">    <span class="attr">where</span>: &#123;</span><br><span class="line">      id</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getUserByName</span>(<span class="params">username</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> <span class="title class_">User</span>.<span class="title function_">findOne</span>(&#123;</span><br><span class="line">    <span class="attr">where</span>: &#123;</span><br><span class="line">      username</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，首先将数据库和user表进行了对应，使用的是sequelize的<code>import</code>方法，然后定义了两个方法，分别是通过id和用户名查找数据</p>
+<p>然后在我们上面提到的<code>controller</code>文件夹下的<code>userController.js</code>中，编写api的逻辑。</p>
+<p>同样我们定义了两个方法，第一个方法是获取用户信息<code>getUserInfo</code>，对应的就是<code>/auth/user/:id</code>的<code>get</code>请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getUserInfo</span>(<span class="params">ctx</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> id = ctx.<span class="property">params</span>.<span class="property">id</span>; <span class="comment">// 获取url里传过来的参数里的id</span></span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> userModal.<span class="title function_">getUserById</span>(id);</span><br><span class="line">  <span class="keyword">if</span> (user) &#123;</span><br><span class="line">    ctx.<span class="property">body</span> = &#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">retDsc</span>: <span class="string">&#x27;查询成功&#x27;</span>,</span><br><span class="line">      <span class="attr">ret</span>: user</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ctx.<span class="property">body</span> = &#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">retDsc</span>: <span class="string">&#x27;用户不存在&#x27;</span>,</span><br><span class="line">      <span class="attr">ret</span>: <span class="literal">null</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，ctx是koa的上下文，可以理解为上(request)下(response)沟通的环境，其实就是将NodeJS的request&#x2F;response对象封装进一个单独对象，<code>ctx.req=ctx.request</code>，<code>ctx.res=ctx.response</code>，<code>ctx.body</code>是http协议中的响应体，<code>ctx.header</code>是响应头</p>
+<p>url里面传过来的参数<code>/user/:id</code>是通过<code>ctx.params.id</code>获取的</p>
+<p>另外一个方法<code>postUserAuth</code>是用来为密码验证通过的用户下发token，保证在访问过程中用户权限的有效性，具体会在登录的章节展开，在这里我们只需要了解这个方法的主要逻辑即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">postUserAuth</span>(<span class="params">ctx</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> data = ctx.<span class="property">request</span>.<span class="property">body</span>; <span class="comment">// post过来的数据存在request.body里</span></span><br><span class="line">  <span class="keyword">const</span> userInfo = <span class="keyword">await</span> userModal.<span class="title function_">getUserByName</span>(data.<span class="property">username</span>); <span class="comment">// 数据库返回的数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!userInfo) &#123;</span><br><span class="line">    ctx.<span class="property">body</span> = &#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">retDsc</span>: <span class="string">&#x27;用户不存在&#x27;</span>,</span><br><span class="line">      <span class="attr">ret</span>: <span class="literal">null</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!bcrypt.<span class="title function_">compareSync</span>(data.<span class="property">password</span>, userInfo.<span class="property">password</span>)) &#123;</span><br><span class="line">    ctx.<span class="property">body</span> = &#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">retDsc</span>: <span class="string">&#x27;密码错误&#x27;</span>,</span><br><span class="line">      <span class="attr">ret</span>: <span class="literal">null</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> userToken = &#123;</span><br><span class="line">    <span class="attr">iss</span>: config.<span class="property">userToken</span>.<span class="property">iss</span>,</span><br><span class="line">    <span class="attr">name</span>: userInfo.<span class="property">username</span>,</span><br><span class="line">    <span class="attr">id</span>: userInfo.<span class="property">id</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> secret = serverConfig.<span class="property">jwtSecret</span>; <span class="comment">// 指定密钥，这是之后用来判断token合法性的标志</span></span><br><span class="line">  <span class="keyword">const</span> token = <span class="variable constant_">JWT</span>.<span class="title function_">sign</span>(userToken, secret); <span class="comment">// 签发token</span></span><br><span class="line">  ctx.<span class="property">body</span> = &#123;</span><br><span class="line">    <span class="attr">success</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">retDsc</span>: <span class="string">&#x27;登陆成功&#x27;</span>,</span><br><span class="line">    <span class="attr">ret</span>: &#123;</span><br><span class="line">      token,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>首先调用model里面定义的<code>getUserByName</code>，通过用户名查找用户，找不到就返回“用户不存在”，找到用户对密码校验，如果校验不通过返回“密码错误”，通过之后下发token</p>
+<p>对于另外的<code>exmaplModel.js</code>→<code>exampleController.js</code>→<code>api.js</code>流程类似，不再展开，需要指出的几点是</p>
+<ol>
+<li>想表中插入数据的方法是<code>create</code>，更新的就是找到对应的对象，然后对要更新的属性直接赋值并保存(<code>save</code>)，删除数据的方法是<code>destroy</code></li>
+<li>操作数据库的操作都是异步函数，这里面使用了<code>async</code>和<code>await</code>语法</li>
+<li>最好将返回值的retCode和retDsc有统一的定义并统一维护</li>
+<li>接口最好定义为使用restful风格的接口</li>
+</ol>
+<p>最终在后端服务的实际启动文件<code>app.js</code>中，除了在第三章提到的加载各个中间件的服务，实现对应的功能，加上对错误和日至的处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// log</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> start = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  <span class="keyword">let</span> ms = <span class="keyword">new</span> <span class="title class_">Date</span>() - start;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;%s %s - %s&#x27;</span>, ctx.<span class="property">method</span>, ctx.<span class="property">url</span>, ms); <span class="comment">// 显示执行的时间</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err, ctx</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server error: &#x27;</span>, err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后通过listen方法监听指定的端口：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">listen</span>(config.<span class="property">appServer</span>.<span class="property">port</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Koa is listening in <span class="subst">$&#123;config.appServer.port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在完成这些之后我们就可以开启后端服务了，在控制台输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./index.js</span><br></pre></td></tr></table></figure>
+<p>这样我们就要可以开启dev.js对应的端口，提示“koa is listening in 80”</p>
+<p>这时候我们如果改动后端代码，都需要手动将node进行停止，然后再次执行上述命令开启服务，代码更改才能生效，好在我们有nodemon， nodemon将监视启动目录中的文件，如果有任何文件更改，nodemon将自动重新启动node应用程序。</p>
+<p>如果没有全局安装nodemon的话是无法在命令行直接执行下面的命令来启动nodemon服务的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodemon ./index.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+<p>我们将这条命令写到package.json中的scripts命令中，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: nodemon ./index.<span class="property">js</span> <span class="string">&quot;,</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br></pre></td></tr></table></figure>
+<p>当我们执行<code>npm run server</code>时就会启动nodemon服务，但是我们没有办法指定<code>NODE_ENV</code>环境变量，也就无法切换环境，所以需要在命令中增加<code>NODE_ENV=development</code>，再次执行时会报错，原因是“windows不支持<code>NODE_ENV=development</code>的设置方式”，解决方式就是使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/cross-env">cross-env</a>，安装之后再<code>NODE_ENV=development</code>前面增加<code>cross-env</code>就可以了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;server&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=development nodemon ./index.js &quot;</span>,</span><br><span class="line">  <span class="string">&quot;start&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production nodemon ./index.js &quot;</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>这样执行<code>npm run server</code>就可以监听开发端口8099了：”Koa is listening in 8099 for development”</p>
+<p>P.S.</p>
+<ol>
+<li>开发过程中对API的自测可以使用Postman</li>
+<li>webstorm是支持NodeJS的断点调试的，具体可以参考<a target="_blank" rel="noopener" href="https://www.html-js.cn/details/Vk7UgWaQg.html">这篇文章</a>。</li>
+</ol>
+<h2 id="5-前端页面"><a href="#5-前端页面" class="headerlink" title="5 前端页面"></a>5 前端页面</h2><p>前端页面不细说了，就是Vue+Vue Router+element，首先进入的是login页面，进行登录，登录之后是一个列表页，点击单挑数据进入详情页，详情页有三个button，分别是插入、编辑和删除，没什么好讲的。</p>
+<p>要注意的是现在由&#x2F;login到&#x2F;admin的跳转是单页面应用内的跳转，没有向后端发送任何请求，是从前端实现的。所以实际上在应用了后面的登陆系统后，跳转之前是需要想后端进行判断验证的，根据情况不同再决定是否跳转</p>
+<h2 id="6-登录系统"><a href="#6-登录系统" class="headerlink" title="6 登录系统"></a>6 登录系统</h2><h3 id="6-1-JSON-WEB-TOKEN"><a href="#6-1-JSON-WEB-TOKEN" class="headerlink" title="6.1 JSON-WEB-TOKEN"></a>6.1 JSON-WEB-TOKEN</h3><p>使用JSON-WEB-TOKEN可以实现无状态的登陆，可以参考<a target="_blank" rel="noopener" href="http://blog.leapoahead.com/2015/09/07/user-authentication-with-jwt/?utm_source=tuicool&utm_medium=referral">这篇文章</a>和<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000005783306">这篇文章</a>帮助理解</p>
+<p>主要的登陆流程如下：</p>
+<ol>
+<li>客户端通过Post请求将用户名和密码发送到服务器接口（这一过程一般都是明文传输的，建议通过SSL加密的https协议进行传输，避免被监听和中间人攻击。</li>
+<li>服务器核定用用户名和密码</li>
+<li>验证通过之后发送经过加密的Token返回给客户端</li>
+<li>客户端收到Token后应该存储到cookie或者storage，每次访问指定资源都应该携带含有Token的cookie或者storage</li>
+<li>后端受到请求信息，都需要验证TOKEN是否有效</li>
+</ol>
+<h3 id="6-2-token的请求与发放"><a href="#6-2-token的请求与发放" class="headerlink" title="6.2 token的请求与发放"></a>6.2 token的请求与发放</h3><p>具体到我们的代码中，我们已经安装了JSON-WEB-TOEKN的koa2中间件<code>koa-jwt</code>，然后在安装<code>bcryptjs</code>来为密码加解密，<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/bcryptjs">bcryptjs</a>是一个第三方密码加密库</p>
+<p>正规的流程应该是当我们向数据库添加一个用户的时候，密码通过bcryptjs加密后存储到数据库的password字段，而登陆时传输的是未经加密的密码数据（所以https是必须的）。我这里为了省事没有做注册的功能，所以数据库中的密码是通过手动加密然后存储的。</p>
+<p>当服务器收到登陆验证的Post请求（<code>/auth/user</code>)，会调用对应的<code>postUserAuth</code>方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/user&#x27;</span>, userController.<span class="property">postUserAuth</span>);</span><br></pre></td></tr></table></figure>
+<p>定义在<code>userController.js</code>中的<code>postUserAuth</code>方法会应用bcrypt的<code>compareSync</code>方法对密码进行验证。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!bcrypt.<span class="title function_">compareSync</span>(data.<span class="property">password</span>, userInfo.<span class="property">password</span>)) &#123;</span><br><span class="line">  ctx.<span class="property">body</span> = &#123;</span><br><span class="line">    <span class="attr">success</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">retDsc</span>: <span class="string">&#x27;密码错误&#x27;</span>,</span><br><span class="line">    <span class="attr">ret</span>: <span class="literal">null</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要注意，<code>compareSync</code>的第一个参数应该是未加密的数据，第二个参数是加密的数据，否则是无法验证通过的。</p>
+<p>验证通过之后，向客户端下发Token，Token由两个部分组成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> userToken = &#123;</span><br><span class="line">  <span class="attr">iss</span>: config.<span class="property">userToken</span>.<span class="property">iss</span>,</span><br><span class="line">  <span class="attr">name</span>: userInfo.<span class="property">username</span>,</span><br><span class="line">  <span class="attr">id</span>: userInfo.<span class="property">id</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> secret = dbConfig.<span class="property">jwtSecret</span>; <span class="comment">// 指定密钥，这是之后用来判断token合法性的标志</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> token = <span class="variable constant_">JWT</span>.<span class="title function_">sign</span>(userToken, secret); <span class="comment">// 签发token</span></span><br></pre></td></tr></table></figure>
+<p>里面的userToken是包含了认证用户的一些信息，secret是我们定义的用来加密的密钥，是之后用来判断token合法性的标志，<strong>secret不应该在前端被暴露出来</strong>，后端将签发后的token返回给客户端：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ctx.<span class="property">body</span> = &#123;</span><br><span class="line">  <span class="attr">success</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">retDsc</span>: <span class="string">&#x27;登陆成功&#x27;</span>,</span><br><span class="line">  <span class="attr">ret</span>: &#123; token&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>浏览器收到token之后，将token保存到了sessionStorage中，然后进行页面跳转：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.<span class="title function_">setItem</span>(<span class="string">&#x27;userToken&#x27;</span>, data.<span class="property">ret</span>.<span class="property">token</span>);</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$router</span>.<span class="title function_">push</span>(<span class="string">&#x27;/admin&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-token的验证"><a href="#6-3-token的验证" class="headerlink" title="6.3 token的验证"></a>6.3 token的验证</h3><p>访问哪些资源需要token的验证呢？这也需要我们在定义koa-router时指定，在<code>app.js</code>中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">use</span>(<span class="string">&#x27;/auth&#x27;</span>, authRouter.<span class="title function_">routes</span>());</span><br><span class="line">router.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, <span class="title function_">jwt</span>(&#123; <span class="attr">secret</span>: dbConfig.<span class="property">jwtSecret</span> &#125;), apiRouter.<span class="title function_">routes</span>()); <span class="comment">// 所有走/api/打头的请求都需要经过jwt验证。</span></span><br></pre></td></tr></table></figure>
+<p>我们定义，所有走<code>/api/</code>的路由都需要经过token的验证，验证的密钥就是之前定义的secret，具体的验证工作都是有koa-jwt帮我们完成的。</p>
+<p>所以前端在发起API请求时，都应该在请求头中携带上token，否则请求会被拒绝。为了简化代码，我们在Vue router的定义文件中使用了全局的导航守卫<code>router.beforeEach</code>，在每次跳转之前都判断是否存在token（并且token是我们所下发的token，这是通过token解析后包含我们预定义一些信息来进行判断的），如果存在就在请求头添加token：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">JsonWebToken</span> <span class="keyword">from</span> <span class="string">&#x27;jsonwebtoken&#x27;</span>;</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> token = sessionStorage.<span class="title function_">getItem</span>(<span class="string">&#x27;userToken&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> isTokenRight = !!(token &amp;&amp; <span class="title class_">JsonWebToken</span>.<span class="title function_">decode</span>(token) &amp;&amp; (<span class="title class_">JsonWebToken</span>.<span class="title function_">decode</span>(token).<span class="property">iss</span> === config.<span class="property">userToken</span>.<span class="property">iss</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 全局设定发送请求header的token验证</span></span><br><span class="line">  <span class="keyword">if</span> (isTokenRight) &#123;</span><br><span class="line">    <span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$http</span>.<span class="property">defaults</span>.<span class="property">headers</span>.<span class="property">common</span>[<span class="string">&#x27;Authorization&#x27;</span>] = <span class="string">&#x27;Bearer &#x27;</span> + token</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这样做其实不太对，请求头增加token其实在第一次登陆成功后就增加了，以后每次的网络请求的请求头都会携带token，就算token失效也不会改变</p>
+<p>更加合理的做法应该是在每个网络请求前都判断一下token是否存在，如果存在就携带，如果不存在就不添加token</p>
+<p>我的http请求使用了axois这个库，并且在<code>src/components/helper</code>下增加了一个<code>httpHelper.js</code>文件，用来对网络请求进行个性化定制，主要的定制内容有：</p>
+<p>针对开发环境还是线上环境的URL前缀进行改变等：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sever = process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&quot;development&quot;</span> ? config.<span class="property">devServer</span> : config.<span class="property">appServer</span>;</span><br><span class="line">axios.<span class="property">defaults</span>.<span class="property">baseURL</span> = sever.<span class="property">protocol</span> + sever.<span class="property">host</span> + <span class="string">&#x27;:&#x27;</span> + sever.<span class="property">port</span>;</span><br><span class="line">axios.<span class="property">defaults</span>.<span class="property">headers</span>.<span class="property">post</span>[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>;</span><br><span class="line">axios.<span class="property">defaults</span>.<span class="property">withCredentials</span> = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>此外添加了请求拦截器和响应拦截器，刚才提到的对token的判断可以放到请求拦截器中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加请求拦截器</span></span><br><span class="line">axios.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">config</span>) &#123;</span><br><span class="line">  <span class="comment">// 发送时展示loading</span></span><br><span class="line">  loading = uiHelper.<span class="title function_">showLoading</span>();</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">  <span class="comment">// 请求错误时取消loading</span></span><br><span class="line">  loading.<span class="title function_">close</span>();</span><br><span class="line">  <span class="comment">// 给出提示</span></span><br><span class="line">  uiHelper.<span class="title function_">showMessage</span>(errorText, <span class="string">&#x27;error&#x27;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">axios.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">response</span>) &#123;</span><br><span class="line">  <span class="comment">// 收到相应数据后取消loading</span></span><br><span class="line">  <span class="keyword">if</span> (loading) &#123;</span><br><span class="line">    loading.<span class="title function_">close</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> response;</span><br><span class="line">&#125;, <span class="keyword">function</span> (<span class="params">error, text</span>) &#123;</span><br><span class="line">  <span class="comment">// 响应错误时取消loading</span></span><br><span class="line">  <span class="keyword">if</span> (loading) &#123;</span><br><span class="line">    loading.<span class="title function_">close</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  uiHelper.<span class="title function_">showMessage</span>(errorText, <span class="string">&#x27;error&#x27;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="6-4-跳转拦截"><a href="#6-4-跳转拦截" class="headerlink" title="6.4 跳转拦截"></a>6.4 跳转拦截</h3><p>现在我们每一步路由的变化都会验证token了，但是如果我们直接手动将地址栏的地址更改，还是能够跳转到登陆后的页面的，所以我们需要跳转拦截，做法就是在导航守卫的钩子函数中进行拦截：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> token = sessionStorage.<span class="title function_">getItem</span>(<span class="string">&#x27;userToken&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> isTokenRight = !!(token &amp;&amp; <span class="title class_">JsonWebToken</span>.<span class="title function_">decode</span>(token) &amp;&amp; (<span class="title class_">JsonWebToken</span>.<span class="title function_">decode</span>(token).<span class="property">iss</span> === config.<span class="property">userToken</span>.<span class="property">iss</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 全局设定发送请求header的token验证</span></span><br><span class="line">  <span class="keyword">if</span> (isTokenRight) &#123;</span><br><span class="line">    <span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$http</span>.<span class="property">defaults</span>.<span class="property">headers</span>.<span class="property">common</span>[<span class="string">&#x27;Authorization&#x27;</span>] = <span class="string">&#x27;Bearer &#x27;</span> + token</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (to.<span class="property">path</span> === <span class="string">&#x27;/login&#x27;</span>) &#123; <span class="comment">// 如果是跳转到登陆页的</span></span><br><span class="line">    <span class="keyword">if</span> (isTokenRight) &#123; <span class="comment">// 如果有token就转向admin页不返回登录页</span></span><br><span class="line">      <span class="title function_">next</span>(<span class="string">&#x27;/admin&#x27;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则呆在登陆页</span></span><br><span class="line">      <span class="title function_">next</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (isTokenRight) &#123; <span class="comment">// 如果有token就正常转向</span></span><br><span class="line">      <span class="title function_">next</span>()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">next</span>(<span class="string">&#x27;/login&#x27;</span>) <span class="comment">// 否则跳转回登录页</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意：一定要确保要调用<code>next()</code>方法，否则钩子就不会被resolved。如果纯粹调用<code>next(path)</code>这样的方法最终还是会回到<code>beforeEach()</code>这个钩子里面来，如果没有写对条件就有可能出现死循环，栈溢出的情况。</p>
+<p>至此，前后端的服务就算是都搭建起来了。</p>
+<h2 id="7-部署"><a href="#7-部署" class="headerlink" title="7 部署"></a>7 部署</h2><p>对于一个没有任何部署惊人的人来说，部署这个小demo也是花费了很多精力。下面就是我的部署过程</p>
+<p>首先，你需要有一个服务器，我选的是腾讯云的云服务器，最低配置那种，一个月40多，如果是学生的话可以申请免费的（云虚拟主机是不可以的，云虚拟主机只能配置静态网页，无法自行配置node环境、部署koa的服务等）</p>
+<p>然后，你还需要申请一个MySQL的服务，同样我选购的是最低配置的，一个月30多</p>
+<h3 id="7-1-配置环境"><a href="#7-1-配置环境" class="headerlink" title="7.1 配置环境"></a>7.1 配置环境</h3><p>都申请好了之后，要在虚拟服务器上配置环境。</p>
+<h4 id="7-1-1NodeJS"><a href="#7-1-1NodeJS" class="headerlink" title="7.1.1NodeJS"></a>7.1.1NodeJS</h4><p>首先就是要安装NodeJS，要存放下载资源的目录，我放在了<code>usr/local/src</code>目录下，然后执行安装命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>上述命令是下<code>8.10.0</code>的64位NodeJS版本，如果你想下载其他版本，可以将命令中的两处<code>v8.10.0</code>替换成其他版本号；如果你的系统是 32 位(一般是64位)，也可以将x64改成x32</p>
+<p>下载完成后，执行解压命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf node-v8.10.0-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>解压完成，可以看到当前目录解压后的文件夹<code>node-v8.10.0-linux-x64</code>，将这个文件夹重命名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv node-v8.10.0-linux-x64 node</span><br></pre></td></tr></table></figure>
+<p>现在，重命名后的node文件夹就是程序目录，然后需要添加环境变量，首先在<code>root</code>目录下找到<code>.bash_profile</code>，编辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>找到<code>PATH=$PATH:$HOME/bin</code>，在后面添加路径为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH=$PATH:$HOME/bin:/usr/local/src/node/bin</span><br></pre></td></tr></table></figure>
+<p>保存修改，然后重载一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>现在<code>node</code>和<code>npm</code>就可以全局使用了</p>
+<h4 id="7-1-2-MySQ客户端"><a href="#7-1-2-MySQ客户端" class="headerlink" title="7.1.2 MySQ客户端"></a>7.1.2 MySQ客户端</h4><p>利用CentOS自带的包管理软件Yum去腾讯云的镜像源下载安装MySQL客户端。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql</span><br></pre></td></tr></table></figure>
+<p>输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h 172.21.0.15 -P 3306 -u root -p xxxx</span><br></pre></td></tr></table></figure>
+<p>其中<code>172.21.0.15</code>是你申请的MySQL的内网地址，<code>3306</code>是端口号，<code>xxxx</code>是密码</p>
+<h4 id="7-1-3-其他"><a href="#7-1-3-其他" class="headerlink" title="7.1.3 其他"></a>7.1.3 其他</h4><p>其他的软件都可以通过npm来安装了</p>
+<h4 id="7-1-4-保存镜像"><a href="#7-1-4-保存镜像" class="headerlink" title="7.1.4 保存镜像"></a>7.1.4 保存镜像</h4><p>安装之后，在云主机的列表页，<code>操作</code>的选项卡中的<code>更多</code>，选择制作镜像，输入镜像名称和竞相描述，将镜像保存，如果有新的云主机或者需要重装系统的时候，就可以选择自己制作的镜像来快捷的安装依赖了。</p>
+<h3 id="7-2-静态资源托管"><a href="#7-2-静态资源托管" class="headerlink" title="7.2 静态资源托管"></a>7.2 静态资源托管</h3><p>前面提到过了，先用webpack打包出项目文件到<code>dist</code>目录中，然后使用koa-static来实现静态资源的托管</p>
+<h3 id="7-3-部署运行"><a href="#7-3-部署运行" class="headerlink" title="7.3 部署运行"></a>7.3 部署运行</h3><p>一般会使用pm2来管理Node应用进程，而不是直接用Node来执行，原因是pm2这类进程工具可以更方便的监控一些信息，包括cpu，内存，日志，异常，其他信息等</p>
+<p>安装之后的启动命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start index.js</span><br></pre></td></tr></table></figure>
+<h3 id="7-4-二级域名解析"><a href="#7-4-二级域名解析" class="headerlink" title="7.4 二级域名解析"></a>7.4 二级域名解析</h3><p>网站目前可以登录了，地址栏输入<code>http://139.199.112.184/#/admin</code>，就可以看到登录页面了</p>
+<p><img src="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/A05307DD406B44BF88DD0B1F55066E44/58682" alt="image"></p>
+<p>但是现在我们目前只能用IP登录，因为我没有单独购买域名，但是我以前在百度云购买国一个域名，<code>oldzhou.cn</code>，并且已经备案过，所以我想将这个demo作为二级域名解析到<code>demo.oldzhou.cn</code></p>
+<p>登录百度云控制台，进入<code>域名服务</code>→<code>域名管理</code>，点击添加解析，在主机记录输入<code>demo</code>，记录值输入腾讯云服务器的公网IP，其他选择默认值即可。</p>
+<p>等待一会就可以通过<a target="_blank" rel="noopener" href="http://demo.oldzhou.cn/#/login">demo.oldzhou.cn</a>来访问了。</p>
+<h2 id="8-webpack打包优化"><a href="#8-webpack打包优化" class="headerlink" title="8 webpack打包优化"></a>8 webpack打包优化</h2><h3 id="8-1-开启Gzip"><a href="#8-1-开启Gzip" class="headerlink" title="8.1 开启Gzip"></a>8.1 开启Gzip</h3><p>在<code>webpack.prod.conf.js</code>中，引入了<code>compression-webpack-plugin</code>，用来生成一个被gzip压缩过的JS文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (config.<span class="property">build</span>.<span class="property">productionGzip</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">CompressionWebpackPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;compression-webpack-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  webpackConfig.<span class="property">plugins</span>.<span class="title function_">push</span>(</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">CompressionWebpackPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">asset</span>: <span class="string">&#x27;[path].gz[query]&#x27;</span>,</span><br><span class="line">      <span class="attr">algorithm</span>: <span class="string">&#x27;gzip&#x27;</span>,</span><br><span class="line">      <span class="attr">test</span>: <span class="keyword">new</span> <span class="title class_">RegExp</span>(</span><br><span class="line">        <span class="string">&#x27;\\.(&#x27;</span> +</span><br><span class="line">        config.<span class="property">build</span>.<span class="property">productionGzipExtensions</span>.<span class="title function_">join</span>(<span class="string">&#x27;|&#x27;</span>) +</span><br><span class="line">        <span class="string">&#x27;)$&#x27;</span></span><br><span class="line">      ),</span><br><span class="line">      <span class="attr">threshold</span>: <span class="number">10240</span>,</span><br><span class="line">      <span class="attr">minRatio</span>: <span class="number">0.8</span></span><br><span class="line">    &#125;)</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出来，压缩过的<code>vendor.js</code>文件由1.07M减小到了306kb</p>
+<p><img src="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/C5CA49CB993B4F10B4C96EFB72C8527D/58707" alt="image"></p>
+<p>然后我们配合我们在前面提到的koa-compress中间件，来使用压缩后的JS文件，这时候来看我们的网络请求情况：</p>
+<p><img src="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/73A9E6AEC919425DA3BCD0FDCACA04F9/58753" alt="image"></p>
+<p>可以看到，<code>size</code>栏目上面的数字是传输的大小，是经过gzip压缩的，下面是文件实际的大小。</p>
+<h3 id="8-2-定位原因"><a href="#8-2-定位原因" class="headerlink" title="8.2 定位原因"></a>8.2 定位原因</h3><p>虽然小了很多，但是这样一个简单的demo压缩之后还有300kb，也是让人无法忍受的，我们就要找出打包后的文件到底大在哪里</p>
+<p>我们可以使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/webpack-bundle-analyzer">webpack-bundle-analyzer</a>插件，它可以帮助我们发现模块有哪些组成，体积多大。</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack-bundle-analyzer</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，在<code>webpack.config.js</code>中进行配置，将<code>webpack-bundle-analyzer</code>作为插件导入进去：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">BundleAnalyzerPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;webpack-bundle-analyzer&#x27;</span>).<span class="property">BundleAnalyzerPlugin</span>;</span><br><span class="line"> </span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">BundleAnalyzerPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">analyzerMode</span>: <span class="string">&#x27;server&#x27;</span>,</span><br><span class="line">      <span class="attr">analyzerHost</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>,</span><br><span class="line">      <span class="attr">analyzerPort</span>: <span class="number">8888</span>,</span><br><span class="line">      <span class="attr">reportFilename</span>: <span class="string">&#x27;report.html&#x27;</span>,</span><br><span class="line">      <span class="attr">defaultSizes</span>: <span class="string">&#x27;parsed&#x27;</span>,</span><br><span class="line">      <span class="attr">openAnalyzer</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">generateStatsFile</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">statsFilename</span>: <span class="string">&#x27;stats.json&#x27;</span>,</span><br><span class="line">      <span class="attr">statsOptions</span>: <span class="literal">null</span>,</span><br><span class="line">      <span class="attr">logLevel</span>: <span class="string">&#x27;info&#x27;</span></span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+
+<p>然后需要在进行分析的时候设置环境变量为<code>production</code>，为了统一在不同的操作系统中的设置方法，可以使用<code>cross-env</code>这个库</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cross-env --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>使用时只需要在原来的脚本前面加上<code>cross-env</code>就可以了</p>
+<p>准备工作做好之后，在项目的<code>package.json</code>文件中注入如下命令，以方便运行（<code>npm run analyze</code>），默认会打开<code>http://127.0.0.1:8888</code>作为展示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;analyz&quot;</span>: <span class="string">&quot;cross-env NODE_ENV=production npm_config_report=true npm run build&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行之后页面内容：</p>
+<p><img src="https://note.youdao.com/yws/public/resource/75a4388ac4427bcee7a493f6d86d62b1/xmlnote/6B0109B2316F412ABF9699794879F887/58780" alt="image"></p>
+<p>我们发现，两个大胖子是element-ui和vue，那就有针对性的对他们进行处理</p>
+<h4 id="8-2-1-element的按需加载"><a href="#8-2-1-element的按需加载" class="headerlink" title="8.2.1 element的按需加载"></a>8.2.1 element的按需加载</h4><p>element提供了按需加载的方法，可以有效地减小项目体积。</p>
+<p>按需加载需要安装<a target="_blank" rel="noopener" href="https://github.com/QingWei-Li/babel-plugin-component">babel-plugin-component</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install babel-plugin-component -save-dev</span><br></pre></td></tr></table></figure>
+<p>然后在<code>.babelrc</code>中添加下面的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;plugins&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">    <span class="string">&quot;component&quot;</span>, </span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;libraryName&quot;</span>: <span class="string">&quot;element-ui&quot;</span>,</span><br><span class="line">      <span class="string">&quot;styleLibraryName&quot;</span>: <span class="string">&quot;theme-chalk&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以按需引入组件了，在<code>scr/heper/elementHelper.js</code>中，引入Vue和element的css文件，然后按需引入我们使用的表格、按钮等组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;element-ui/lib/theme-chalk/index.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">Table</span>, <span class="title class_">TableColumn</span>, <span class="title class_">Row</span>, <span class="title class_">Col</span>,</span><br><span class="line">  <span class="title class_">Input</span>,</span><br><span class="line">  <span class="title class_">Button</span></span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  <span class="title class_">Table</span>, <span class="title class_">TableColumn</span>, <span class="title class_">Row</span>, <span class="title class_">Col</span>,</span><br><span class="line">  <span class="title class_">Input</span>,</span><br><span class="line">  <span class="title class_">Button</span></span><br><span class="line">].<span class="title function_">forEach</span>(<span class="function"><span class="params">Compo</span> =&gt;</span> <span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">Compo</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Vue</span></span><br></pre></td></tr></table></figure>
+<p>引入之后需要使用<code>Vue.use</code>或者<code>Vue.component(Button.name, Button)</code>来注册组件，注册完成后导出Vue</p>
+<p>在前端入口文件<code>main.js</code>中引用的Vue更改为由<code>elementHelper.js</code>导出的Vue，然后我们就可以再组件中使用element的组件了，比如<code>ElButton</code>、<code>ElTable</code>等</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ElButton</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">class</span>=<span class="string">&quot;login-button&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;login&quot;</span>&gt;</span>登陆<span class="tag">&lt;/<span class="name">ElButton</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>将element改为按需加载之后，再执行分析看一下体积</p>
+<p><img src="https://note.youdao.com/yws/public/resource/368ee58425e2a7f1a0a6c11d42f2bf58/xmlnote/6B4F1765A7F24E0C90F6B41008A3CAB2/58836" alt="按需加载后的打包体积"></p>
+<p>压缩前的打包体积由1.07M缩小到了614kb，压缩后的打包体积由299kb缩小到了203kb</p>
+<h4 id="8-2-2-外部引入模块"><a href="#8-2-2-外部引入模块" class="headerlink" title="8.2.2 外部引入模块"></a>8.2.2 外部引入模块</h4><p>针对打包后的Vue比较大的问题，我们采取通过绕过webpack打包，外部引入模块的方式解决，这样既可以减小打包后的体积，加快打包速度，同时CDN的下载速度肯定要比我目前申请的服务器的宽带速度要快。</p>
+<p>既然要处理，我们将前端用的相关的包都通过外部引入</p>
+<p>外部引入模块需要在<code>webpack.prod.conf.js</code>中配置<code>externals</code>，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">externals</span>: &#123;</span><br><span class="line">  <span class="string">&#x27;vue&#x27;</span>: <span class="string">&#x27;Vue&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;vue-router&#x27;</span>: <span class="string">&#x27;VueRouter&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;element-ui&#x27;</span>: <span class="string">&#x27;ElementUI&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;axios&#x27;</span>: <span class="string">&#x27;axios&#x27;</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>webpack可以不处理应用的某些依赖库，使用externals配置后，依旧可以在代码中通过CMD、AMD或者window&#x2F;global全局的方式访问。关于externals更多的信息可以查看<a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/externals/">官网</a>上的介绍</p>
+<blockquote>
+<p>注意，这里面对应的属性名称比如<code>Vue</code>、<code>VueRouter</code>就是源码中看导出的模块的名称</p>
+</blockquote>
+<p>然后在<code>index.html</code>中通过标签的形式引入</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width,initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>background-demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;static/base.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- built files will be auto injected --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/vue/2.5.2/vue.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/element-ui/2.4.0/index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/axios/0.18.0/axios.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样做之后再来看一下打包后的体积：</p>
+<p><img src="https://note.youdao.com/yws/public/resource/368ee58425e2a7f1a0a6c11d42f2bf58/xmlnote/9FC4BD909A824F778D174490EC9E28BA/58859" alt="打包后的体积"></p>
+<p>压缩前的体积已经减小到了491kb，压缩后的体积缩小到了160kb</p>
+<p>更多的还可以参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48461259">这篇文章</a>进行分析和优化。</p>
+<h2 id="9-写在最后"><a href="#9-写在最后" class="headerlink" title="9 写在最后"></a>9 写在最后</h2><p>到这里基本上这个小的尝试就结束了，正如题目所说的，只是一个入门的尝试，并且还有很多可以改进的地方，但是他解决了我很多的疑惑，让我亲身接触到了前端之外的开发领域</p>
+<p>学海无涯，大家加油。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://molunerfinn.com/Vue+Koa/#%E7%AE%80%E4%BB%8B">https://molunerfinn.com/Vue+Koa/#%E7%AE%80%E4%BB%8B</a></li>
+<li><a target="_blank" rel="noopener" href="https://chenshenhai.github.io/koa2-note/note/route/koa-router.html">https://chenshenhai.github.io/koa2-note/note/route/koa-router.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000005024412">https://segmentfault.com/q/1010000005024412</a></li>
+<li><a target="_blank" rel="noopener" href="https://cnodejs.org/topic/56936889c2289f51658f0926">https://cnodejs.org/topic/56936889c2289f51658f0926</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/kcors">https://www.npmjs.com/package/kcors</a></li>
+<li><a target="_blank" rel="noopener" href="https://div.io/topic/1937">https://div.io/topic/1937</a></li>
+<li><a target="_blank" rel="noopener" href="https://itbilu.com/nodejs/npm/VkYIaRPz-.html">https://itbilu.com/nodejs/npm/VkYIaRPz-.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000008379638">https://segmentfault.com/q/1010000008379638</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fc7664e9025c">https://www.jianshu.com/p/fc7664e9025c</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000005811347">https://segmentfault.com/a/1190000005811347</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008479977">https://segmentfault.com/a/1190000008479977</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zcfy.cc/article/two-quick-ways-to-reduce-react-app-s-size-in-production-1930.html">https://www.zcfy.cc/article/two-quick-ways-to-reduce-react-app-s-size-in-production-1930.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000000672656">https://segmentfault.com/q/1010000000672656</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zcfy.cc/article/two-quick-ways-to-reduce-react-app-s-size-in-production-1930.html">https://www.zcfy.cc/article/two-quick-ways-to-reduce-react-app-s-size-in-production-1930.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://jeffjade.com/2017/08/06/124-webpack-packge-optimization-for-volume/">https://jeffjade.com/2017/08/06/124-webpack-packge-optimization-for-volume/</a></li>
+<li><a target="_blank" rel="noopener" href="http://element-cn.eleme.io/#/zh-CN/component/quickstart">http://element-cn.eleme.io/#/zh-CN/component/quickstart</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangrongxiang/p/8202912.html">https://www.cnblogs.com/wangrongxiang/p/8202912.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jb51.net/article/129670.htm">https://www.jb51.net/article/129670.htm</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25186543/article/details/79279874">https://blog.csdn.net/qq_25186543/article/details/79279874</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/Koa2/" rel="tag"># Koa2</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/29/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/05%20MySQL/MySQL-01%20%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" rel="prev" title="MySQL-01 快速上手">
+                  <i class="fa fa-chevron-left"></i> MySQL-01 快速上手
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/03%20%E5%8A%A8%E7%94%BB/%E5%8A%A8%E7%94%BB05%20Vue%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E5%90%91%E4%B8%8A%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/" rel="next" title="动画05 Vue中实现文字向上滚动的动画效果">
+                  动画05 Vue中实现文字向上滚动的动画效果 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

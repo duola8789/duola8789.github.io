@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Docker最佳实践。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker04 Docker最佳实践">
+<meta property="og:url" content="https://duola8789.github.io/2018/10/18/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker04%20Docker%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Docker最佳实践。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-18T07:48:45.000Z">
+<meta property="article:modified_time" content="2018-10-18T07:48:45.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/10/18/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker04%20Docker%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/10/18/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker04%20Docker%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/","path":"2018/10/18/05 全栈开发/04 Docker/Docker04 Docker最佳实践/","title":"Docker04 Docker最佳实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker04 Docker最佳实践 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-dockerignore"><span class="nav-number">1.</span> <span class="nav-text">使用.dockerignore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%AE%89%E8%A3%85%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">避免安装不必要的安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%BA%94%E8%AF%A5%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">每个容器应该只有一个进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%BC%93%E5%AD%98"><span class="nav-number">4.</span> <span class="nav-text">构建缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FROM"><span class="nav-number">5.</span> <span class="nav-text">FROM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RUN"><span class="nav-number">6.</span> <span class="nav-text">RUN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD"><span class="nav-number">7.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADD-or-COPY"><span class="nav-number">8.</span> <span class="nav-text">ADD or COPY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8docker-exec%E8%80%8C%E4%B8%8D%E6%98%AFsshd"><span class="nav-number">9.</span> <span class="nav-text">使用docker exec而不是sshd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/10/18/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker04%20Docker%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker04 Docker最佳实践 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker04 Docker最佳实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-18 15:48:45" itemprop="dateCreated datePublished" datetime="2018-10-18T15:48:45+08:00">2018-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Docker最佳实践。</p>
+<span id="more"></span>
+
+<h2 id="使用-dockerignore"><a href="#使用-dockerignore" class="headerlink" title="使用.dockerignore"></a>使用<code>.dockerignore</code></h2><p>在大多数情况下，最好将每个Dockerfile放在一个空目录中。然后，仅添加构建Dockerfile所需的文件。要增加构建的性能，可以通过将<code>.dockerignore</code>文件添加到该目录来排除文件和目录。</p>
+<h2 id="避免安装不必要的安装包"><a href="#避免安装不必要的安装包" class="headerlink" title="避免安装不必要的安装包"></a>避免安装不必要的安装包</h2><p>应该尽量减少容器的复杂性，依赖性，文件的大小，构建的次数，所以应该尽量避免安装不必要的安装包。</p>
+<h2 id="每个容器应该只有一个进程"><a href="#每个容器应该只有一个进程" class="headerlink" title="每个容器应该只有一个进程"></a>每个容器应该只有一个进程</h2><p>将应用程序解耦到多个容器中可以更轻松地水平扩展和重新使用容器。</p>
+<p>例如，Web应用程序可能由三个独立的容器组成，每个容器具有自己独特的映像，以解耦的方式管理应用、数据库、数据缓存。</p>
+<p>如果容器之间有依赖关系，应该使用Docker Network解决容器之间的通信。</p>
+<h2 id="构建缓存"><a href="#构建缓存" class="headerlink" title="构建缓存"></a>构建缓存</h2><p>在构建image的过程中，Docker将按照指定的顺序逐步执行你的Dockerfile中的指令。随着每条指令的检查，Docker将在其缓存中查找可重用的现有image，而不是创建一个新的（重复）image。如果你不想使用缓存，可以在<code>docker build</code>命令中使用<code>–no-cache=true</code>选项。</p>
+<h2 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h2><p>只要有可能，使用当前的官方存储库作为你的image的基础。建议使用Debian镜像，因为它是非常严格的控制，并保持最小（目前在150 mb），而仍然是一个完整的分布。</p>
+<h2 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h2><p>可以在多行上分隔长度或复杂的RUN语句，并以反斜杠分隔。</p>
+<p>请务必将<code>RUN apt-get update</code>与<code>apt-get install</code>组合在同一个RUN语句中。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RUN apt-get update &amp;&amp; apt-get install -y \</span><br><span class="line">  package-bar \</span><br><span class="line">  package-baz \</span><br><span class="line">  package-foo</span><br></pre></td></tr></table></figure>
+<p>如果在RUN语句中单独使用<code>apt-get update</code>会导致缓存问题。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:14.04</span><br><span class="line">RUN apt-get update</span><br><span class="line">RUN apt-get install -y curl</span><br></pre></td></tr></table></figure>
+
+<p>构建image后，所有内容都在Docker缓存中。如果以后通过添加额外的程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:14.04</span><br><span class="line">RUN apt-get update</span><br><span class="line">RUN apt-get install -y curl nginx</span><br></pre></td></tr></table></figure>
+
+<p>Docker将认为第一个RUN是相同的命令，会重复使用先前步骤的缓存，因此第一个RUN并不会实际执行，因此有可能得到的curl和nginx不是最新版本的。</p>
+<p>将<code>RUN apt-get update</code>与<code>apt-get install</code>组合在同一个RUN语句中确保Dockerfile安装最新的软件包版本，无需进一步的编码或手动干预。这种技术被称为“缓存破解”。</p>
+<p>还可以通过指定包版本来实现缓存清除。这被称为版本固定，例如：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y \</span></span><br><span class="line"><span class="language-bash">  package-bar \</span></span><br><span class="line"><span class="language-bash">  package-baz \</span></span><br><span class="line"><span class="language-bash">  package-foo=1.3.*</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><p>CMD指令应用于运行image中包含的软件以及任何参数。 CMD几乎总是以<code>CMD [“executable”, “param1”, “param2”…]</code>的形式使用。 </p>
+<p>因此，如果image用于服务，例如Apache和Rails，则可以运行类似于<code>CMD [“apache2”,”-DFOREGROUND”]</code>的内容。 实际上，这种形式的指令是推荐用于任何基于服务的image。</p>
+<h2 id="ADD-or-COPY"><a href="#ADD-or-COPY" class="headerlink" title="ADD or COPY"></a>ADD or COPY</h2><p>虽然ADD和COPY在功能上是相似的，但一般来说，COPY是首选的。这是因为它比ADD更透明。</p>
+<p>COPY只支持将本地文件复制到容器中，而ADD具有一些不是很明显的功能（如本地的tar提取和远程URL支持）。因此，ADD的最佳用途是将本地tar文件自动提取到镜像中，如：<code>ADD rootfs.tar.xz /</code>。</p>
+<h2 id="使用docker-exec而不是sshd"><a href="#使用docker-exec而不是sshd" class="headerlink" title="使用docker exec而不是sshd"></a>使用<code>docker exec</code>而不是<code>sshd</code></h2><p>需要进入容器要使用<code>docker exec</code>命令，而不要单独安装<code>sshd</code></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://birdben.github.io/2017/05/07/Docker/Docker%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89Dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/">birdben - Docker实战（三十）Dockerfile最佳实践总结</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/11/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker03%20Docker%E9%83%A8%E7%BD%B2%E5%88%9D%E6%AD%A5%E5%AE%9E%E8%B7%B5/" rel="prev" title="Docker03 Docker部署初步实践">
+                  <i class="fa fa-chevron-left"></i> Docker03 Docker部署初步实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter05%20%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" rel="next" title="VueRouter05 实现原理">
+                  VueRouter05 实现原理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

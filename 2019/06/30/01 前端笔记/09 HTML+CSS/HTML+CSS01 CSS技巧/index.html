@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="各种CSS效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML+CSS01 CSS技巧">
+<meta property="og:url" content="https://duola8789.github.io/2019/06/30/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/HTML+CSS01%20CSS%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="各种CSS效果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FpKGstS3QYG5aEbxFSCWYfrP7VlE">
+<meta property="og:image" content="http://image.oldzhou.cn/FsV6IWhYI7_Q1bgL6TF7OHma9E0Z">
+<meta property="og:image" content="http://image.oldzhou.cn/FrF8Xmp5uh3UukOsaYQiaLaG9vwo">
+<meta property="og:image" content="http://image.oldzhou.cn/FkPYqMg8GKKPhsJ9sajTyZhABVEw">
+<meta property="og:image" content="http://image.oldzhou.cn/FtG6m6JEX1SUeZn6p7SgdTuJpcvq">
+<meta property="og:image" content="http://image.oldzhou.cn/Fo2YmjK0hJYLXI_R1LH5Ll4iZXE7">
+<meta property="og:image" content="http://image.oldzhou.cn/Fn4GZlUhMnmHGxpUWPlUJd0Xx6Q9">
+<meta property="og:image" content="http://image.oldzhou.cn/FswhNgLNUD7PxJLo2woa0kCXqvXa">
+<meta property="og:image" content="http://image.oldzhou.cn/FrXgZTN2joXiIvqj7YStdIl2XUA2">
+<meta property="og:image" content="http://image.oldzhou.cn/FluW1mYFqLlYY8D1bBtJLU4cJHmL">
+<meta property="og:image" content="http://image.oldzhou.cn/FpHhAgjiahF6PeuxsF_XaqwZb0-i">
+<meta property="og:image" content="http://image.oldzhou.cn/FgsHRYQ-1rkRVFYStGFTgFUGFWCl">
+<meta property="og:image" content="http://image.oldzhou.cn/Fn4GZlUhMnmHGxpUWPlUJd0Xx6Q9">
+<meta property="og:image" content="http://image.oldzhou.cn/FrnFBglSd0nXpgo1VAOqqMONVf8R">
+<meta property="og:image" content="http://image.oldzhou.cn/Fk6jnaJ2R33O7q7j93Z-lMh4gnZ0">
+<meta property="og:image" content="http://image.oldzhou.cn/FhYUUEkaUI0ZKKsS-9Uz_s4ItDWm">
+<meta property="og:image" content="http://image.oldzhou.cn/FrfiO8WADiybGVVVZEaqCzegt6Pt">
+<meta property="og:image" content="http://image.oldzhou.cn/Fk3UAB64mjf_QRIBHnCjpd9OJSxM">
+<meta property="og:image" content="http://image.oldzhou.cn/FmQdq_CuWwjIoiPrNLZDG7ygKc3y">
+<meta property="og:image" content="http://image.oldzhou.cn/Fu8bj-9f2y3nll4eB0pa23e7-WIX">
+<meta property="og:image" content="http://image.oldzhou.cn/FmbtnK0ucf0g_dQjb2KsLOB1S6d2">
+<meta property="og:image" content="http://image.oldzhou.cn/FvfGizAT795CYaX8dkenO_Oi7GTe">
+<meta property="og:image" content="http://image.oldzhou.cn/Fgpe2VMO_K0CPIc8uLoeG-Nr6KAA">
+<meta property="og:image" content="http://image.oldzhou.cn/Fnbau00ivj7GkoEPuD4nv8plYK6u">
+<meta property="og:image" content="http://image.oldzhou.cn/Ft5HZrTncSbiqJMnmXAne6e-onT2">
+<meta property="og:image" content="http://image.oldzhou.cn/FuAr2s9nK8fiPG_G5luffh0pN815">
+<meta property="og:image" content="http://image.oldzhou.cn/FjzAnPWXdFuA7jhf7_TME52N7FPx">
+<meta property="og:image" content="http://image.oldzhou.cn/FoVIGXokiPMOlo0NCPkoEfgpEZ_k">
+<meta property="og:image" content="http://image.oldzhou.cn/FlxewVHNLJBvvy_PXSu1Z4ob5dWP">
+<meta property="og:image" content="http://image.oldzhou.cn/FgEYRszHBiQ9RCUNpnI5-YZDBHmb">
+<meta property="og:image" content="http://image.oldzhou.cn/FiwuEwmAMoxE3y52uMbkP77c1rma">
+<meta property="og:image" content="http://image.oldzhou.cn/FpGOAUJylHDQ7Or8diFZGHXRhGcu">
+<meta property="og:image" content="http://image.oldzhou.cn/Fjpiu_n8Qytes9AF5NsW0zfyeHET">
+<meta property="og:image" content="http://image.oldzhou.cn/FrlcN9GSAToCVBLlQWLdyxFwxuKa">
+<meta property="og:image" content="http://image.oldzhou.cn/FmvTrDRTVMCA2XEplQu01ZB91opA">
+<meta property="og:image" content="http://image.oldzhou.cn/Fob1EZjScaYgxzMjH7_BNuFYCxut">
+<meta property="og:image" content="http://image.oldzhou.cn/FishqPKefkv-UFpfufwRMw-8IS6I">
+<meta property="og:image" content="http://image.oldzhou.cn/FggrhOtmhulYd1Gnj_dG7McX9YX3">
+<meta property="og:image" content="http://image.oldzhou.cn/Fsj-gmkm0X6fDXcs-3u-aFKTRdrn">
+<meta property="article:published_time" content="2019-06-30T00:58:00.000Z">
+<meta property="article:modified_time" content="2019-08-13T08:39:12.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FpKGstS3QYG5aEbxFSCWYfrP7VlE">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/06/30/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/HTML+CSS01%20CSS%E6%8A%80%E5%B7%A7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/06/30/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/HTML+CSS01%20CSS%E6%8A%80%E5%B7%A7/","path":"2019/06/30/01 前端笔记/09 HTML+CSS/HTML+CSS01 CSS技巧/","title":"HTML+CSS01 CSS技巧"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HTML+CSS01 CSS技巧 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%8F%E6%98%8E%E8%BE%B9%E6%A1%86"><span class="nav-number">1.</span> <span class="nav-text">透明边框</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E8%BE%B9%E6%A1%86"><span class="nav-number">2.</span> <span class="nav-text">多重边框</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#box-shadow"><span class="nav-number">2.1.</span> <span class="nav-text">box-shadow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#outline-outline-offset"><span class="nav-number">2.2.</span> <span class="nav-text">outline + outline-offset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%B9%E6%A1%86%E5%86%85%E5%9C%86%E8%A7%92"><span class="nav-number">3.</span> <span class="nav-text">边框内圆角</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E5%AE%9A%E4%BD%8D"><span class="nav-number">4.</span> <span class="nav-text">背景定位</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#background-position"><span class="nav-number">4.1.</span> <span class="nav-text">background-position</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background-origin"><span class="nav-number">4.2.</span> <span class="nav-text">background-origin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%A1%E7%BA%B9%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">5.</span> <span class="nav-text">条纹进度条</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E8%A7%84%E5%88%99%E5%8D%A1%E7%89%87"><span class="nav-number">6.</span> <span class="nav-text">不规则卡片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%86%E5%92%8C%E6%A4%AD%E5%9C%86"><span class="nav-number">7.</span> <span class="nav-text">圆和椭圆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E8%BE%B9%E5%BD%A2"><span class="nav-number">8.</span> <span class="nav-text">四边形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E8%A7%92%E6%95%88%E6%9E%9C"><span class="nav-number">9.</span> <span class="nav-text">切角效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AAdiv%E5%AE%9E%E7%8E%B0%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">10.</span> <span class="nav-text">使用一个div实现进度条</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E5%BF%83%E5%9C%86%E7%8E%AF"><span class="nav-number">11.</span> <span class="nav-text">空心圆环</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/06/30/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/HTML+CSS01%20CSS%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HTML+CSS01 CSS技巧 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTML+CSS01 CSS技巧
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-30 08:58:00" itemprop="dateCreated datePublished" datetime="2019-06-30T08:58:00+08:00">2019-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-08-13 16:39:12" itemprop="dateModified" datetime="2019-08-13T16:39:12+08:00">2019-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/HTML-CSS/" itemprop="url" rel="index"><span itemprop="name">HTML+CSS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>各种CSS效果</p>
+<span id="more"></span>
+
+<h1 id="透明边框"><a href="#透明边框" class="headerlink" title="透明边框"></a>透明边框</h1><p>默认情况下，背景的颜色会延伸至边框下层，所以如果边框设置为透明色，会被背景色覆盖掉。</p>
+<p>可以设置CSS3的属性<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-clip"><code>background-clip</code></a>设置元素的背景（背景图片或颜色）是否延伸到边框下面。</p>
+<p><code>background-clip</code>取值有四个：</p>
+<ul>
+<li><code>border-box</code>: 背景延伸至边框外沿（但是在边框下层）</li>
+<li><code>padding-box</code>: 背景延伸至内边距（<code>padding</code>）外沿，不会绘制到边框外</li>
+<li><code>content-box</code>: 背景延伸至内容区（<code>content box</code>）外沿</li>
+<li><code>text</code>：背景剪裁成为文字的前景色。（只有Chrome支持，需加<code>-webkit-</code>前缀）</li>
+</ul>
+<p><img src="http://image.oldzhou.cn/FpKGstS3QYG5aEbxFSCWYfrP7VlE"></p>
+<p>所以将<code>background-clip</code>设置为<code>padding-box</code>就可以实现透明边框。</p>
+<blockquote>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/translucent-borders">半透明边框@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-clip">background-clip@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="多重边框"><a href="#多重边框" class="headerlink" title="多重边框"></a>多重边框</h1><h2 id="box-shadow"><a href="#box-shadow" class="headerlink" title="box-shadow"></a><code>box-shadow</code></h2><p><code>box-shadow</code>用来产生阴影效果，如果只给出两个数值，那么浏览器解析为<code>x</code>方向偏移量和<code>y</code>方向偏移量；如果给出第三个值，将被解释为模糊半径的大小；如果给出第四个值，将被监事未扩展半径的大小。</p>
+<p>另外两个属性是<code>inset</code>属性（声明式）和颜色值。</p>
+<p>一直对模糊半径和扩展半径有一些糊涂，从<a target="_blank" rel="noopener" href="https://juejin.im/post/5ce290cc6fb9a07ea8039d83">下面这个例子</a>了解<code>box-shadow</code>的生成过程</p>
+<p>首先定义出<code>box-shadow</code>属性：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: yellowgreen;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">30px</span> <span class="number">50px</span> <span class="number">20px</span> <span class="number">#000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（1）首先在<code>box</code>元素生成一个同<code>box</code>大小、形状完全相同的阴影，颜色为设置的颜色<code>#000</code></p>
+<p><img src="http://image.oldzhou.cn/FsV6IWhYI7_Q1bgL6TF7OHma9E0Z"></p>
+<p>此时，阴影在元素的上层</p>
+<p>（2）根据<code>offset-x</code>和<code>offset-y</code>，将阴影从上层向右移动<code>30px</code>，向上移动<code>50px</code></p>
+<p><img src="http://image.oldzhou.cn/FrF8Xmp5uh3UukOsaYQiaLaG9vwo"></p>
+<p>（3）然后根据设置的<code>20px</code>的模糊半径，然后在四个方向上，每个方向的阴影边缘为中心，向两侧各扩展<code>10px</code>的区域，作为高斯模糊的半径</p>
+<p>以右侧为例：</p>
+<p><img src="http://image.oldzhou.cn/FkPYqMg8GKKPhsJ9sajTyZhABVEw"></p>
+<p>（4）最后一步，将阴影与元素重叠的区域剪裁掉，如下图：</p>
+<p><img src="http://image.oldzhou.cn/FtG6m6JEX1SUeZn6p7SgdTuJpcvq"></p>
+<p>（5）得到最终效果：</p>
+<p><img src="http://image.oldzhou.cn/Fo2YmjK0hJYLXI_R1LH5Ll4iZXE7"></p>
+<p>从上面的例子看出，模糊半径是是以阴影边缘为中心，向两侧扩展一半，作为半径，进行高斯模糊。只能取正值。</p>
+<p>扩展半径，是将阴影的面积增大，在它取值为<code>0</code>时，阴影面积是等于元素的面积的，它不等于<code>0</code>时，取值是四个方向增大或者减小的尺寸</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">30px</span> <span class="number">50px</span> <span class="number">0</span> <span class="number">30px</span> <span class="number">#000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/Fn4GZlUhMnmHGxpUWPlUJd0Xx6Q9"></p>
+<p>上图的虚线尺寸就是增加的扩展半径<code>30px</code>，当设置了扩展半径，模糊半径也会从增大后的阴影边缘向两侧模糊。</p>
+<p>可以通过将<code>x-offset</code>、<code>y-offset</code>、模糊半径都设为<code>0</code>，设置不同尺寸的扩展半径，来实现多重边框的效果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> darkgoldenrod, <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span> darkolivegreen, <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">15px</span> red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FswhNgLNUD7PxJLo2woa0kCXqvXa"></p>
+<p>优点是很容易实现2条以上的边框，且可以实现圆角边框，缺点是无法实现非实线的边框。</p>
+<h2 id="outline-outline-offset"><a href="#outline-outline-offset" class="headerlink" title="outline + outline-offset"></a><code>outline</code> + <code>outline-offset</code></h2><p><code>outline</code>可以设置一个或者或者多个单独轮廓属性，轮廓不占据空间（<code>box-shadow</code>和<code>border</code>都占据空间）</p>
+<p><code>outline-offset</code>用来设置一个<code>outline</code>与一个元素边缘或者边框的间隙</p>
+<p>将两者结合，就可以实现多种边框，并且可以实现<code>box-shadow</code>无法实现的，非实线的多重边框</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner2</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: aqua dotted <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">outline</span>: red dotted <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">outline-offset</span>: -<span class="number">15px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FrXgZTN2joXiIvqj7YStdIl2XUA2"></p>
+<p>优点是可以实现非实线的边框，缺点是实现2条以上的边框不方便，且无法实现圆角边框。</p>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/multiple-borders">多重边框@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/box-shadow">box-shadow@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5ce290cc6fb9a07ea8039d83">box-shadow详解@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/outline">outline@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/outline-offset">outline-offset@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="边框内圆角"><a href="#边框内圆角" class="headerlink" title="边框内圆角"></a>边框内圆角</h1><p>要实现的效果：</p>
+<p><img src="http://image.oldzhou.cn/FluW1mYFqLlYY8D1bBtJLU4cJHmL"></p>
+<p>边框外围没有圆角，内部有圆角，所以单独使用<code>border-radius</code>是不行的。上一部分内容中，我们可以发现，<code>box-shadow</code>是跟随边框有圆角的，而<code>outline</code>则是没有圆角的，所以我们可以使用三者的组合实现边框内圆角。</p>
+<p>利用<code>border-radius</code>设置圆角，假设为<code>r</code>，但是不设置<code>border</code>，设置<code>outline</code>为<code>w</code>，这样外边框是没有圆角的，</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: darkgray;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">outline</span>: <span class="number">5px</span> solid darkgreen;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候效果是：</p>
+<p><img src="http://image.oldzhou.cn/FpHhAgjiahF6PeuxsF_XaqwZb0-i"></p>
+<p>背景会由于<code>border-radius</code>的设置出现圆角，然后我们用<code>box-shadow</code>将这部分补上，只设置其扩展半径，颜色与<code>outline</code>的颜色相同</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: darkgray;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">outline</span>: <span class="number">5px</span> solid darkgreen;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> darkgreen;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>扩展半径的取值范围见下图：</p>
+<p><img src="http://image.oldzhou.cn/FgsHRYQ-1rkRVFYStGFTgFUGFWCl"></p>
+<p>复习一下扩展半径的值：</p>
+<p><img src="http://image.oldzhou.cn/Fn4GZlUhMnmHGxpUWPlUJd0Xx6Q9"></p>
+<p>所以这里取值最大值不能超过<code>outline</code>的宽度<code>w</code>，而最小宽度根据勾股定理不能小于<code>$\sqrt&#123;2&#125;r - r$</code>，即<code>$\sqrt&#123;2-1&#125;r$</code>，在我们上面的设置中，扩展半径的取值范围是<code>[2.07, 5)</code></p>
+<blockquote>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/inner-rounding">边框内圆角@You-need-to-know-css</a></li>
+</ul>
+</blockquote>
+<h1 id="背景定位"><a href="#背景定位" class="headerlink" title="背景定位"></a>背景定位</h1><h2 id="background-position"><a href="#background-position" class="headerlink" title="background-position"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-position"><code>background-position</code></a></h2><p><img src="http://image.oldzhou.cn/FrnFBglSd0nXpgo1VAOqqMONVf8R"></p>
+<p>我比较熟悉的背景定位是使用<code>background-position</code>，但是都是只指定了两个属性值：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.backgroundPosition</span> &#123;</span><br><span class="line">  <span class="attribute">background-position</span>: right bottom;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有三个点要注意：</p>
+<ol>
+<li><code>background-position</code>指定的位置是相对于由<code>background-origin</code>定义的位置图层的，默认定位于元素的左上角</li>
+<li><code>background-position</code>在一个方向上，可以指定一个值（例如上面），也可以指定两个值，可以在<code>right</code>后面跟一个数值，表示相对于边缘的位置</li>
+<li>如果指定的是百分比，<code>0%</code>代表图片的左（上）边界和容器的左（上）边界重合，<code>100%</code>代表图片的右（下）边界与容器的右（下）边界重合，<code>50%</code>代表图片的中心与容器的中心重合</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#fff</span> <span class="built_in">url</span>(<span class="string">&#x27;../assets/images/css-tricks.png&#x27;</span>) no-repeat;</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">50px</span>;CSS</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.backgroundPosition</span> &#123;</span><br><span class="line">  <span class="attribute">background-position</span>: right <span class="number">20px</span> bottom <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，这个属性是可以融合到<code>background</code>属性中的：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.backgroundPosition</span> &#123;</span><br><span class="line"> <span class="attribute">background</span>: <span class="number">#fff</span> <span class="built_in">url</span>(<span class="string">&#x27;../assets/images/css-tricks.png&#x27;</span>) no-repeat right <span class="number">20px</span> bottom <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="background-origin"><a href="#background-origin" class="headerlink" title="background-origin"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-origin"><code>background-origin</code></a></h2><p>刚才也提到了，<code>background-position</code>指定的位置是相对于由<code>background-origin</code>定义的位置图层的。<code>background-origin</code>规定了背景图片的属性的原点位置与容器的关系（与<code>background-clip</code>类似）</p>
+<p>可以取值有：</p>
+<ul>
+<li><code>border-box</code>: 图片边界与<code>border</code>重合</li>
+<li><code>padding-box</code>: 图片边界与<code>padding</code>区域重合</li>
+<li><code>content-box</code>: 图片边界与<code>content</code>区域重合</li>
+</ul>
+<p><img src="http://image.oldzhou.cn/Fk6jnaJ2R33O7q7j93Z-lMh4gnZ0"></p>
+<p>所以，可以取值<code>content-box</code>，借用<code>padding</code>定位实现。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">10px</span> solid red;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#fff</span> <span class="built_in">url</span>(<span class="string">&#x27;../assets/images/css-tricks.png&#x27;</span>) no-repeat right bottom;</span><br><span class="line">  <span class="attribute">background-origin</span>: content-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/extended-bg-position">背景定位@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-position">background-position@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-origin">background-origin@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="条纹进度条"><a href="#条纹进度条" class="headerlink" title="条纹进度条"></a>条纹进度条</h1><p>可以使用<code>background</code>的<code>repeating-linear-gradient</code>属性，来生成一个静态的进度条，再结合动画属性，实现动态的进度条样式。</p>
+<p><img src="http://image.oldzhou.cn/FhYUUEkaUI0ZKKsS-9Uz_s4ItDWm"></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/linear-gradient"><code>linear-gradient</code></a>可以实现线形重复渐变效果。</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/repeating-linear-gradient"><code>repeating-linear-gradient</code></a>类似<code>linear-gradient</code>，并且采用相同的参数，但是它会在所有方向上重复渐变以覆盖其整个容器。</p>
+<p>它分为两组参数，第一组参数用来描述渐变线的起点位置，<code>to top</code>这样的值会转换为0度，<code>to left</code>会被转换为270度。第二组参数可以包含多个值，用逗号分隔，每个值都是一个色值，后面跟随一个可选的终点位置，终点位置可以是百分比也可以是绝对值</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 一个倾斜45度的重复线性渐变,</span></span><br><span class="line"><span class="comment">   从蓝色开始渐变到红色 */</span></span><br><span class="line">linear-gradient(<span class="number">45deg</span>, blue, red);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FrfiO8WADiybGVVVZEaqCzegt6Pt"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 一个从右下角到左上角的重复线性渐变,</span></span><br><span class="line"><span class="comment">   从蓝色开始渐变到红色 */</span></span><br><span class="line">linear-gradient(<span class="selector-tag">to</span> <span class="attribute">left</span> <span class="attribute">top</span>, blue, red);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/Fk3UAB64mjf_QRIBHnCjpd9OJSxM"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 一个由下至上的重复线性渐变,</span></span><br><span class="line"><span class="comment">   从蓝色开始，40%后变绿，</span></span><br><span class="line"><span class="comment">   最后渐变到红色 */</span></span><br><span class="line">linear-gradient(<span class="number">0deg</span>, blue, green <span class="number">40%</span>, red);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FmQdq_CuWwjIoiPrNLZDG7ygKc3y"></p>
+<p>要想实现突然变色，而非渐变色，需要为两个颜色制定同一个终点位置，那么这两个颜色会产生一个无线小的过渡区域，从效果上看，颜色会在那个位置突然变化，而不是一个平滑的过程。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">90deg</span>, blue <span class="number">50%</span>, red <span class="number">50%</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/Fu8bj-9f2y3nll4eB0pa23e7-WIX"></p>
+<p>上面的写法的可维护性不太好，因为每次修改尺寸时都需要修改两处，但是CSS规范规定，如果某个色标的位置值比整个列表在它之前的位置都要小，则改色标的位置会被设置为它前面的额所有色标位置值的最大值</p>
+<p>所以上面的代码也可以改为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">90deg</span>, blue <span class="number">50%</span>, red <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>色块的大小是可以通过<code>background-size</code>来控制的：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">90deg</span>, blue <span class="number">50%</span>, red <span class="number">0</span>);</span><br><span class="line"><span class="attribute">background-size</span>: <span class="number">16px</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FmbtnK0ucf0g_dQjb2KsLOB1S6d2"></p>
+<p>在就将角度倾斜，通过<code>animation</code>控制<code>background-position</code>，就可以实现动起来的效果了：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">90deg</span>, blue <span class="number">50%</span>, red <span class="number">0</span>);</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">animation</span>: loading <span class="number">10s</span> linear infinite;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> loading &#123;</span><br><span class="line">  <span class="selector-tag">to</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样可以实现水平方向条纹的横向移动</p>
+<p><img src="http://image.oldzhou.cn/FvfGizAT795CYaX8dkenO_Oi7GTe"></p>
+<p>但是如果要是倾斜45度就出现问题了</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">45deg</span>, blue <span class="number">50%</span>, red <span class="number">0</span>);</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">animation</span>: loading <span class="number">10s</span> linear infinite;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/Fgpe2VMO_K0CPIc8uLoeG-Nr6KAA"></p>
+<p>这个时候应该改为使用<code>repeating-linear-gradient</code>属性，在所有方向上重复渐变以覆盖其整个容器，使用这个属性时，色标值需要写完整：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">background</span>: <span class="built_in">repeating-linear-gradient</span>(<span class="number">90deg</span>, blue <span class="number">0</span> ,blue <span class="number">50%</span>, red <span class="number">50%</span>, red <span class="number">100%</span>);</span><br></pre></td></tr></table></figure>
+<p>所以这样可以实现斜着45度的进度条：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">repeating-linear-gradient</span>(<span class="number">45deg</span>, red <span class="number">0</span>, red <span class="number">25%</span>, blue <span class="number">0</span>, blue <span class="number">50%</span>,</span><br><span class="line">  red <span class="number">0</span>, red <span class="number">75%</span>, blue <span class="number">0</span>, blue <span class="number">100%</span>);</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">animation</span>: loading <span class="number">10s</span> linear infinite;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2019-10.21更新）之前理解有错误，其实<code>repeating-linear-gradient</code>就等于<code>linear-gradient</code> + <code>background-repeat</code> + <code>background-size</code>，因为之前用的是百分比来确定色款其实体现不出来，上面的代码不用<code>repeating-linear-gradient</code>而是直接使用<code>linear-gradient</code>也是可以直接实现的。</p>
+<p>如果改用<code>px</code>，就可以舍弃<code>background-size</code>，直接使用<code>repeating-linear-gradient</code>实现：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">repeating-linear-gradient</span>(<span class="number">45deg</span>, black <span class="number">0</span>, black <span class="number">5px</span>, darkgoldenrod <span class="number">0</span>, darkgoldenrod <span class="number">10px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/stripes-background?id=%e8%bf%9b%e5%ba%a6%e6%9d%a1">条纹背景@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/linear-gradient">linear-gradient@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/repeating-linear-gradient">repeating-linear-gradient@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5bc2fb09f265da0ac55e75e7">聊一聊CSS3的渐变——gradient@掘金</a></li>
+</ul>
+</blockquote>
+<h1 id="不规则卡片"><a href="#不规则卡片" class="headerlink" title="不规则卡片"></a>不规则卡片</h1><p>想要实现这样的卡片：</p>
+<p><img src="http://image.oldzhou.cn/Fnbau00ivj7GkoEPuD4nv8plYK6u"></p>
+<p>上面的不规则椭圆切口使用<code>background</code>的<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/radial-gradient"><code>radial-gradient</code></a>实现。</p>
+<p>它的第一个参数定义圆形渐变的中心点，默认为背景的中心，第二个参数定义渐变的形状，可以取值<code>circle</code>（圆形）和<code>ellipse</code>（椭圆），这两个参数可以通过<code>at</code>关键字合并为一个参数，比如<code>circle at 50% -5px</code></p>
+<p>后面的参数和线性填充一样，表示某个确定位置的固定色值，形式为<code>color1 position1, color2 position2</code>，这个位置值是相对虚拟渐变射线的位置值，如果是圆形可以理解为半径</p>
+<p>所以这样的一个椭圆缺口可以通过下面实现：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.top</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">radial-gradient</span>(circle at <span class="number">50%</span> -<span class="number">5px</span>, transparent <span class="number">20px</span>, <span class="number">#73d2d3</span> <span class="number">21px</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数定义了在<code>50%, -5px</code>的横纵坐标位置的一个圆形填充，如果不指定位置如下：</p>
+<p><img src="http://image.oldzhou.cn/Ft5HZrTncSbiqJMnmXAne6e-onT2"></p>
+<p>后面的色值参数实际上省略了一部分，完整的应该是：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.top</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>:  <span class="built_in">radial-gradient</span>(circle at <span class="number">50%</span> -<span class="number">5px</span>,transparent <span class="number">0</span>, transparent <span class="number">20px</span>, <span class="number">#73d2d3</span> <span class="number">21px</span>, <span class="number">#73d2d3</span> <span class="number">100%</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义了在<code>20px</code>范围内是透明色，在<code>21px</code>到填充满都是蓝色，之所以大了<code>1px</code>是为了让边缘平滑。这样切口实现。</p>
+<p>下面实现上下两个色块的交界处的波浪线，可以利用伪元素加上样式为<code>dotted</code>的<code>border</code>实现：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.top</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: -<span class="number">3px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">#f7f7f7</span> <span class="number">6px</span> dotted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>dotted</code>的边框，显示为一系列圆点。标准中没有定义两点之间的间隔大小，视不同实现而定。圆点半径是<code>border-width</code>计算值的一半。</p>
+<p><img src="http://image.oldzhou.cn/FuAr2s9nK8fiPG_G5luffh0pN815"></p>
+<blockquote>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/stripes-background?id=%e4%b8%8d%e8%a7%84%e5%88%99%e5%8d%a1%e7%89%87">不规则卡片@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/radial-gradient">radial-gradient()@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-style">border-style@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="圆和椭圆"><a href="#圆和椭圆" class="headerlink" title="圆和椭圆"></a>圆和椭圆</h1><p>一般我们会使用<code>border-radius</code>实现圆角效果，但是实际上使用<code>border-radius</code>可以实现圆、椭圆、半圆等各种圆形的效果。</p>
+<p>我们常用的可能就是<code>border-radius: 5px</code>，但是实际上它是一个缩写，它的完整写法是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px</span><br></pre></td></tr></table></figure>
+
+<p>这八个取值以<code>/</code>进行分割，每一组四个值，分别代表左上、右上、右下、左下四个角的圆角半径，第一组值是水平方向半径，第二组是垂直方向的半径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">border-radius: 左上角水平圆角半径大小 右上角水平圆角半径大小 右下角水平圆角半径大小 左下角水平圆角半径大小</span><br><span class="line">               / 左上角垂直圆角半径大小 右上角垂直圆角半径大小 右下角垂直圆角半径大小 左下角垂直圆角半径大小</span><br></pre></td></tr></table></figure>
+
+<p>理解了完整的取值，就可以通过设置不同的值来实现不同的圆形。以半圆为例：</p>
+<p><img src="http://image.oldzhou.cn/FjzAnPWXdFuA7jhf7_TME52N7FPx"></p>
+<p>首先矩形的宽度应该是高度的2倍，上图的半圆应该设置的是左上和右上的圆角，而且水平半径应该都是矩形宽度的一半，垂直半径应该等于矩形高度，所以：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.semicircle</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span> <span class="number">50%</span> <span class="number">0</span> <span class="number">0</span> / <span class="number">100%</span> <span class="number">100%</span> <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>border-radius</code>的百分比是相对于<code>offsetWidth</code>和<code>offsetHeight</code>进行设置的，及包括了<code>content</code>、<code>padding</code>以及<code>border</code>的宽度。</p>
+<p>更多的实现起来也就不难了，无非是各种组合。</p>
+<p><img src="http://image.oldzhou.cn/FoVIGXokiPMOlo0NCPkoEfgpEZ_k"></p>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/ellipse">圆与椭圆@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhangxinxu.com/wordpress/2015/11/css3-border-radius-tips/">秋月何时了，CSS3 border-radius知多少@鑫空间鑫生活</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-radius">border-radius@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="四边形"><a href="#四边形" class="headerlink" title="四边形"></a>四边形</h1><p><img src="http://image.oldzhou.cn/FlxewVHNLJBvvy_PXSu1Z4ob5dWP"></p>
+<p>实现一个四边形我首先想到的方案是使用矩形+三角形拼接而成，三角形使用<code>border</code>来实现：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parallel1</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#FFF</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.parallel1</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">100%</span>);</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">50px</span> solid transparent;</span><br><span class="line">  <span class="attribute">border-right-color</span>: <span class="number">#FFF</span>;</span><br><span class="line">  <span class="attribute">border-bottom-color</span>: <span class="number">#FFF</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.parallel1</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translateX</span>(<span class="number">100%</span>);</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">50px</span> solid transparent;</span><br><span class="line">  <span class="attribute">border-left-color</span>: <span class="number">#FFF</span>;</span><br><span class="line">  <span class="attribute">border-top-color</span>: <span class="number">#FFF</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>能够实现，但是代码量是在是不少，而且还占据了两个伪元素。其实有两种更简单的方法，一种是使用<code>transform: skew</code>，<code>skew</code>的意思就是偏离、扭转，它定义了在2D平面上一个对象的歪斜变换，参数可以使一个也可以是两个，当是两个的时候，分别表示沿着横坐标、从坐标扭曲元素的角度。</p>
+<p>它的效果可以看下面的三幅图：</p>
+<p><code>transform: skewX(30deg)</code></p>
+<p><img src="http://image.oldzhou.cn/FgEYRszHBiQ9RCUNpnI5-YZDBHmb"></p>
+<p><code>transform: skewY(30deg)</code></p>
+<p><img src="http://image.oldzhou.cn/FiwuEwmAMoxE3y52uMbkP77c1rma"></p>
+<p><code>transform: skew(30deg)</code></p>
+<p><img src="http://image.oldzhou.cn/FpGOAUJylHDQ7Or8diFZGHXRhGcu"></p>
+<p>所以用它来实现四边形就很简单了：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parallel2</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#FFF</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">skewX</span>(-<span class="number">45deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一种方法是使用<code>clip-path</code>，它可以用来创建一个只有元素的部分区域显示的剪切区域，区域内的部分显示，区域外的隐藏（这个属性替代了已经弃用的<code>clip</code>属性）</p>
+<p>它的可能取值有：</p>
+<ul>
+<li><code>clip-source</code>，用一个SVG的URL来表示剪切元素的路径，比如<code>clip-path: url(resources.svg#c1);</code></li>
+<li><code>geometry-box</code>，为基本形状提供相应的参考矿框盒，可以取值有<code>margin-box</code>、<code>border-box</code>、<code>padding-box</code>、<code>content-box</code>、<code>fill-box</code>等</li>
+<li><code>basic-shape</code>，可以用一些预置的形状来进行剪切，比如<code>circle</code>、<code>epplipse</code>、<code>polygon</code></li>
+</ul>
+<p>用这个属性与使用SVG是很类似的，可以实现多种多样的形状，使用<code>clie-path: polygon(A, B, C, D)</code>就可以实现各种四边形。其中A&#x2F;B&#x2F;C&#x2F;D分别是四个点的坐标值，其中横坐标在前，纵坐标在后：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parallel3</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#FFF</span>;</span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(<span class="number">33%</span> <span class="number">0</span>, <span class="number">100%</span> <span class="number">0</span>, <span class="number">66%</span> <span class="number">100%</span>, <span class="number">0</span> <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以实现类似菱形的四边形：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parallel4</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#FFF</span>;</span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(<span class="number">50%</span> <span class="number">0</span>, <span class="number">100%</span> <span class="number">50%</span>, <span class="number">50%</span> <span class="number">100%</span>, <span class="number">0</span> <span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以实现一个三角形：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parallel5</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#FFF</span>;</span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(<span class="number">0</span> <span class="number">100%</span>, <span class="number">100%</span> <span class="number">100%</span>, <span class="number">100%</span> <span class="number">0</span>);</span><br><span class="line">  <span class="attribute">transition</span>: clip-path <span class="number">0.5s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/Fjpiu_n8Qytes9AF5NsW0zfyeHET"></p>
+<p>简直太强大了。</p>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/parallelogram">parallel四边形@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform-function/skew">skew()@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/clip-path">clip-path@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21725826/answer/19247715">css3中-webkit-transform 的 skew 如何使用？@知乎</a></li>
+</ul>
+</blockquote>
+<h1 id="切角效果"><a href="#切角效果" class="headerlink" title="切角效果"></a>切角效果</h1><p>想实现下面这两种切角效果</p>
+<p><img src="http://image.oldzhou.cn/FrlcN9GSAToCVBLlQWLdyxFwxuKa"></p>
+<p>有三种方法，实际上前面都介绍过，先看实现直角切角效果</p>
+<p>（1）首先可以使用<code>linear-gradient</code>，首先定义一个方向的直线渐变：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.corner1</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">45deg</span>, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) left bottom no-repeat；</span><br><span class="line">  background-size: <span class="number">51%</span>  <span class="number">51%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要注意的是，这个切角是定义的左下角的位置，首先这个「左下角」是由<code>background-position</code>定义的，只不过简写在<code>background</code>属性中</p>
+<p>还要注意的是角度，只需要记住<code>to top</code>是<code>0deg</code>，<code>to right</code>是<code>90deg</code>，计算角度时需要从镜像的起始点出发计算</p>
+<p><img src="http://image.oldzhou.cn/FmvTrDRTVMCA2XEplQu01ZB91opA"></p>
+<p>然后定义了<code>background-size: 51%  51%;</code>相当于只定义了左下角四分之一的背景填充：</p>
+<p><img src="http://image.oldzhou.cn/Fob1EZjScaYgxzMjH7_BNuFYCxut"></p>
+<p>之所以不用<code>50%</code>而是<code>51%</code>，是为了防止有些浏览器在渲染时出现缝隙的问题，和<code>border-radius</code>设置为<code>51%</code>是一样的道理。</p>
+<p>所以按照同理，将另外三个角补充完整即可：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.corner1</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(<span class="number">45deg</span>, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) left bottom no-repeat,</span><br><span class="line">              <span class="built_in">linear-gradient</span>(<span class="number">135deg</span>, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) left top no-repeat,</span><br><span class="line">              <span class="built_in">linear-gradient</span>(-<span class="number">45deg</span>, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) right bottom no-repeat,</span><br><span class="line">              <span class="built_in">linear-gradient</span>(-<span class="number">135deg</span>, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) right top no-repeat;</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">51%</span>  <span class="number">51%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2）也可以使用之前一节学习过的<code>clip-path</code>来实现，将这个切过角的形状作为一个多边形，将各个坐标点描绘出来即可（当然也可以使用内联SVG）</p>
+<p>在描述各点坐标时，可以使用<code>calc</code>这个属性来计算，小心点一点别把横纵坐标搞错就行：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.corner2</span> &#123;</span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(<span class="number">0</span> <span class="number">12px</span>, <span class="number">12px</span> <span class="number">0</span>, <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">12px</span>) <span class="number">0</span>, <span class="number">100%</span> <span class="number">12px</span>,</span><br><span class="line">                     <span class="number">100%</span> <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">12px</span>), <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">12px</span>) <span class="number">100%</span>, <span class="number">12px</span> <span class="number">100%</span>, <span class="number">0</span> <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">12px</span>));</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）圆角切角可以使用<code>radial-gradient</code>实现，原理与使用<code>linear-gradient</code>类似，只是需要额外指定径向渐变的圆心位置：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.corner3</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">radial-gradient</span>(circle at bottom left, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) bottom left no-repeat,</span><br><span class="line">              <span class="built_in">radial-gradient</span>(circle at top left, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) top left no-repeat,</span><br><span class="line">              <span class="built_in">radial-gradient</span>(circle at bottom right, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) bottom right no-repeat,</span><br><span class="line">              <span class="built_in">radial-gradient</span>(circle at top right, transparent <span class="number">12px</span>, <span class="number">#FFF</span> <span class="number">13px</span>) top right no-repeat;</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">51%</span>  <span class="number">51%</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://lhammer.cn/You-need-to-know-css/#/zh-cn/bevel-corners">切角效果@You-need-to-know-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/linear-gradient">linear-gradient()@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="使用一个div实现进度条"><a href="#使用一个div实现进度条" class="headerlink" title="使用一个div实现进度条"></a>使用一个<code>div</code>实现进度条</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bar</span> &#123;</span><br><span class="line">  <span class="attr">--c</span>: <span class="number">#5b8b7b</span>;</span><br><span class="line">  <span class="attr">--h</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attr">--p</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="built_in">var</span>(--h);</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="built_in">calc</span>(<span class="built_in">var</span>(--h) / <span class="number">2</span>);</span><br><span class="line">  <span class="attribute">background-color</span>: lightgray;</span><br><span class="line">  <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(<span class="built_in">var</span>(--c), <span class="built_in">var</span>(--c));</span><br><span class="line">  <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="built_in">var</span>(--p) <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="http://image.oldzhou.cn/FishqPKefkv-UFpfufwRMw-8IS6I"></p>
+<p>为了使完成部分也出现圆角，可以添加一个<code>radial-gradient</code>，利用它可以实现一个圆球：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.circle</span> &#123;</span><br><span class="line">  <span class="attribute">background-image</span>: <span class="built_in">radial-gradient</span>(closest-side circle at <span class="number">50%</span> <span class="number">50%</span>, red, red <span class="number">100%</span>, yellow);</span><br><span class="line">  <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.oldzhou.cn/FggrhOtmhulYd1Gnj_dG7McX9YX3"></p>
+<p>综合起来：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bar</span> &#123;</span><br><span class="line">  <span class="attr">--c</span>: <span class="number">#5b8b7b</span>;</span><br><span class="line">  <span class="attr">--h</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attr">--p</span>: <span class="number">60%</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="built_in">var</span>(--h);</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="built_in">calc</span>(<span class="built_in">var</span>(--h) / <span class="number">2</span>);</span><br><span class="line">  <span class="attribute">background-color</span>: lightgray;</span><br><span class="line">  <span class="attribute">background-image</span>: <span class="built_in">radial-gradient</span>(closest-side circle at <span class="built_in">var</span>(--p) center, <span class="built_in">var</span>(--c), <span class="built_in">var</span>(--c) <span class="number">100%</span>, transparent),</span><br><span class="line">                      <span class="built_in">linear-gradient</span>(<span class="built_in">var</span>(--c), <span class="built_in">var</span>(--c));</span><br><span class="line">  <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">  <span class="attribute">background-size</span>: <span class="number">100%</span>, <span class="built_in">var</span>(--p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，<code>background-size</code>两个取值之间有一个逗号，意味着是对多个背景的设置，一个背景的设置中如果提供了两个数值时，第一个将作为宽度，第二个作为高度，如果只提供了一个数值，那么它将作为宽度值大小，高度值会被设为<code>auto</code>，所以完整的写法是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-size: 100% auto, var(--p) auto;</span><br></pre></td></tr></table></figure>
+
+<p>实现的效果：</p>
+<p><img src="http://image.oldzhou.cn/Fsj-gmkm0X6fDXcs-3u-aFKTRdrn"></p>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5d3eca78e51d4561cb5dde12#heading-37">你未必知道的49个CSS知识点@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/linear-gradient">linear-gradient()@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size">background-size@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/radial-gradient">radial-gradient()@MDN</a></li>
+</ul>
+</blockquote>
+<h1 id="空心圆环"><a href="#空心圆环" class="headerlink" title="空心圆环"></a>空心圆环</h1><p>想到了四种方法来实现空心圆环：</p>
+<p>（1）使用标签嵌套（或者伪元素）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.circle</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">background</span>: red;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.circle</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">130px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">130px</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>);</span><br><span class="line">  <span class="attribute">background</span>: darkcyan;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用标签嵌套和微元素原理一样，缺点是需要设置背景色与整体的背景色一致，并非完全的空心圆环</p>
+<p>（2）使用<code>border-radius</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.circle</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">10px</span> solid red;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>元素本身是透明背景，边框有颜色</p>
+<p>（3）使用<code>box-shadow</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.circle</span> &#123;</span><br><span class="line">  <span class="attribute">margin-left</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">130px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">130px</span>;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span> red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>与上一种方案类似</p>
+<p>（4）使用<code>radial-gradient</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.outer4</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">radial-gradient</span>(circle closest-side, transparent <span class="number">65px</span>, red <span class="number">65px</span>);</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（5）<code>outline</code></p>
+<p>使用<code>outline</code>是无法实现的，因为<code>border-radius</code>不能影响<code>outline</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/27/06%20%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/03%20%E5%B0%8F%E7%B1%B3/03%20%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%87%8D%E6%9E%84%E6%80%BB%E7%BB%93/" rel="prev" title="03 服务端重构总结">
+                  <i class="fa fa-chevron-left"></i> 03 服务端重构总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS44%20%E9%A1%B5%E9%9D%A2%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="next" title="JS44 页面生命周期">
+                  JS44 页面生命周期 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

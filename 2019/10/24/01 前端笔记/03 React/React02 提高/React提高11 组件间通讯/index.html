@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="React与Vue一样，都是通过组件化的思想来开发各个模块，这就必然面临着组件间通信的问题。项目中的组件间关系包括如下几种：  父子组件之间 爷孙组件之间（就是跨级的父子组件） 兄弟组件之间  各种组件间通信的方法都有不同的适用场景，下面分别学习一下。Demo中都使用了React Hooks API，顺道可以复习一下Hooks的基本用法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React提高11 组件间通讯">
+<meta property="og:url" content="https://duola8789.github.io/2019/10/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9811%20%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E8%AE%AF/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="React与Vue一样，都是通过组件化的思想来开发各个模块，这就必然面临着组件间通信的问题。项目中的组件间关系包括如下几种：  父子组件之间 爷孙组件之间（就是跨级的父子组件） 兄弟组件之间  各种组件间通信的方法都有不同的适用场景，下面分别学习一下。Demo中都使用了React Hooks API，顺道可以复习一下Hooks的基本用法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-24T06:23:17.000Z">
+<meta property="article:modified_time" content="2019-10-24T06:23:19.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Redux">
+<meta property="article:tag" content="Context">
+<meta property="article:tag" content="Prop">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/10/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9811%20%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E8%AE%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/10/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9811%20%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E8%AE%AF/","path":"2019/10/24/01 前端笔记/03 React/React02 提高/React提高11 组件间通讯/","title":"React提高11 组件间通讯"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React提高11 组件间通讯 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%BC%A0%E9%80%92props"><span class="nav-number">1.</span> <span class="nav-text">通过传递props</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux"><span class="nav-number">3.</span> <span class="nav-text">Redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Content-API"><span class="nav-number">4.</span> <span class="nav-text">Content API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/10/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9811%20%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E8%AE%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React提高11 组件间通讯 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React提高11 组件间通讯
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2019-10-24 14:23:17 / 修改时间：14:23:19" itemprop="dateCreated datePublished" datetime="2019-10-24T14:23:17+08:00">2019-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>React与Vue一样，都是通过组件化的思想来开发各个模块，这就必然面临着组件间通信的问题。项目中的组件间关系包括如下几种：</p>
+<ol>
+<li>父子组件之间</li>
+<li>爷孙组件之间（就是跨级的父子组件）</li>
+<li>兄弟组件之间</li>
+</ol>
+<p>各种组件间通信的方法都有不同的适用场景，下面分别学习一下。Demo中都使用了React Hooks API，顺道可以复习一下Hooks的基本用法。</p>
+<span id="more"></span>
+
+<h2 id="通过传递props"><a href="#通过传递props" class="headerlink" title="通过传递props"></a>通过传递<code>props</code></h2><p>React中，父组件向子组件传递数据是基础的组件间通信的方式，是通过<code>props</code>完成的。这种方式一般适用于父子组件之间通信。</p>
+<p>父组件向子组件传递<code>props</code>进行通信，子组件向父组件通信则需要调用父组件通过<code>props</code>传递给子组件的函数（下面代码中的<code>changeMsg</code>），这个函数作用于是组父组件自身。子组件调用该函数，将子组件想要传递的信息作为参数，传递给父组件<br>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const Child1 = props =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;child-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h4 onClick=&#123;() =&gt; props.changeMsg(&#x27;By Child1&#x27;)&#125;&gt;Child1 -- &#123;props.msg&#125;&lt;/h4&gt;</span><br><span class="line">      &lt;Grandson1 &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Parent = () =&gt; &#123;</span><br><span class="line">  const [msg, setMsg] = useState(&#x27;start&#x27;);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      setMsg(&#x27;end&#x27;);</span><br><span class="line">    &#125;, 2000);</span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;parent-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h3&gt;Parent -- &#123;msg&#125;&lt;/h3&gt;</span><br><span class="line">      &lt;Child1 msg=&#123;msg&#125; changeMsg=&#123;newMsg =&gt; setMsg(newMsg)&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default function () &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h2&gt;Demo14 -- 组件间通信&lt;/h2&gt;</span><br><span class="line">      &lt;Parent /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式也适用于爷孙组件之间进行通信，但是需要通过子组件作为周转，在子组件中，使用<code>...</code>运算符将父组件的全部的<code>props</code>传递给更深层次的孙组件。孙子组件想爷爷组件传递消息也是通过<code>...</code>传递的函数进行的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const Child1 = props =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;child-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h4 onClick=&#123;() =&gt; props.changeMsg(&#x27;By Child1&#x27;)&#125;&gt;Child1 -- &#123;props.msg&#125;&lt;/h4&gt;</span><br><span class="line">      &lt;Grandson1 &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>至于兄弟组件之间，也可以使用这个方式进行通讯，但是必须借由相同的父组件，<code>Child1</code>将数据传递给<code>Parent</code>，再通过<code>Parent</code>将数据由<code>props</code>传递给<code>Child2</code>，组件比较多的时候不便于管理和维护。</p>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>可以引入第三方的观察者模式，来实现组件间的通信，这种方式适用于上面的所有情况。</p>
+<p>观察者模式是一种比较常见的设计模式，观察者模式也叫做『发布-订阅』模式，发布者发布事件，订阅者监听事件并作出反应。</p>
+<p>面试的时候也经常遇到手写建议的观察者模式的情况，下面是一种简易的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">EventEmitter</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span> = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">on</span>(<span class="params">name, cb</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>[name]) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">events</span>[name] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span>[name].<span class="title function_">push</span>(cb);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">emit</span>(<span class="params">name, ...params</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>[name]) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span>[name].<span class="title function_">forEach</span>(<span class="function"><span class="params">cb</span> =&gt;</span> <span class="title function_">cb</span>(...params));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">off</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>[name]) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span>[name] = [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在<code>Child2</code>中订阅<code>msg</code>事件，并且在订阅的回调函数中修改其内部对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const Child2 = () =&gt; &#123;</span><br><span class="line">  const [msg, setMsg] = useState(&#x27;Child2&#x27;);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    event.on(&#x27;msg&#x27;, newMsg =&gt; setMsg(newMsg));</span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;child-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h4&gt;Child2 -- &#123;msg&#125;&lt;/h4&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>Child1</code>中发布<code>msg</code>事件，发布的时候就可以将数据从<code>Child1</code>传递到<code>Child2</code>中（实际上发布订阅模式就是将函数进行传递，在上面的例子中，我们是将<code>setMsg</code>函数作为参数传递到了订阅的回调函数中）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const Child1 = props =&gt; &#123;</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      event.emit(&#x27;msg&#x27;, &#x27;Message from Child1&#x27;);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;child-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h4 onClick=&#123;() =&gt; props.changeMsg(&#x27;By Child1&#x27;)&#125;&gt;Child1 -- &#123;props.msg&#125;&lt;/h4&gt;</span><br><span class="line">      &lt;Grandson1 &#123;...props&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p>利用Redux框架可以管理复杂的组件间通讯的状况，它可以解决文章一开始提出的多种情况的组件间通讯。</p>
+<p>之前<a href="https://duola8789.github.io/2019/03/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux01%20%E5%85%A5%E9%97%A8/">学习过Redux</a>，但是实际工作中没有用过，总是忘，但是这次回顾还是顺利的多，只不过没有实际经验，Redux的实际维护缺乏太多工程实践了。</p>
+<p>下面的Demo使用了<a href="https://duola8789.github.io/2019/03/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux03%20React-Redux/">React-Redux</a>，它提供了很多遍历的API，更加方便</p>
+<p>首先改造了根组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; useState, useEffect &#125; from &#x27;react&#x27;;</span><br><span class="line">import &#123; connect, Provider &#125; from &#x27;react-redux&#x27;;</span><br><span class="line">import store from &#x27;@/store/&#x27;;</span><br><span class="line"></span><br><span class="line">const mapStateToProps = (state) =&gt; (&#123; rootMsg: state.reducer14.msg &#125;);</span><br><span class="line">const mapDispatchToProps = &#123; changeMsg: where =&gt; (&#123; type: &#x27;changeMsg&#x27;, payload: &#123; where &#125;&#125;) &#125;;</span><br><span class="line"></span><br><span class="line">const Demo14 = (&#123; rootMsg, changeMsg &#125;) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h2 onClick=&#123;() =&gt; changeMsg(&#x27;Root&#x27;)&#125;&gt;Demo14 -- 组件间通信 -- &#123;rootMsg&#125; &lt;/h2&gt;</span><br><span class="line">      &lt;Parent /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Demo14Container = connect(mapStateToProps, mapDispatchToProps)(Demo14);</span><br><span class="line"></span><br><span class="line">export default function () &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">      &lt;Demo14Container /&gt;</span><br><span class="line">    &lt;/Provider&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>connect</code>方法生成一个新的注入了Redux相关方法的组件，通过<code>mapStateToProps</code>把<code>Store</code>中的<code>state</code>映射为UI组件的<code>prop</code>，通过<code>mapDispatchToProps</code>将<code>dispatch</code>也映射为<code>props</code>的方法（有没有很熟悉的感觉，Vuex的<code>mapState</code>&#x2F;<code>mapMutations</code>），通过<code>&lt;Provider&gt;</code>注入<code>store</code>。</p>
+<p>同样，也通过<code>connect</code>方法生成包装后的<code>Grandson2Container</code>组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const Grandson2 = (&#123; rootMsg, changeMsg &#125;) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;grandson-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h5 onClick=&#123;() =&gt; changeMsg(&#x27;Grandson1&#x27;)&#125;&gt;Grandson1 -- &#123;rootMsg&#125;&lt;/h5&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Grandson2Container = connect(mapStateToProps, mapDispatchToProps)(Grandson2);</span><br></pre></td></tr></table></figure>
+
+<p>这样，根组件和<code>Grandson2</code>就通过Redux实现了通信，兄弟组件之间也同样可以实现。</p>
+<h2 id="Content-API"><a href="#Content-API" class="headerlink" title="Content API"></a>Content API</h2><p>之前学习过<a href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9807%20Context/">React的Content API</a>，这个API也可以实现组件间通讯的功能。</p>
+<p>这个API有过较大的变化，Demo中使用的都是新的API。要注意的是，官方文档也提到，使用Context要谨慎，因为它会使组件重用更加困难。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">// 初始化一个 Context</span><br><span class="line">const Context = React.createContext();</span><br><span class="line"></span><br><span class="line">const Grandson3 = () =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;Context.Consumer&gt;</span><br><span class="line">      &#123;context =&gt; (</span><br><span class="line">        &lt;div className=&#123;style[&#x27;grandson-container&#x27;]&#125;&gt;</span><br><span class="line">          &lt;h5 onClick=&#123;() =&gt; context.changeMsg(&#x27;By Grandson3&#x27;)&#125;&gt;Grandson3 -- &#123;context.msgToGrand3&#125;&lt;/h5&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      )&#125;</span><br><span class="line">    &lt;/Context.Consumer&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Child3 = () =&gt; &#123;</span><br><span class="line">  const [msg] = useState(&#x27;Child3&#x27;);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;style[&#x27;child-container&#x27;]&#125;&gt;</span><br><span class="line">      &lt;h4&gt;Child3 -- &#123;msg&#125;&lt;/h4&gt;</span><br><span class="line">      &lt;Grandson3 /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Parent = () =&gt; &#123;</span><br><span class="line">  const [msg, setMsg] = useState(&#x27;start&#x27;);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;Context.Provider value=&#123;&#123;</span><br><span class="line">      msgToGrand3: msg,</span><br><span class="line">      changeMsg: newMsg =&gt; setMsg(newMsg)</span><br><span class="line">    &#125;&#125;&gt;</span><br><span class="line">      &lt;div className=&#123;style[&#x27;parent-container&#x27;]&#125;&gt;</span><br><span class="line">        &lt;h3&gt;Parent -- &#123;msg&#125;&lt;/h3&gt;</span><br><span class="line">        &lt;Child3 /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/Context.Provider&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default Parent;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式首先通过<code>React.createContext</code>初始化一个<code>xxxContext</code>，然后<code>xxxContext.Provider</code>作为顶层组件，接受一个<code>value</code>作为<code>prop</code>，将数据以对象的形式传入（包括方法），<code>xxxContext.Consumer</code>作为目标组件，其内部通过一个函数返回需要接受数据的组件，这个函数的参数就是<code>context</code>，它就是从<code>Provider</code>中传过来的数据。</p>
+<p>这种方式在有多个数据需要传递时，不太容易管理。</p>
+<p>还有就是Context结合Hooks，可以实现Redux类似的数据共享的作用，可以参考<a target="_blank" rel="noopener" href="https://fed.taobao.org/blog/2019/05/17/use-the-react-hooks-instead-of-the-redux/">这篇文章</a>。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://fed.taobao.org/blog/2016/11/18/react-components-communication/">React 组件间通讯@淘宝FED</a></li>
+<li><a href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9807%20Context/">React提高07 Context@不负好时光</a></li>
+<li><a href="https://duola8789.github.io/2019/03/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux01%20%E5%85%A5%E9%97%A8/">Redux01 入门@不负好时光</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Redux/" rel="tag"># Redux</a>
+              <a href="/tags/Context/" rel="tag"># Context</a>
+              <a href="/tags/Prop/" rel="tag"># Prop</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/HTML+CSS39%20%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C/" rel="prev" title="HTML+CSS39 渐变效果">
+                  <i class="fa fa-chevron-left"></i> HTML+CSS39 渐变效果
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/31/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS63%20IntersectionObserver%20API/" rel="next" title="JS63 IntersectionObserver API">
+                  JS63 IntersectionObserver API <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

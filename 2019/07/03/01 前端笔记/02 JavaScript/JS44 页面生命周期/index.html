@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="W3C指定了Page Lifecycle API，统一了网页从诞生到卸载的行为模式，并且定义了新的事件，允许开发者响应网页状态的各种转换。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS44 页面生命周期">
+<meta property="og:url" content="https://duola8789.github.io/2019/07/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS44%20%E9%A1%B5%E9%9D%A2%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="W3C指定了Page Lifecycle API，统一了网页从诞生到卸载的行为模式，并且定义了新的事件，允许开发者响应网页状态的各种转换。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FjBmzZhvyUI2JkbKO9kyi4KgYnEi">
+<meta property="article:published_time" content="2019-07-03T01:55:00.000Z">
+<meta property="article:modified_time" content="2019-07-03T01:55:00.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Page Life API">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FjBmzZhvyUI2JkbKO9kyi4KgYnEi">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/07/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS44%20%E9%A1%B5%E9%9D%A2%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/07/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS44%20%E9%A1%B5%E9%9D%A2%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/","path":"2019/07/03/01 前端笔记/02 JavaScript/JS44 页面生命周期/","title":"JS44 页面生命周期"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS44 页面生命周期 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%9A%84API"><span class="nav-number">1.</span> <span class="nav-text">新的API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">常见场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#focus%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">focus事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#blur%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">blur事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visibilitychange%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">visibilitychange事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#freeze"><span class="nav-number">4.4.</span> <span class="nav-text">freeze</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resume%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.5.</span> <span class="nav-text">resume事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pageshow%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.6.</span> <span class="nav-text">pageshow事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pagehide%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.7.</span> <span class="nav-text">pagehide事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#beforeunload%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.8.</span> <span class="nav-text">beforeunload事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unload%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.9.</span> <span class="nav-text">unload事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E7%8A%B6%E6%80%81"><span class="nav-number">5.</span> <span class="nav-text">获取页面状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOMContentLoaded%E4%BA%8B%E4%BB%B6%E5%92%8Cload%E4%BA%8B%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">DOMContentLoaded事件和load事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/07/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS44%20%E9%A1%B5%E9%9D%A2%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JS44 页面生命周期 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS44 页面生命周期
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-07-03 09:55:00" itemprop="dateCreated datePublished" datetime="2019-07-03T09:55:00+08:00">2019-07-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>W3C指定了Page Lifecycle API，统一了网页从诞生到卸载的行为模式，并且定义了新的事件，允许开发者响应网页状态的各种转换。</p>
+<span id="more"></span>
+
+<h2 id="新的API"><a href="#新的API" class="headerlink" title="新的API"></a>新的API</h2><p><img src="http://image.oldzhou.cn/FjBmzZhvyUI2JkbKO9kyi4KgYnEi"></p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>网页的生命周期被分为了六个阶段，每个时刻只可能处于其中一个阶段。</p>
+<p>（1）Active 阶段</p>
+<p>网页处于可见状态，且拥有输入焦点。</p>
+<p>（2）Passive阶段</p>
+<p>此阶段网页可见，但是没有输入焦点，无法接受输入。UI更新（比如动画）仍然在执行。</p>
+<p>（3）Hidden阶段</p>
+<p>此阶段用户的桌面被其他窗口占据，网页不可见，当尚未冻结。UI更新不再执行。</p>
+<p>（4）Terminated阶段</p>
+<p>由于用户主动关闭窗口或者在同一个窗口但前往其他页面，导致当前页面被浏览器卸载并从内存中清除，页面进入此阶段。</p>
+<p>这个阶段总是在Hidden阶段之后发生，此阶段不会自动任何新任务，正在进行的任务可能会被终止。</p>
+<p>（5）Frozen阶段</p>
+<p>页面处于Hidden阶段时间过长，但网页一直未关闭，页面会被冻结，进入Frozen阶段。也有可能处于可见状态的页面长时间没有操作，也会进入Frozen阶段。</p>
+<p>这个阶段，网页不会再被分配CPU资源，定时器、回调函数、网络请求、DOM操作都不会执行，但是正在执行的任务会被执行完。浏览器可能会允许Frozen阶段的页面，周期性复苏一小段时间，短暂变回Hidden阶段，允许一小部分任务执行。</p>
+<p>（6）Discarded阶段</p>
+<p>网页长时间处于Frozen阶段，用户未唤醒页面，就会进入Discarded阶段。此阶段浏览器自动卸载网页，清楚网页内存占用。Passive阶段的网页如果长时间没有互动，也可能直接进入Discarded阶段。</p>
+<p>这个阶段一般是系统强制执行，任何新任务和JavaScript代码都不能执行。</p>
+<p>网页Discarded周，Tab窗口还在，如果用户重新访问Tab，浏览器会重新向服务器发出请求，再次加载网页，回到Active阶段</p>
+<h2 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h2><p>（1）用户打开网页，切换到其他App，过了一会又重新回到网页</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active → Hidden → Active</span><br></pre></td></tr></table></figure>
+
+<p>（2）用户打开网页，切换到其他App，并且长时间使用后者，导致系统自动丢弃网页</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active → Hidden → Frozen → Discarded</span><br></pre></td></tr></table></figure>
+
+<p>（3）用户打开网页，切换到其他App，然后在任务管理器中将浏览器进程清楚。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active → Hidden → Terminated</span><br></pre></td></tr></table></figure>
+
+<p>（4）系统丢弃了某个Tab里面的页面后，用户重新打开这个Tab</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Discarded → Active</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><p>网页的生命周期是在所有帧触发，不管是底层的帧，还是内嵌的帧。也就是说，内嵌的<code>&lt;iframe&gt;</code>网页跟顶层的网页一样，都会同时监听到所有的生命周期事件。</p>
+<h3 id="focus事件"><a href="#focus事件" class="headerlink" title="focus事件"></a>focus事件</h3><p><code>focus</code>事件在页面获得输入焦点时触发，比如网页从Passive阶段变为Active阶段。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;focus&#x27;</span>, <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;focus&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="blur事件"><a href="#blur事件" class="headerlink" title="blur事件"></a>blur事件</h3><p><code>blur</code>事件在页面失去输入焦点时触发，比如页面从Active阶段变为Passive阶段。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;blur&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;blur&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="visibilitychange事件"><a href="#visibilitychange事件" class="headerlink" title="visibilitychange事件"></a>visibilitychange事件</h3><p><code>visibilitychange</code>事件在网页可见状态发生变化时触发，一般发生在下面的场景：</p>
+<ol>
+<li>用户隐藏页面（切换Tab，最小化浏览器），页面由Active阶段变为Hidden阶段</li>
+<li>用户重新访问隐藏的页面，页面由Hidden阶段进入Active阶段</li>
+<li>用户关闭页面，页面先进入Hidden阶段，然后进入Terminated阶段。</li>
+</ol>
+<p>Page Visibility API在<code>document</code>对象上新增了<code>document.visibilityState</code>属性，该属性返回一个字符串，表示页面当前的可见性状态，有三个可能的值：</p>
+<ul>
+<li><code>hidden</code>，页面彻底不可见</li>
+<li><code>visibile</code>，页面至少一部分课件</li>
+<li><code>prerender</code>，页面即将或正在渲染，处于不可见状态</li>
+</ul>
+<p>通过监听<code>visibilitychange</code>事件，判断<code>document.visibilityState</code>属性，就可以获得页面的可见状态。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;visibilitychange&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">document</span>.<span class="property">visibilityState</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;visibilitychange&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">document</span>.<span class="property">visibilityState</span>));</span><br></pre></td></tr></table></figure>
+
+<p>由于历史兼容性的原因，<code>document</code>上定义了<code>hidden</code>属性，这是一个只读的属性，返回一个布尔值，表示当前页面是否可见。应当尽量避免使用这个属性。</p>
+<h3 id="freeze"><a href="#freeze" class="headerlink" title="freeze"></a>freeze</h3><p><code>freeze</code>事件在网页进入Frozen阶段时触发，这个事件的监听函数，最长只能运行500毫秒，并且只能复用已经打开的网络连接，不能发起新的网络请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;freeze&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;freeze&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="property">onfreeze</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，从Frozen阶段进入Discarded阶段，不会触发任何事件，无法指定回调函数，只能在进入Frozen阶段时指定。</p>
+<h3 id="resume事件"><a href="#resume事件" class="headerlink" title="resume事件"></a>resume事件</h3><p><code>resume</code>事件在网页离开Frozen阶段，变为Active&#x2F;Passive&#x2F;Hidden阶段时触发</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;resume&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;resume&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="property">resume</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="pageshow事件"><a href="#pageshow事件" class="headerlink" title="pageshow事件"></a>pageshow事件</h3><p><code>pageshow</code>事件在用户加载网页时触发，有可能是全新的页面加载，也有可能是从缓存中获取的页面。如果是从缓存中获取的页面，则该事件对象的<code>event.persisted</code>为<code>true</code>，否则为<code>false</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;pageshow&#x27;</span>, <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;pageshow&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p><strong>这个事件与页面的可见性无关</strong>，至于浏览器的History记录变化有关。</p>
+<h3 id="pagehide事件"><a href="#pagehide事件" class="headerlink" title="pagehide事件"></a>pagehide事件</h3><p><code>pagehide</code>事件在用户离开网页、进入另一个网页时触发。它同样与页面的可见性没有关系，至于浏览器的History记录有关系。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;pagehide&#x27;</span>, <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;pagehide&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>如果浏览器能够将当前页面添加到缓存以供稍后重用，那么事件对象的<code>event.persisted</code>属性为<code>true</code>，否则为<code>false</code>。如果为<code>true</code>时，页面添加到了缓存，则页面进入Frozen阶段，否则进入Terminated状态。</p>
+<h3 id="beforeunload事件"><a href="#beforeunload事件" class="headerlink" title="beforeunload事件"></a>beforeunload事件</h3><p><code>beforeunload</code>事件在窗口或文档即将卸载时触发，改时间发生时，文档依然可以见，此时卸载仍可取消。经过这个时间，网页进入Terminated状态。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;beforeunload&#x27;</span>, <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">  event.<span class="property">returnValue</span> = <span class="string">&#x27;any content&#x27;</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>当为<code>event.returnValue</code>显式的设置任何值时，弹出确认窗口让用户自行选择是否关闭当前页面。没有赋值时，该事件不做任何响应。</p>
+<p>从2011年5月25日起,  HTML5规范声明：在该事件的处理函数中调用下列弹窗相关的方法时,可以忽略不执行,<code>window.showModalDialog()</code>, <code>window.alert()</code>, <code>window.confirm()</code>和<code>window.prompt()</code></p>
+<p>要注意的是，<code>beforeunload</code>事件只应该用于提醒用户尚未保存的更改，如果这些更改已经保存，那么这个事件应该被移除。这个事件不应该无条件的加载到页面，因为这样做在某些情况下会造成性能的问题。</p>
+<h3 id="unload事件"><a href="#unload事件" class="headerlink" title="unload事件"></a>unload事件</h3><p><code>unload</code>事件在页面正在卸载时触发，经过这个事件，页面进入Terminated状态。</p>
+<p>注意，不建议使用<code>unload</code>事件，因为这个时间是不可靠的，并且可能在某些情况下会有性能问题。</p>
+<h2 id="获取页面状态"><a href="#获取页面状态" class="headerlink" title="获取页面状态"></a>获取页面状态</h2><p>如果页面处于Active、Passive、Hidden阶段，可以通过下面代码获取页面状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getState</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="property">visibilityState</span> === <span class="string">&#x27;hidden&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hidden&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="title function_">hasFocus</span>()) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;active&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;passive&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果页面处于Frozen和Terminated阶段，由于定时器代码不会执行，只能通过事件监听判断状态，进入Frozen阶段，可以监听<code>freeze</code>时间，进入<code>Terminated</code>阶段，可以监听<code>pageHide</code>阶段</p>
+<p>如果某个选项卡处于Frozen阶段，就随时有可能被系统丢弃，进入Terminated阶段。如果用户再次点击该选项卡，浏览器会重新加载该页面。可以通过判断<code>document.wasDicarded</code>属性，为<code>true</code>证明网页曾经被丢弃过。</p>
+<p>如果页面被丢弃过，<code>window</code>对象上会新增<code>window.clientId</code>和<code>window.discardedClientId</code>两个属性，用来恢复丢弃前的状态</p>
+<h2 id="DOMContentLoaded事件和load事件"><a href="#DOMContentLoaded事件和load事件" class="headerlink" title="DOMContentLoaded事件和load事件"></a><code>DOMContentLoaded</code>事件和<code>load</code>事件</h2><p>在页面开始加载时，会先后触发这两个事件。可以通过监听<code>DOMContentLoaded</code>事件和<code>load</code>事件来衡量页面的加载情况。</p>
+<p><code>DOMContentLoaded</code>事件表示DOM树构建完毕，可以安全的访问DOM树所有节点、绑定事件等（不需要等待图片、音视频等资源下载完成），jQuery的<code>ready</code>事件监听的就是这个事件）</p>
+<p>而<code>load</code>事件表示所有资源都已经加载完毕，图片、背景内容都完成渲染，页面出于可交互状态，jQuery的<code>load</code>事件监听的就是这个事件</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/11/page_lifecycle_api.html">Page Lifecycle API 教程@阮一峰的网络日志</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/10/page_visibility_api.html">Page Visibility API 教程@阮一峰的网络日志</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload">beforeunload@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/updates/2018/07/page-lifecycle-api#state-frozen">Page Lifecycle API@Google Developers</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Page-Life-API/" rel="tag"># Page Life API</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/30/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/HTML+CSS01%20CSS%E6%8A%80%E5%B7%A7/" rel="prev" title="HTML+CSS01 CSS技巧">
+                  <i class="fa fa-chevron-left"></i> HTML+CSS01 CSS技巧
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9834%20JavaScript%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" rel="next" title="零散专题34 JavaScript的垃圾回收机制">
+                  零散专题34 JavaScript的垃圾回收机制 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

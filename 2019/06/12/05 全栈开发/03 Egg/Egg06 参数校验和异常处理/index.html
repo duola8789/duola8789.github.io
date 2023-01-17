@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Egg中参数校验和异常处理的实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Egg06 参数校验和异常处理">
+<meta property="og:url" content="https://duola8789.github.io/2019/06/12/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg06%20%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C%E5%92%8C%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Egg中参数校验和异常处理的实践">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FkBFmprqHzBa_uCoTmIjt38GLCbW">
+<meta property="article:published_time" content="2019-06-12T08:25:09.000Z">
+<meta property="article:modified_time" content="2019-06-12T08:25:11.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="validate">
+<meta property="article:tag" content="error">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FkBFmprqHzBa_uCoTmIjt38GLCbW">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/06/12/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg06%20%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C%E5%92%8C%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/06/12/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg06%20%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C%E5%92%8C%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/","path":"2019/06/12/05 全栈开发/03 Egg/Egg06 参数校验和异常处理/","title":"Egg06 参数校验和异常处理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Egg06 参数校验和异常处理 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.</span> <span class="nav-text">参数校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.1.</span> <span class="nav-text">手动校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#egg-validate"><span class="nav-number">1.2.</span> <span class="nav-text">egg-validate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">统一异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">中间件的加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E7%9A%84%E9%94%99%E8%AF%AF%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.</span> <span class="nav-text">统一的错误对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/06/12/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg06%20%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C%E5%92%8C%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Egg06 参数校验和异常处理 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Egg06 参数校验和异常处理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2019-06-12 16:25:09 / 修改时间：16:25:11" itemprop="dateCreated datePublished" datetime="2019-06-12T16:25:09+08:00">2019-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Egg/" itemprop="url" rel="index"><span itemprop="name">Egg</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Egg中参数校验和异常处理的实践</p>
+<span id="more"></span>
+
+<h2 id="参数校验"><a href="#参数校验" class="headerlink" title="参数校验"></a>参数校验</h2><h3 id="手动校验"><a href="#手动校验" class="headerlink" title="手动校验"></a>手动校验</h3><p>之前的参数都是在Controller的入口处，手动的进行校验：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">index</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;ctx &#125; = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">const</span> &#123; query &#125; = ctx.<span class="property">request</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; type &#125; = query</span><br><span class="line">    <span class="comment">// 缺少参数，没法查</span></span><br><span class="line">    <span class="keyword">if</span> (!type) &#123;</span><br><span class="line">      <span class="keyword">const</span> errMsg = <span class="string">&#x27;缺少参数&#x27;</span></span><br><span class="line">      ctx.<span class="property">response</span>.<span class="property">status</span> = <span class="variable language_">this</span>.<span class="property">config</span>.<span class="property">httpCodeHash</span>.<span class="property">badRequest</span></span><br><span class="line">      ctx.<span class="property">response</span>.<span class="property">body</span> = ctx.<span class="property">helper</span>.<span class="title function_">makeErrorResponse</span>(errMsg)</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">logger</span>.<span class="title function_">error</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(errMsg))</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 响应内容</span></span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> ctx.<span class="property">service</span>.<span class="property">settings</span>.<span class="title function_">findSettings</span>(type)</span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">status</span> = <span class="variable language_">this</span>.<span class="property">config</span>.<span class="property">httpCodeHash</span>.<span class="property">ok</span></span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">body</span> = data</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">body</span> = err.<span class="property">message</span> || <span class="string">&#x27;查询规则错误&#x27;</span></span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">status</span> = <span class="variable language_">this</span>.<span class="property">config</span>.<span class="property">httpCodeHash</span>.<span class="property">serverError</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">logger</span>.<span class="title function_">error</span>(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样很很导致大量的代码冗余，每个Controll都要写这样进行校验，如果失败手动返回错误结果（实际上参数校验失败也应该统一处理，后面的异常处理部分会提到）</p>
+<h3 id="egg-validate"><a href="#egg-validate" class="headerlink" title="egg-validate"></a><code>egg-validate</code></h3><p>实际上使用<a target="_blank" rel="noopener" href="https://github.com/eggjs/egg-validate">egg-validate</a>插件可以大大简化和标准化参数校验的流程。</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i egg-validate --save</span><br></pre></td></tr></table></figure>
+
+<p>需要在<code>plugin.js</code>中开启插件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">validate</span> = &#123;</span><br><span class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">package</span>: <span class="string">&#x27;egg-validate&#x27;</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>egg-validate</code>实际上是由<a target="_blank" rel="noopener" href="https://github.com/node-modules/parameter">parameter</a>这个库封装而来，它可以针对很多类型的参数进行校验，比如<code>string</code>、<code>dateTime</code>、<code>number</code>、<code>enum</code>等，具体的使用方法可以参考它的文档。</p>
+<p>使用<code>egg-validate</code>进行参数校验的正确姿势：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Controller</span> = <span class="built_in">require</span>(<span class="string">&#x27;egg&#x27;</span>).<span class="property">Controller</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建规则的校验规则</span></span><br><span class="line"><span class="keyword">const</span> createRule = &#123;</span><br><span class="line">  <span class="attr">type</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;enum&#x27;</span>, <span class="attr">values</span>: [ <span class="string">&#x27;pre&#x27;</span>, <span class="string">&#x27;single&#x27;</span>, <span class="string">&#x27;other&#x27;</span> ] &#125;,</span><br><span class="line">  <span class="attr">name</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>, <span class="attr">trim</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  <span class="attr">packageName</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>, <span class="attr">trim</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  <span class="attr">content</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;object&#x27;</span> &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PrivacyController</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Controller</span> &#123;</span><br><span class="line">  <span class="comment">// 新建预设规则</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">create</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span></span><br><span class="line">    <span class="keyword">const</span> &#123; name, packageName, type, content &#125; = ctx.<span class="property">request</span>.<span class="property">body</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 参数校验</span></span><br><span class="line">    ctx.<span class="title function_">validate</span>(createRule, ctx.<span class="property">request</span>.<span class="property">body</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建新规则</span></span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> ctx.<span class="property">service</span>.<span class="property">settings</span>.<span class="title function_">createSetting</span>(name.<span class="title function_">trim</span>(), packageName.<span class="title function_">trim</span>(), type.<span class="title function_">trim</span>(), content)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建成功</span></span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">status</span> = <span class="variable language_">this</span>.<span class="property">config</span>.<span class="property">httpCodeHash</span>.<span class="property">created</span>.<span class="property">code</span></span><br><span class="line">    ctx.<span class="property">response</span>.<span class="property">body</span> = insertSetting</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">PrivacyController</span></span><br></pre></td></tr></table></figure>
+
+<p><code>ctx.validate</code>的第一个参数就是校验的规则，第二个参数是被校验的参数，我们的请求方法是POST，所有的参数都在<code>body</code>中，所以传入的是<code>ctx.request.body</code></p>
+<p>如果参数校验没有通过，将会抛出一个<code>status</code>为<code>422</code>的异常：</p>
+<p><img src="http://image.oldzhou.cn/FkBFmprqHzBa_uCoTmIjt38GLCbW"></p>
+<p>这个错误我们没有在Controller中捕获，后面会提到是如何处理的。</p>
+<p>要注意的是，在校验规则中，某些类型是可以传入自定义的错误提示信息的，比如对<code>string</code>的校验，如果使用了<code>formate</code>选项，那么传入的<code>message</code>就会有效，其他时刻传入<code>message</code>无效，无法自定义错误提示信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> indexRule = &#123;</span><br><span class="line">  <span class="attr">id</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>, <span class="attr">trim</span>: <span class="literal">true</span>, <span class="attr">format</span>: <span class="regexp">/^.&#123;24&#125;$/</span>, <span class="attr">message</span>: <span class="string">&#x27;非法ID&#x27;</span> &#125;, <span class="comment">// Mongo生成的ID长度为24位</span></span><br><span class="line">  <span class="attr">packageName</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>, <span class="attr">trim</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查看它的源码，发现它只有显示或者隐式（<code>type</code>为<code>email</code>等）这种情况下才会提示自定义的提示信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">checkString</span>(<span class="params">rule, value</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> value !== <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">t</span>(<span class="string">&#x27;should be a string&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// if required === false, set allowEmpty to true by default</span></span><br><span class="line">  <span class="keyword">if</span> (!rule.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;allowEmpty&#x27;</span>) &amp;&amp; rule.<span class="property">required</span> === <span class="literal">false</span>) &#123;</span><br><span class="line">    rule.<span class="property">allowEmpty</span> = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> allowEmpty = rule.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;allowEmpty&#x27;</span>)</span><br><span class="line">    ? rule.<span class="property">allowEmpty</span></span><br><span class="line">    : rule.<span class="property">empty</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!value) &#123;</span><br><span class="line">    <span class="keyword">if</span> (allowEmpty) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">t</span>(<span class="string">&#x27;should not be empty&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (rule.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;max&#x27;</span>) &amp;&amp; value.<span class="property">length</span> &gt; rule.<span class="property">max</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">t</span>(<span class="string">&#x27;length should smaller than %s&#x27;</span>, rule.<span class="property">max</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (rule.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;min&#x27;</span>) &amp;&amp; value.<span class="property">length</span> &lt; rule.<span class="property">min</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">t</span>(<span class="string">&#x27;length should bigger than %s&#x27;</span>, rule.<span class="property">min</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (rule.<span class="property">format</span> &amp;&amp; !rule.<span class="property">format</span>.<span class="title function_">test</span>(value)) &#123;</span><br><span class="line">    <span class="keyword">return</span> rule.<span class="property">message</span> || <span class="variable language_">this</span>.<span class="title function_">t</span>(<span class="string">&#x27;should match %s&#x27;</span>, rule.<span class="property">format</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">checkEnum</span>(<span class="params">rule, value</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(rule.<span class="property">values</span>)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;check enum need array type values&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (rule.<span class="property">values</span>.<span class="title function_">indexOf</span>(value) === -<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">t</span>(<span class="string">&#x27;should be one of %s&#x27;</span>, rule.<span class="property">values</span>.<span class="title function_">join</span>(<span class="string">&#x27;, &#x27;</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有时间想提一个PR，支持所有的类型校验都支持自定义提示信息，但是现在由于无法完全自定义，所以索性在异常处理的时候不对外暴漏具体的<code>message</code>了，只给出统一的参数校验失败的提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;code&quot;</span>: -<span class="number">1</span>,</span><br><span class="line">  <span class="string">&quot;message&quot;</span>: <span class="string">&quot;Validation Failed&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统一异常处理"><a href="#统一异常处理" class="headerlink" title="统一异常处理"></a>统一异常处理</h2><p>一开始我都是在Controller中使用<code>try...catch</code>来捕获错误，每个Controller都这样做很烦，虽然编写了一个helper中的生成错误响应的方法，但是到处都要调用也很麻烦。</p>
+<p>在Controller和Service中都有可能抛出异常，这也是Egg推荐的编码方式。当发现客户端参数传递错误或者调用后端服务异常时，通过抛出异常的方式来进行中断</p>
+<p>常见的终端的情形有：</p>
+<ol>
+<li>Controller中<code>this.ctx.validate</code>进行参数校验，失败抛出异常</li>
+<li>Service中调用<code>this.ctx.curl()</code>进行HTTP请求，可能由于网络问题等原因抛出服务端异常</li>
+<li>Service中获取到<code>this.ctx.curl()</code>的调用失败的结果，也会抛出异常</li>
+<li>其他意料之外的错误，也会抛出异常</li>
+</ol>
+<p>Egg提供了默认的异常处理，但是可能与系统中统一的接口约定不一致，因此需要自己实现一个统一错误处理的中间件来对错误处理。</p>
+<p>在<code>app/middleware</code>目录下新建<code>errorHanlder.js</code>文件，新建一个中间件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/middleware/error_handler.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">errorHandler</span>(<span class="params">ctx, next</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">next</span>()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 所有的异常都在 app 上触发一个 error 事件，框架会记录一条错误日志</span></span><br><span class="line">      ctx.<span class="property">app</span>.<span class="title function_">emit</span>(<span class="string">&#x27;error&#x27;</span>, err, ctx)</span><br><span class="line">      <span class="keyword">const</span> status = err.<span class="property">status</span> || <span class="number">500</span></span><br><span class="line">      <span class="keyword">const</span> message = err.<span class="property">message</span> || <span class="string">&#x27;Internal Server Error&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// HTTP Code</span></span><br><span class="line">      ctx.<span class="property">status</span> = status</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 生产环境</span></span><br><span class="line">      <span class="keyword">const</span> isProd = ctx.<span class="property">app</span>.<span class="property">config</span>.<span class="property">env</span> === <span class="string">&#x27;prod&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 错误响应对象</span></span><br><span class="line">      ctx.<span class="property">body</span> = &#123;</span><br><span class="line">        <span class="attr">code</span>: -<span class="number">1</span>,</span><br><span class="line">        <span class="attr">message</span>: (status === <span class="number">500</span> &amp;&amp; isProd) ? <span class="string">&#x27;Internal Server Error&#x27;</span> : message,</span><br><span class="line">        <span class="comment">// detail: status === 422 ? err.errors : undefined, // 参数校验未通过</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生产环境时500错误的消息错误内容不应该返回给客户端，因为可能包含敏感信息，所以只返回固定的错误信息。</p>
+<p>通过这个中间件，可以捕获所有异常，并且按照想要的格式封装了响应，将这个中间件通过配置文件加载进来：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="comment">// 加载 errorHandler 中间件</span></span><br><span class="line">  <span class="attr">middleware</span>: [ <span class="string">&#x27;errorHandler&#x27;</span> ],</span><br><span class="line">  <span class="comment">// 只对 /api 前缀的 url 路径生效</span></span><br><span class="line">  <span class="attr">errorHandler</span>: &#123;</span><br><span class="line">    <span class="attr">match</span>: <span class="string">&#x27;/api&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中间件的加载"><a href="#中间件的加载" class="headerlink" title="中间件的加载"></a>中间件的加载</h2><p>单独拿出来这一节，是因为当时踩了一个坑，按照上面的配置之后，发现所有的请求根本没有经过我们的<code>errorHandler</code>中间件。</p>
+<p>这是因为Egg支持定义多个环境的配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config</span><br><span class="line">|- config.default.js</span><br><span class="line">|- config.prod.js</span><br><span class="line">|- config.unittest.js</span><br><span class="line">`- config.local.js</span><br></pre></td></tr></table></figure>
+
+<p><code>config.default.js</code>是默认的配置文件，所有所有环境都会加载这个配置文件，一般也会作为开发环境的默认配置文件。</p>
+<p>当指定<code>env</code>时也会同时加载对应的额配置文件，并且覆盖默认配置文件的同名配置，比如<code>prod</code>环境会加载<code>config.prod.js</code>和<code>config.default.js</code>文件，<strong>前者会覆盖后者的同名配置</strong></p>
+<p>配置合并使用了<a target="_blank" rel="noopener" href="https://github.com/eggjs/extend2">extend2</a>模块进行深度拷贝，对数组进行合并时会直接覆盖数组，而不是进行合并</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;</span><br><span class="line">  <span class="attr">arr</span>: [ <span class="number">1</span>, <span class="number">2</span> ],</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> b = &#123;</span><br><span class="line">  <span class="attr">arr</span>: [ <span class="number">3</span> ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">extend</span>(<span class="literal">true</span>, a, b);</span><br><span class="line"><span class="comment">// =&gt; &#123; arr: [ 3 ] &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这就是我们的中间件没有生效的原因，我们的目录里面同时配置了<code>config.local.js</code>和<code>config.default.js</code>，在<code>config.default.js</code>虽然配置了中间件，但是在<code>config.local.js</code>中的<code>middleware</code>对应的属性值是一个空数组</p>
+<p>根据上面的合并规则，导致最终的<code>middleware</code>是一个空数组，没有加载任何的中间件，所以或者在所有的配置文件的<code>middleware</code>的数组中都加上<code>errorHandler</code>中间件，或者直接在除了<code>config.default.js</code>之外的配置文件中删除<code>middleware</code>属性。</p>
+<h2 id="统一的错误对象"><a href="#统一的错误对象" class="headerlink" title="统一的错误对象"></a>统一的错误对象</h2><p>我们现在有了统一的异常处理机制，在Controller或者Service中有时候我们要主动抛出异常，抛出的异常应该是一个Error对象，这样才会带上堆栈信息。</p>
+<p>但是有一些与HTTP状态有关的异常，应该统一进行管理，保持整个系统的统一。所以使用了<code>egg-errors</code>插件，它内置了统一的异常和错误对象。</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i egg-errors --save</span><br></pre></td></tr></table></figure>
+
+<p>这里主要使用的是<code>egg-errors</code>内置的HTTP错误对象，它内置了<code>400</code>到<code>500</code>的错误对象，它提供了对应的<code>status</code>和<code>headers</code>属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">ForbiddenError</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;egg-errors&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> err = <span class="keyword">new</span> <span class="title class_">ForbiddenError</span>(<span class="string">&#x27;your request is forbidden&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">status</span>); <span class="comment">// 403</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以使用简写来调用对应的错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="variable constant_">E403</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;egg-errors&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> err = <span class="keyword">new</span> <span class="title function_">E403</span>(<span class="string">&#x27;your request is forbidden&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">status</span>); <span class="comment">// 403</span></span><br></pre></td></tr></table></figure>
+
+<p>我们在<code>config</code>中新建了一个<code>httpCodeHash.js</code>配置文件，在这个配置文件中引入了<code>egg-errors</code>，根据语义化的HTTP返回值进行了配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HTTP 响应代码: https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status</span></span><br><span class="line"><span class="keyword">const</span> errors = <span class="built_in">require</span>(<span class="string">&#x27;egg-errors&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// <span class="doctag">TODO:</span> httpCodeHash.code</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">continue</span>: &#123; <span class="attr">code</span>: <span class="number">100</span>, <span class="attr">message</span>: <span class="string">&#x27;Continue&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">ok</span>: &#123; <span class="attr">code</span>: <span class="number">200</span>, <span class="attr">message</span>: <span class="string">&#x27;OK&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">created</span>: &#123; <span class="attr">code</span>: <span class="number">201</span>, <span class="attr">message</span>: <span class="string">&#x27;Created&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">noContent</span>: &#123; <span class="attr">code</span>: <span class="number">204</span>, <span class="attr">message</span>: <span class="string">&#x27;No Content&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">movedPermanently</span>: &#123; <span class="attr">code</span>: <span class="number">301</span>, <span class="attr">message</span>: <span class="string">&#x27;Moved Permanently&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">found</span>: &#123; <span class="attr">code</span>: <span class="number">302</span>, <span class="attr">message</span>: <span class="string">&#x27;Found&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">notModified</span>: &#123; <span class="attr">code</span>: <span class="number">304</span>, <span class="attr">message</span>: <span class="string">&#x27;Not Modified&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">badRequest</span>: &#123; <span class="attr">code</span>: <span class="number">400</span>, <span class="attr">message</span>: <span class="string">&#x27;Bad Request&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E400</span> &#125;,</span><br><span class="line">  <span class="attr">unauthorized</span>: &#123; <span class="attr">code</span>: <span class="number">401</span>, <span class="attr">message</span>: <span class="string">&#x27;Unauthorized&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E401</span> &#125;,</span><br><span class="line">  <span class="attr">forbidden</span>: &#123; <span class="attr">code</span>: <span class="number">403</span>, <span class="attr">message</span>: <span class="string">&#x27;Forbidden&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E403</span> &#125;,</span><br><span class="line">  <span class="attr">notFound</span>: &#123; <span class="attr">code</span>: <span class="number">404</span>, <span class="attr">message</span>: <span class="string">&#x27;Not Found&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E404</span> &#125;,</span><br><span class="line">  <span class="attr">conflict</span>: &#123; <span class="attr">code</span>: <span class="number">409</span>, <span class="attr">message</span>: <span class="string">&#x27;Conflict&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E409</span> &#125;,</span><br><span class="line">  <span class="attr">unprocessable</span>: &#123; <span class="attr">code</span>: <span class="number">422</span>, <span class="attr">message</span>: <span class="string">&#x27;Unprocessable Entity&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E422</span> &#125;,</span><br><span class="line">  <span class="attr">serverError</span>: &#123; <span class="attr">code</span>: <span class="number">500</span>, <span class="attr">message</span>: <span class="string">&#x27;serverError&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E500</span> &#125;,</span><br><span class="line">  <span class="attr">otherServerError</span>: &#123; <span class="attr">code</span>: <span class="number">502</span>, <span class="attr">message</span>: <span class="string">&#x27;Bad Gateway&#x27;</span>, <span class="attr">error</span>: errors.<span class="property">E502</span> &#125;,</span><br><span class="line">  errors,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用的时候如果只需要加载对应的信息而不需要抛出错误，那么对应的信息都是统一的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 响应内容</span></span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">await</span> ctx.<span class="property">service</span>.<span class="property">log</span>.<span class="title function_">findPrivacyLog</span>(&#123; id, packageName &#125;)</span><br><span class="line">ctx.<span class="property">response</span>.<span class="property">status</span> = <span class="variable language_">this</span>.<span class="property">config</span>.<span class="property">httpCodeHash</span>.<span class="property">ok</span>.<span class="property">code</span></span><br><span class="line">ctx.<span class="property">response</span>.<span class="property">body</span> = data</span><br></pre></td></tr></table></figure>
+
+<p>如果需要抛出错误的时候，那么就是用对应的<code>error</code>属性，新建一个错误对象，并传入对应的自定义错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="variable language_">this</span>.<span class="property">config</span>.<span class="property">httpCodeHash</span>.<span class="property">notFound</span>.<span class="title function_">error</span>(<span class="string">&#x27;检测记录不存在&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样保证了抛出的错误对象的语义化且统一。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://eggjs.org/zh-cn/tutorials/restful.html#%E5%BC%80%E5%90%AF-validate-%E6%8F%92%E4%BB%B6">开启 validate 插件@Egg</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/eggjs/egg-validate">eggjs&#x2F;egg-validate@github</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/node-modules/parameter">node-modules&#x2F;parameter@github</a></li>
+<li><a target="_blank" rel="noopener" href="https://eggjs.org/zh-cn/basics/config.html">Config 配置@Egg</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/eggjs/egg-errors">eggjs&#x2F;egg-errors@github</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/validate/" rel="tag"># validate</a>
+              <a href="/tags/error/" rel="tag"># error</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/11/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg05%20Session/" rel="prev" title="Egg05 Session">
+                  <i class="fa fa-chevron-left"></i> Egg05 Session
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/01%20Vue%E5%9F%BA%E7%A1%80/Vue%E5%9F%BA%E7%A1%8020%20%E6%8D%A2%E8%A1%8C%E7%9A%84%E5%A4%84%E7%90%86/" rel="next" title="Vue基础20 换行的处理">
+                  Vue基础20 换行的处理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JavaScript中的封装。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS语言理解01 Javascript中的封装">
+<meta property="og:url" content="https://duola8789.github.io/2017/02/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A301%20Javascript%E4%B8%AD%E7%9A%84%E5%B0%81%E8%A3%85/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="JavaScript中的封装。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/B9D80B44320C42F5A5FBD1C509D9AAC4/15204">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/7a4cc97141934a9d2f7fae9ccbc1f5d8/xmlnote/E60CB3AC295C45F6A4A49B906EA11A35/23139">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/4A11D36FCDAB4829985CFA77FA601B2B/15262">
+<meta property="article:published_time" content="2017-02-24T01:27:00.000Z">
+<meta property="article:modified_time" content="2019-07-05T08:31:00.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="封装">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/B9D80B44320C42F5A5FBD1C509D9AAC4/15204">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2017/02/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A301%20Javascript%E4%B8%AD%E7%9A%84%E5%B0%81%E8%A3%85/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2017/02/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A301%20Javascript%E4%B8%AD%E7%9A%84%E5%B0%81%E8%A3%85/","path":"2017/02/24/01 前端笔记/02 JavaScript/01 语言理解/JS语言理解01 Javascript中的封装/","title":"JS语言理解01 Javascript中的封装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS语言理解01 Javascript中的封装 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B0%81%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1 封装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F%E5%92%8C%E7%A7%81%E6%9C%89%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 私有变量和私有函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 构造函数模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 构造函数的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E5%8E%9F%E5%9E%8BPrototype"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 原型Prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-%E5%88%A9%E7%94%A8%E5%8E%9F%E5%9E%8BPrototype%E5%88%9B%E9%80%A0%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 利用原型Prototype创造实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-Prototype%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%AA%8C%E8%AF%81%E6%96%B9%E6%B3%95"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 Prototype模式的验证方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-6-1-isPrototypeOf"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 isPrototypeOf()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-6-2-hasOwnProperty"><span class="nav-number">1.6.2.</span> <span class="nav-text">1.6.2 hasOwnProperty()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-6-3-in%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.6.3.</span> <span class="nav-text">1.6.3 in运算符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 注意事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.8.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2017/02/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A301%20Javascript%E4%B8%AD%E7%9A%84%E5%B0%81%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JS语言理解01 Javascript中的封装 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS语言理解01 Javascript中的封装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-24 09:27:00" itemprop="dateCreated datePublished" datetime="2017-02-24T09:27:00+08:00">2017-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-07-05 16:31:00" itemprop="dateModified" datetime="2019-07-05T16:31:00+08:00">2019-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JavaScript中的封装。</p>
+<span id="more"></span>
+
+<h3 id="1-封装"><a href="#1-封装" class="headerlink" title="1 封装"></a>1 封装</h3><h4 id="1-1-私有变量和私有函数"><a href="#1-1-私有变量和私有函数" class="headerlink" title="1.1 私有变量和私有函数"></a>1.1 私有变量和私有函数</h4><p>JavaScript的函数作用域，在函数内定义的变量和函数如果不对外提供接口，那么外部将无法访问到，也就是变为私有变量和私有函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function animal(name)&#123;</span><br><span class="line">    var type=&quot;cat&quot;,//私有变量</span><br><span class="line">        say=function()&#123;alert(&quot;wawawa&quot;)&#125;;//私有函数</span><br><span class="line">&#125;</span><br><span class="line">alert(type);//undefined</span><br></pre></td></tr></table></figure>
+<p>在函数对象<code>animal</code>外部无法访问变量<code>type</code>和函数<code>say</code>，它们就变成私有的，只能在<code>animal</code>内部使用，即使是函数<code>animal</code>的实例仍然无法访问这些变量和函数.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var dog=new animal(&quot;seven&quot;);</span><br><span class="line">alert(dog.type);//undefined</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-构造函数模式"><a href="#1-2-构造函数模式" class="headerlink" title="1.2 构造函数模式"></a>1.2 构造函数模式</h4><p>为了解决从原型对象生成实例的问题，Javascript提供了一个构造函数（<code>Constructor</code>）模式。</p>
+<p>所谓”构造函数”，其实就是一个普通函数，但是内部使用了<code>this</code>变量。对构造函数使用<code>new</code>运算符，就能生成实例，并且<code>this</code>变量会绑定在实例对象上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function animal(name,age)&#123;</span><br><span class="line">    this.name=name;</span><br><span class="line">    this.age=age;</span><br><span class="line">&#125;</span><br><span class="line">var cat=new animal(&quot;tom&quot;,23);</span><br><span class="line">var dog=new animal(&quot;jerry&quot;,24);</span><br><span class="line">console.log(cat.name);//tom</span><br><span class="line">console.log(dog.age);//24</span><br></pre></td></tr></table></figure>
+<p>cat和dog会自动含有一个<code>constructor</code>属性，指向它们的构造函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(cat.constructor===animal);//true</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/B9D80B44320C42F5A5FBD1C509D9AAC4/15204" alt="image"></p>
+<p>Javascript还提供了一个<code>instanceof</code>运算符，验证原型对象与实例对象之间的关系。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(cat instanceof animal);//true</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，<code>instanceof</code>是一个操作符，不是一个方法，所以用法是<code>a instanceof b</code></p>
+</blockquote>
+<h4 id="1-3-构造函数的问题"><a href="#1-3-构造函数的问题" class="headerlink" title="1.3 构造函数的问题"></a>1.3 构造函数的问题</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function animal(name,age)&#123;</span><br><span class="line">    this.name=name;</span><br><span class="line">    this.age=age;</span><br><span class="line">    this.type=&quot;animal&quot;;</span><br><span class="line">    this.say=function()&#123;alert(&quot;hello&quot;)&#125;</span><br><span class="line">&#125;</span><br><span class="line">var cat=new animal(&quot;tom&quot;,23);</span><br><span class="line">var dog=new animal(&quot;jerry&quot;,24);</span><br><span class="line">console.log(cat.type);//animal</span><br><span class="line">dog.say();//hello</span><br></pre></td></tr></table></figure>
+<p>表面上好像没什么问题，但是实际上这样做，有一个很大的弊端。那就是对于每一个实例对象，<code>type</code>属性和<code>say()</code>方法都是一模一样的内容，每一次生成一个实例，都必须为重复的内容，多占用一些内存。这样既不环保，也缺乏效率。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(cat.say===dog.say);//false</span><br></pre></td></tr></table></figure>
+<p>利用原型（<code>Prototype</code>）模式就可以让<code>type</code>属性和<code>say()</code>方法在内存中只生成一次，然后所有实例都指向那个内存地址呢从而提升性能。</p>
+<h4 id="1-4-原型Prototype"><a href="#1-4-原型Prototype" class="headerlink" title="1.4 原型Prototype"></a>1.4 原型Prototype</h4><p>无论什么时候，只要创建了一个新函数，该函数就会有一个<code>prototype</code>属性，这个属性也是一个对象，默认情况下<code>prototype</code>属性会默认获得一个<code>constructor</code>(构造函数)属性，这个属性是一个指向<code>prototype</code>属性所在函数的指针（即函数自己）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function animal(name,age)&#123;</span><br><span class="line">    this.name=name;</span><br><span class="line">    this.age=age;</span><br><span class="line">&#125;</span><br><span class="line">animal.prototype.type=animal;</span><br><span class="line">animal.prototype.say=function()&#123;</span><br><span class="line">    alert(&quot;hello&quot;)</span><br><span class="line">&#125;;</span><br><span class="line">var cat=new animal(&quot;tom&quot;,23);</span><br><span class="line">var dog=new animal(&quot;jerry&quot;,24);</span><br><span class="line">console.log(cat.__proto__.constructor.name);//animal</span><br><span class="line">console.log(animal.prototype.constructor.name);//animal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>构造函数的<code>prototype</code>的<code>constructor</code>指向构造函数本身，而实例的将包含一个<code>__proto__</code>指针，指向构造函数的<code>prototype</code>。</p>
+<p><img src="http://note.youdao.com/yws/public/resource/7a4cc97141934a9d2f7fae9ccbc1f5d8/xmlnote/E60CB3AC295C45F6A4A49B906EA11A35/23139" alt="image"></p>
+<blockquote>
+<p>注意，实例是没有<code>prototype</code>属性的，通过<code>new</code>关键字声明的实例获得的是指向其构造函数的<code>prototype</code>的<code>__proto__</code>指针。</p>
+</blockquote>
+<p><img src="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/4A11D36FCDAB4829985CFA77FA601B2B/15262" alt="image"></p>
+<p>每一个函数被创建时，都会自动的拥有<code>prototype</code>属性。这个属性并无什么特别之处，它和其他的属性一样可以访问，可以赋值。不过当我们用 <code>new</code>关键字来创建一个对象的时候，<code>prototype</code>就起作用了：它的值（也是一个对象）所包含的所有属性，都会被关联到新创建的实例对象的<code>__proto__</code>指针上。</p>
+<h4 id="1-5-利用原型Prototype创造实例"><a href="#1-5-利用原型Prototype创造实例" class="headerlink" title="1.5 利用原型Prototype创造实例"></a>1.5 利用原型Prototype创造实例</h4><p>每一个构造函数都有一个<code>prototype</code>属性，指向另一个对象。这个对象的所有属性和方法，都会被构造函数的实例继承。</p>
+<p>这意味着，我们可以把那些<strong>不变的</strong>属性和方法，直接定义在<code>prototype</code>对象上。</p>
+<p>就像上面的例子一样，此时所有实例的<code>type</code>和<code>say</code>方法都是指向同一个内存地址，提高了运行效率。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(cat.say===dog.say);///true</span><br></pre></td></tr></table></figure>
+<h4 id="1-6-Prototype模式的验证方法"><a href="#1-6-Prototype模式的验证方法" class="headerlink" title="1.6 Prototype模式的验证方法"></a>1.6 Prototype模式的验证方法</h4><p>为了配合prototype属性，Javascript定义了一些辅助方法，帮助我们使用它。</p>
+<h5 id="1-6-1-isPrototypeOf"><a href="#1-6-1-isPrototypeOf" class="headerlink" title="1.6.1 isPrototypeOf()"></a>1.6.1 <code>isPrototypeOf()</code></h5><p>这个方法用来判断，某个<code>proptotype</code>对象和某个实例之间的关系。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console.log(animal.prototype.isPrototypeOf(cat));//true</span><br><span class="line">console.log(animal.prototype.isPrototypeOf(dog));//true</span><br><span class="line">console.log(animal.prototype.isPrototypeOf(animal));//false</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-6-2-hasOwnProperty"><a href="#1-6-2-hasOwnProperty" class="headerlink" title="1.6.2 hasOwnProperty()"></a>1.6.2 <code>hasOwnProperty()</code></h5><p>每个实例对象都有一个<code>hasOwnProperty()</code>方法，用来判断某一个属性到底是本地属性，还是继承自prototype对象的属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">console.log(cat.hasOwnProperty(&quot;name&quot;));//true</span><br><span class="line">console.log(cat.hasOwnProperty(&quot;say&quot;));//false</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="1-6-3-in运算符"><a href="#1-6-3-in运算符" class="headerlink" title="1.6.3 in运算符"></a>1.6.3 <code>in</code>运算符</h5><p><code>in</code>运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(cat.hasOwnProperty(&quot;say&quot;));//false</span><br><span class="line">console.log(&quot;say&quot; in cat);//true</span><br></pre></td></tr></table></figure>
+<p><code>in</code>运算符还可以用来遍历某个对象的所有属性.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for(var i in cat)&#123;</span><br><span class="line">    var str=&quot;&quot;;</span><br><span class="line">    str=&quot;cat[&quot;+i+&quot;]:&quot;+cat[i];</span><br><span class="line">    console.log(str)</span><br><span class="line">&#125;</span><br><span class="line">/*运行结果</span><br><span class="line">cat[name]:tom</span><br><span class="line">test11.js:29 cat[age]:23</span><br><span class="line">test11.js:29 cat[say]:function ()&#123;alert(&quot;hello&quot;)&#125;*/</span><br></pre></td></tr></table></figure>
+<h4 id="1-7-注意事项"><a href="#1-7-注意事项" class="headerlink" title="1.7 注意事项"></a>1.7 注意事项</h4><p>1 只能把不变的属性和方法，绑在<code>prototype</code>对象上，而不能把可变属性绑上去。</p>
+<p>2 用<code>new</code>的这种方法构造对象，如果忘记加上<code>new</code>，“既没有编译时警告，也没有运行时警告”，所以为了避免忘记加 <code>new</code>，最好的办法是类名首字母大写。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html">http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jb51.net/article/40964.htm">http://www.jb51.net/article/40964.htm</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B0%81%E8%A3%85/" rel="tag"># 封装</a>
+              <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag"># 面向对象</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/01/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/08%20%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%8003%20Web%20Storage/" rel="prev" title="网络基础03 Web Storage">
+                  <i class="fa fa-chevron-left"></i> 网络基础03 Web Storage
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/02/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A302%20%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%A7%E6%89%BF/" rel="next" title="JS语言理解02 构造函数的继承">
+                  JS语言理解02 构造函数的继承 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

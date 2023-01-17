@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Vuex其他知识点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vuex03 Vuex其他">
+<meta property="og:url" content="https://duola8789.github.io/2018/02/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/05%20Vuex/Vuex03%20Vuex%E5%85%B6%E4%BB%96/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Vuex其他知识点。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-02-21T09:56:54.000Z">
+<meta property="article:modified_time" content="2019-09-24T06:46:59.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Vuex">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/02/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/05%20Vuex/Vuex03%20Vuex%E5%85%B6%E4%BB%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/02/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/05%20Vuex/Vuex03%20Vuex%E5%85%B6%E4%BB%96/","path":"2018/02/21/01 前端笔记/04 Vue/05 Vuex/Vuex03 Vuex其他/","title":"Vuex03 Vuex其他"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vuex03 Vuex其他 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">严格模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">表单处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E9%87%8D%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">热重载</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/02/21/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/05%20Vuex/Vuex03%20Vuex%E5%85%B6%E4%BB%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vuex03 Vuex其他 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vuex03 Vuex其他
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-02-21 17:56:54" itemprop="dateCreated datePublished" datetime="2018-02-21T17:56:54+08:00">2018-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-09-24 14:46:59" itemprop="dateModified" datetime="2019-09-24T14:46:59+08:00">2019-09-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Vuex其他知识点。</p>
+<span id="more"></span>
+
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Vuex的插件就是一个函数，接收<code>store</code>作为唯一参数，通过<code>subscribe</code>对<code>store</code>每次的<code>mutation</code>进行监听：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">myPlugin</span> = store =&gt; &#123;</span><br><span class="line">  <span class="comment">// 当store初始化后调用</span></span><br><span class="line">  store.<span class="title function_">subscribe</span>(<span class="function">(<span class="params">mutation, state</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 每次 mutation 之后调用</span></span><br><span class="line">    <span class="comment">// mutation 的格式为 &#123; type, payload &#125;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>插件需要使用<code>plugins</code>选项引入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">plugins</span>: [myPlugin]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>插件内同样不允许直接修改<code>state</code>，只能通过只能通过提交<code>mutation</code>来触发变化</p>
+<h2 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h2><p>开启严格模式，当不通过<code>mutation</code>而直接修改<code>state</code>时，Vuex都会抛出错误。</p>
+<p><strong>不要再发布环境下启用严格模式</strong>，严格模式会深度检测状态树来检测不合规的状态变更，造成性能上的损失：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">strict</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&#x27;production&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h2><p>在开启了严格模式后，把Vuex的<code>state</code>使用到<code>v-model</code>会报错：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">&quot;subTitle.message&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中的<code>subTitle</code>是属于Vuex的store的对象，用户输入时相当于没有通过<code>mutation</code>直接修改了<code>state</code>，Vuex会抛出错误：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: [vuex] do not mutate vuex store state outside mutation handlers.</span><br></pre></td></tr></table></figure>
+
+<p>解决方法有两个，一种是利用了<code>v-model</code>的语法糖的本质，将<code>obj.message</code>作为<code>value</code>，再<code>input</code>方法中手动触发<code>commit</code>方法，然后在<code>mutation</code>中修改<code>state</code>值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">&quot;subTitle.message&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;inputHandler&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">inputHandler</span>(<span class="params">e</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&#x27;changeSubTitle&#x27;</span>, &#123; <span class="attr">message</span>: e.<span class="property">target</span>.<span class="property">value</span> &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">computed</span>: &#123;</span><br><span class="line">    ...<span class="title function_">mapState</span>([<span class="string">&#x27;subTitle&#x27;</span>]),</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Store中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="title function_">changeSubTitle</span>(<span class="params">state, &#123; message &#125;</span>) &#123;</span><br><span class="line">      state.<span class="property">subTitle</span>.<span class="property">message</span> = message;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>另一种方法就是使用带有setter的双向绑定计算属性：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">&quot;title&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  <span class="comment">// 带有 setter 的双向绑定的计算书行</span></span><br><span class="line">  <span class="attr">title</span>: &#123;</span><br><span class="line">    <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="property">state</span>.<span class="property">title</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">set</span>(<span class="params">value</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&#x27;changeTitle&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">message</span>: value</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>Mutation和Getter测试时思路相同，将Mutation或者Getter单独导出来，在测试文件中模拟一个<code>state</code>，来进行断言：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="attr">count</span>: <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// mutations 作为命名输出对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> mutations = &#123;</span><br><span class="line">  <span class="attr">increment</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.<span class="property">count</span>++</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mutations.spec.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; expect &#125; <span class="keyword">from</span> <span class="string">&#x27;chai&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; mutations &#125; <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; increment &#125; = mutations</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;mutations&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;INCREMENT&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 模拟状态</span></span><br><span class="line">    <span class="keyword">const</span> state = &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;</span><br><span class="line">    <span class="comment">// 应用 mutation</span></span><br><span class="line">    <span class="title function_">increment</span>(state)</span><br><span class="line">    <span class="comment">// 断言结果</span></span><br><span class="line">    <span class="title function_">expect</span>(state.<span class="property">count</span>).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>测试Action比较麻烦，因为它们可能会调用外部的API，需要将外部的API调用进行Mock，可以使用webpack和<a target="_blank" rel="noopener" href="https://github.com/plasticine/inject-loader">inject-loader</a>打包测试文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// actions.js</span></span><br><span class="line"><span class="keyword">import</span> shop <span class="keyword">from</span> <span class="string">&#x27;../api/shop&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">getAllProducts</span> = (<span class="params">&#123; commit &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="title function_">commit</span>(<span class="string">&#x27;REQUEST_PRODUCTS&#x27;</span>)</span><br><span class="line">  shop.<span class="title function_">getProducts</span>(<span class="function"><span class="params">products</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">commit</span>(<span class="string">&#x27;RECEIVE_PRODUCTS&#x27;</span>, products)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// actions.spec.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 require 语法处理内联 loaders。</span></span><br><span class="line"><span class="comment">// inject-loader 返回一个允许我们注入 mock 依赖的模块工厂</span></span><br><span class="line"><span class="keyword">import</span> &#123; expect &#125; <span class="keyword">from</span> <span class="string">&#x27;chai&#x27;</span></span><br><span class="line"><span class="keyword">const</span> actionsInjector = <span class="built_in">require</span>(<span class="string">&#x27;inject-loader!./actions&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 mocks 创建模块</span></span><br><span class="line"><span class="keyword">const</span> actions = <span class="title function_">actionsInjector</span>(&#123;</span><br><span class="line">  <span class="string">&#x27;../api/shop&#x27;</span>: &#123;</span><br><span class="line">    getProducts (cb) &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">cb</span>([ <span class="comment">/* mocked response */</span> ])</span><br><span class="line">      &#125;, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用指定的 mutations 测试 action 的辅助函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">testAction</span> = (<span class="params">action, args, state, expectedMutations, done</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 模拟提交</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">commit</span> = (<span class="params">type, payload</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> mutation = expectedMutations[count]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="title function_">expect</span>(mutation.<span class="property">type</span>).<span class="property">to</span>.<span class="title function_">equal</span>(type)</span><br><span class="line">      <span class="keyword">if</span> (payload) &#123;</span><br><span class="line">        <span class="title function_">expect</span>(mutation.<span class="property">payload</span>).<span class="property">to</span>.<span class="property">deep</span>.<span class="title function_">equal</span>(payload)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="title function_">done</span>(error)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    count++</span><br><span class="line">    <span class="keyword">if</span> (count &gt;= expectedMutations.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="title function_">done</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用模拟的 store 和参数调用 action</span></span><br><span class="line">  <span class="title function_">action</span>(&#123; commit, state &#125;, ...args)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查是否没有 mutation 被 dispatch</span></span><br><span class="line">  <span class="keyword">if</span> (expectedMutations.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="title function_">expect</span>(count).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">0</span>)</span><br><span class="line">    <span class="title function_">done</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;actions&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;getAllProducts&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">testAction</span>(actions.<span class="property">getAllProducts</span>, [], &#123;&#125;, [</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">&#x27;REQUEST_PRODUCTS&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">&#x27;RECEIVE_PRODUCTS&#x27;</span>, <span class="attr">payload</span>: &#123; <span class="comment">/* mocked response */</span> &#125; &#125;</span><br><span class="line">    ], done)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>还是挺复杂的，实际上<code>actionsInjector</code>模块mock的仅仅是API部分（<code>../api/shop</code>），而<code>actions.getAllProducts</code>执行的还是原来的<code>action</code>，但是<code>commit</code>和<code>state</code>已经都被我们替换了。</p>
+<p>如果可以使用<a target="_blank" rel="noopener" href="https://sinonjs.org/">Sinon.JS</a>，那么可以使用它来替换上面的辅助函数<code>testAction</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;actions&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;getAllProducts&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 一步直接模拟 commit</span></span><br><span class="line">    <span class="keyword">const</span> commit = sinon.<span class="title function_">spy</span>()</span><br><span class="line">    <span class="keyword">const</span> state = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    actions.<span class="title function_">getAllProducts</span>(&#123; commit, state &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">expect</span>(commit.<span class="property">args</span>).<span class="property">to</span>.<span class="property">deep</span>.<span class="title function_">equal</span>([</span><br><span class="line">      [<span class="string">&#x27;REQUEST_PRODUCTS&#x27;</span>],</span><br><span class="line">      [<span class="string">&#x27;RECEIVE_PRODUCTS&#x27;</span>, &#123; <span class="comment">/* mocked response */</span> &#125;]</span><br><span class="line">    ])</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要给Vuex写单元测试的时候，还是需要到这里对照着例子来实现一下。</p>
+<p>执行测试可以在Node环境下，也可以在浏览器环境下，在Node环境下执行的时候需要创建以下webpack配置（需要配置好<code>.babelrc</code>）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: <span class="string">&#x27;./test.js&#x27;</span>,</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: __dirname,</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;test-bundle.js&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">loaders</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">        <span class="attr">loader</span>: <span class="string">&#x27;babel-loader&#x27;</span>,</span><br><span class="line">        <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行的时候：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ webpack </span><br><span class="line">$ mocha test-bundle.js</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中测试可以<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/guide/testing.html#%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E6%B5%8B%E8%AF%95">参考文档</a>。</p>
+<h2 id="热重载"><a href="#热重载" class="headerlink" title="热重载"></a>热重载</h2><p>Vue-cli脚手架针对Vuex提供了热刷新的功能，当更改Store的数据，页面会自动刷新，但是相比于Vue组件的热重载功能，体验还是略逊一筹。</p>
+<p>Vuex想要实现热重载，也是借助了webpack的<a target="_blank" rel="noopener" href="https://webpack.js.org/guides/hot-module-replacement/">Hot Module Replacement API</a>，以前曾经学习过它的<a href="https://duola8789.github.io/2018/04/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/01%20%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B703%20Webpack%E6%A8%A1%E5%9D%97%E7%83%AD%E9%87%8D%E8%BD%BD(HMR)/">实现原理</a>（注意，面试的时候的高频题目）</p>
+<p>实现热重载的前提就是，必须将代码模块化，所以Store中的Mutation&#x2F;Module&#x2F;Action&#x2F;Getter必须导出为单独的JS文件，才可以实现热重载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">module</span>.<span class="property">hot</span>) &#123;</span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">hot</span>.<span class="title function_">accept</span>([<span class="string">&#x27;./modules/todo-list&#x27;</span>], <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取更新后的模块</span></span><br><span class="line">    <span class="comment">// 因为 babel 6 的模块编译格式问题，下面需要加上 .default</span></span><br><span class="line">    <span class="keyword">const</span> newTodoList = <span class="built_in">require</span>(<span class="string">&#x27;./modules/todo-list&#x27;</span>).<span class="property">default</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(newTodoList);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载新模块</span></span><br><span class="line">    store.<span class="title function_">hotUpdate</span>(&#123;</span><br><span class="line">      <span class="attr">modules</span>: &#123;</span><br><span class="line">        <span class="attr">store_todoList</span>: newTodoList,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>注意：热重载的目标只能是Mutation&#x2F;Module&#x2F;Action&#x2F;Getter，<strong>手动对<code>state</code>的修改不能触发HMR</strong>，可以<a target="_blank" rel="noopener" href="https://github.com/vuejs/vuex/issues/967">参考这个issue</a>。所以这就导致了一个问题：</p>
+<p>如果配置了热重载，那么如果改动state时就必须手动刷新，热刷新也没有了；如果不配置热重载，修改任何文件都是热刷新。这样的话热重载我感觉意义不大</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/Vuex/" rel="tag"># Vuex</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/01/31/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/05%20Vuex/Vuex02%20Vuex%E5%9F%BA%E7%A1%80/" rel="prev" title="Vuex02 Vuex基础">
+                  <i class="fa fa-chevron-left"></i> Vuex02 Vuex基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/13/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/02%20Vue%E6%8F%90%E9%AB%98/Vue%E6%8F%90%E9%AB%9806%20%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1/" rel="next" title="Vue提高06 组件间通信">
+                  Vue提高06 组件间通信 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

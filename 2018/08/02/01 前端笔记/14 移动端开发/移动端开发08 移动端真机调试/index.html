@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="移动端开发时，真机调试的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端开发08 移动端真机调试">
+<meta property="og:url" content="https://duola8789.github.io/2018/08/02/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/14%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%9108%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="移动端开发时，真机调试的方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/18-8-2/31815842.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/18-8-2/93554617.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/FmiR6u7ZaYroN120qnq7sOQQy-JH">
+<meta property="og:image" content="http://image.oldzhou.cn/Fl3LBtEgzsenISpsgBsMtnjm-vkq">
+<meta property="og:image" content="http://image.oldzhou.cn/Fiy6uehqF8o6PFurSywSYkiQbh93">
+<meta property="og:image" content="http://image.oldzhou.cn/Fpspk8pDmR0drzwaYPKxZ0gVqHqb">
+<meta property="og:image" content="http://image.oldzhou.cn/18-8-2/36435624.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/FoPfxll1l_84Zuv6i8zngAZpSK6Z">
+<meta property="og:image" content="http://image.oldzhou.cn/18-8-2/73784289.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/18-8-2/63425257.jpg">
+<meta property="article:published_time" content="2018-08-02T11:02:00.000Z">
+<meta property="article:modified_time" content="2019-11-29T09:25:13.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Charles">
+<meta property="article:tag" content="Fiddler">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/18-8-2/31815842.jpg">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/08/02/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/14%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%9108%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/08/02/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/14%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%9108%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95/","path":"2018/08/02/01 前端笔记/14 移动端开发/移动端开发08 移动端真机调试/","title":"移动端开发08 移动端真机调试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>移动端开发08 移动端真机调试 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E6%9C%BAIP"><span class="nav-number">1.</span> <span class="nav-text">查看本机IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E6%9C%BA%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AEPC%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">手机直接访问PC页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">生成二维码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2%E8%B0%83%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">移动端页面调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E6%9C%BA%E9%85%8D%E7%BD%AEHost"><span class="nav-number">5.</span> <span class="nav-text">手机配置Host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E6%89%8B%E6%9C%BA%E7%AB%AF%E8%AF%B7%E6%B1%82"><span class="nav-number">6.</span> <span class="nav-text">拦截手机端请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/08/02/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/14%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%9108%20%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="移动端开发08 移动端真机调试 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          移动端开发08 移动端真机调试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-08-02 19:02:00" itemprop="dateCreated datePublished" datetime="2018-08-02T19:02:00+08:00">2018-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-11-29 17:25:13" itemprop="dateModified" datetime="2019-11-29T17:25:13+08:00">2019-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">移动端开发</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>移动端开发时，真机调试的方法。</p>
+<span id="more"></span>
+
+<h2 id="查看本机IP"><a href="#查看本机IP" class="headerlink" title="查看本机IP"></a>查看本机IP</h2><p>（1）Window</p>
+<p>打开CMD，输入<code>ipconfig</code>，可以获取IP地址</p>
+<p><img src="http://image.oldzhou.cn/18-8-2/31815842.jpg" alt="本机IP"></p>
+<p>（2）Mac</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig | grep <span class="string">&quot;inet &quot;</span> | grep -v 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>输出结果中前面的IP地址即为本机IP。</p>
+<p>可以将这个命令写入<code>zhs</code>的缩写中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> ip=<span class="string">&#x27;ifconfig | grep &quot;inet &quot; | grep -v 127.0.0.1&#x27;</span><span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样可以直接执行<code>ip</code>就可以展示本机IP了。</p>
+<h2 id="手机直接访问PC页面"><a href="#手机直接访问PC页面" class="headerlink" title="手机直接访问PC页面"></a>手机直接访问PC页面</h2><p>首先要保证手机和电脑处于<strong>同一个局域网</strong>当中，然后通过Webpack开启一个服务（也可以直接修改例如Vue Cli中的配置）</p>
+<p>注意，要将Webpack的配置文件中的host设置为<code>0.0.0.0</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="comment">// can be overwritten by process.env.HOST</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认值是<code>localhost</code>，这样只能通过<code>localhost</code>或者<code>127.0.0.1</code>访问，更改之后不仅可以通过前二者，还可以可以通过本机IP或者<code>0.0.0.0</code>来访问</p>
+<p>在手机上也就可以使用本机IP加端口号访问页面了：<code>http://10.234.98.49:8080/#/</code></p>
+<h2 id="生成二维码"><a href="#生成二维码" class="headerlink" title="生成二维码"></a>生成二维码</h2><p>可以使用Chrome的插件<code>Quick QR Code Generator</code>，来为当前页面生成二维码，节省了手机上输入网址的过程，直接扫一扫就OK</p>
+<p><img src="http://image.oldzhou.cn/18-8-2/93554617.jpg" alt="Quick QR Code Generator"></p>
+<h2 id="移动端页面调试"><a href="#移动端页面调试" class="headerlink" title="移动端页面调试"></a>移动端页面调试</h2><p>当我们发现一个移动端的页面发现了Bug，除了在本机使用Chrome进行模拟调试之外，还可以使用真机调试，有两种方案，一种是利用Chrome，一种是利用Safir，我使用的是前者（因为手里没有Iphone…），关于后者可以参考<a target="_blank" rel="noopener" href="https://aotu.io/notes/2017/02/24/Mobile-debug/index.html">这篇文章</a>，原理是类似的。</p>
+<p>首先需要将手机的开发者模式打开，以我手中的小米9为例，打开开发者模式需要依次进入『设置』→『我的设备』→『全部参数』，点击6次MIUI版本，将开发者模式打开。然后进入『设置』→『更多设置』→『开发者选项』，勾选上『开启开发者选项』和『USB调试』</p>
+<p>然后用PC的Chrome浏览器，在地址栏输入<code>chrome://inspect/#devices</code>，勾选<code>Discover USB devices</code>（顺表说一句，利用Chrome进行Node调试也需要在此页面进行设置，具体参考我的另一篇笔记<a href="https://duola8789.github.io/2019/05/16/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/03%20Egg/Egg03%20%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/">《Egg03 断点调试》</a>）</p>
+<p><img src="http://image.oldzhou.cn/FmiR6u7ZaYroN120qnq7sOQQy-JH"></p>
+<p>然后将手机用USB线与电脑连接，连接时手机会弹窗询问『USB的用途』，需要勾选『传输文件』，这个时候<code>inspect</code>的界面上就会出现手机的相关信息：</p>
+<p><img src="http://image.oldzhou.cn/Fl3LBtEgzsenISpsgBsMtnjm-vkq"></p>
+<p> 点击<code>inspect</code>按钮，会弹出一个独立的调试窗口，然后打开手机端的Chrome，输入URL就可以在调试窗口中看到对应的截面，并且可以展示控制台的相关信息：</p>
+<p> <img src="http://image.oldzhou.cn/Fiy6uehqF8o6PFurSywSYkiQbh93"></p>
+<p>也可以使用腾讯开发的<a target="_blank" rel="noopener" href="https://x5.tencent.com/guide/debug.html">TBS Studio调试工具</a>，它在Chrome的调试工具的基础上进行了功能扩展，功能更强大，有需要的同学可以尝试。</p>
+<h2 id="手机配置Host"><a href="#手机配置Host" class="headerlink" title="手机配置Host"></a>手机配置Host</h2><p>如果本机配置了Host之后（推荐使用<a target="_blank" rel="noopener" href="https://github.com/oldj/SwitchHosts">SwitchHost</a>），如果使用手机直接访问是行不通的，而修改手机的Host一般来说需要Root，还是比较复杂的。可以借助Fiddler或者Charles来进行反向代理实现</p>
+<p>如果在测试环境下，PC端配置了Host：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test2</span></span><br><span class="line">114.113.198.65	facrm.ms.netease.com</span><br></pre></td></tr></table></figure>
+
+<p>Charles在macOS使用，需要注册，可以使用下面的激活码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Registered Name: *******</span><br><span class="line"></span><br><span class="line">License Key: **************</span><br></pre></td></tr></table></figure>
+
+<p>Charles和Fiddler的使用基本是类似的，激活之后首先设置代理的端口号：</p>
+<p><img src="http://image.oldzhou.cn/Fpspk8pDmR0drzwaYPKxZ0gVqHqb"></p>
+<p>在弹出的截面设置端口号，默认是<code>8888</code>，然后在手机上连接代理，还是需要手机和PC在同一局域网下，在连接的WIFI详情页中，在最下方的『代理』处点击『手动』，输入本机IP的上面的代理的端口号，这样在抓包软件中就可以截获手机的网络请求了。</p>
+<p><img src="http://image.oldzhou.cn/18-8-2/36435624.jpg" alt="Fiddler"></p>
+<p>但是如果我们设置的<code>host</code>将<code>fleet.baidu.com</code>代理到了<code>0.0.0.0</code>或者<code>localhost</code>的话，手机端是没有办法正常请求的，会展示<code>Failed to connect to remote host</code>的错误：</p>
+<p><img src="http://image.oldzhou.cn/FoPfxll1l_84Zuv6i8zngAZpSK6Z"></p>
+<p>这个原因在<a target="_blank" rel="noopener" href="https://www.charlesproxy.com/documentation/faqs/localhost-traffic-doesnt-appear-in-charles/">Charles官网</a>上有解释：大改意思就是代理本机<code>localhost</code>和<code>0.0.0.0</code>是非常复杂的，所以如果想要访问<code>localhost:8080</code>需要访问<code>localhost.charlesproxy.com:8080</code>。当然最有效的解决防范就是将Host的配置中的<code>0.0.0.0</code>改为本机IP，这样就不会出现这个问题了</p>
+<h2 id="拦截手机端请求"><a href="#拦截手机端请求" class="headerlink" title="拦截手机端请求"></a>拦截手机端请求</h2><p>如果是客户端内嵌的Web页，在调试时既不能输入网址，又不能扫二维码，如何观察当前PC页面的效果呢？还是要用到Fiddler或者Charles，下面以Fiddler举例：</p>
+<p>首先打开客户端的界面，这时候Fiddler会拦截到当前的网络请求，以百度为例，在主界面右侧的AutoResponder标签下，点击<code>Add Rule</code>，添加一条规则，将请求拦截，转发到谷歌，点击保存</p>
+<p><img src="http://image.oldzhou.cn/18-8-2/73784289.jpg" alt="转发设置"></p>
+<p>这时候再打开这个页面，就会跳转到谷歌的页面了</p>
+<p>注意，要把<code>Enable rules</code>和<code>Unmatched requests passthrough</code>勾选上，否则不会生效</p>
+<p><img src="http://image.oldzhou.cn/18-8-2/63425257.jpg" alt="设置"></p>
+<p>如果将目标网址设置为我们本机服务的地址比如<a target="_blank" rel="noopener" href="http://10.234.98.49:8080/#/%EF%BC%8C%E5%9C%A8%E6%89%8B%E6%9C%BA%E4%B8%AD%E5%B0%B1%E5%AE%9E%E7%8E%B0%E4%BA%86%E6%8B%A6%E6%88%AA%E8%B7%B3%E8%BD%AC%E3%80%82">http://10.234.98.49:8080/#/，在手机中就实现了拦截跳转。</a></p>
+<p>到此，基本上通过Charles配合Chrome，我们就可以愉快的进行各种复杂度的真机调试了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://aotu.io/notes/2017/02/24/Mobile-debug/index.html">移动端真机调试指南@凹凸实验室</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.jikexueyuan.com/project/chrome-devtools/remote-debugging-on-android.html">在安卓设备上使用 Chrome 远程调试功能@极客学院</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5c0a430f51882516207d205d#heading-1">macOS Charles 4.x版本的安装及使用（含破解激活）@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.charlesproxy.com/documentation/faqs/localhost-traffic-doesnt-appear-in-charles/">Localhost traffic doesn’t appear in Charles@Charles</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Charles/" rel="tag"># Charles</a>
+              <a href="/tags/Fiddler/" rel="tag"># Fiddler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/11/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node13%20%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/" rel="prev" title="Node13 文件路径">
+                  <i class="fa fa-chevron-left"></i> Node13 文件路径
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/10/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker02%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="Docker02 常用命令">
+                  Docker02 常用命令 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

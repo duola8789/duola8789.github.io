@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Travis CI是市场份额最大的持续集成工具，它对于开源项目是免费的，但是对私人项目和公司项目则是收费的。 Travis CI提供的是持续集成服务，它绑定Github上的项目，只要有新的diamante，就会自动抓取，然后提供一个运行环境，执行测试，完成构建，然后部署到服务器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持续集成02 Travis CI">
+<meta property="og:url" content="https://duola8789.github.io/2019/06/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/02%20%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%9002%20Travis%20CI/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Travis CI是市场份额最大的持续集成工具，它对于开源项目是免费的，但是对私人项目和公司项目则是收费的。 Travis CI提供的是持续集成服务，它绑定Github上的项目，只要有新的diamante，就会自动抓取，然后提供一个运行环境，执行测试，完成构建，然后部署到服务器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FtpyeOe4CS49Zkzgb08QyCEQdsUt">
+<meta property="og:image" content="http://image.oldzhou.cn/FjcfvJPpJLiravK1zBc5JAqPZCKE">
+<meta property="og:image" content="http://image.oldzhou.cn/Fm5YpSC1WIhonBFudILNit9Zs9uz">
+<meta property="og:image" content="http://image.oldzhou.cn/Fp0lrCW8WwkTEJucgIpVNR9ASPDO">
+<meta property="og:image" content="http://image.oldzhou.cn/Fv1KDfUVNNhsgjqOGX4nT5xp_s54">
+<meta property="og:image" content="http://image.oldzhou.cn/Fv1KDfUVNNhsgjqOGX4nT5xp_s54">
+<meta property="og:image" content="http://image.oldzhou.cn/FhEw_g9Kt7yUkDdFJLmOjINT0huu">
+<meta property="og:image" content="http://image.oldzhou.cn/FikGhMaTB1jE_KQw0xc37gVw2EWr">
+<meta property="og:image" content="http://image.oldzhou.cn/FnBzQXwAUgehD99enHE0Fagm2pdD">
+<meta property="article:published_time" content="2019-06-27T02:52:03.000Z">
+<meta property="article:modified_time" content="2019-10-20T13:55:30.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="持续集成">
+<meta property="article:tag" content="持续部署">
+<meta property="article:tag" content="Travis ci">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FtpyeOe4CS49Zkzgb08QyCEQdsUt">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/06/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/02%20%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%9002%20Travis%20CI/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/06/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/02%20%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%9002%20Travis%20CI/","path":"2019/06/27/01 前端笔记/11 前端工程/02 持续集成/持续集成02 Travis CI/","title":"持续集成02 Travis CI"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>持续集成02 Travis CI | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">使用准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traivs-yml"><span class="nav-number">2.</span> <span class="nav-text">.traivs.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install"><span class="nav-number">3.1.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#script"><span class="nav-number">3.2.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.3.</span> <span class="nav-text">Node项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">3.4.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%9F%A5"><span class="nav-number">3.5.</span> <span class="nav-text">通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%A9%E5%AD%90%E6%96%B9%E6%B3%95"><span class="nav-number">3.6.</span> <span class="nav-text">钩子方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">3.7.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81"><span class="nav-number">3.8.</span> <span class="nav-text">运行状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">使用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">加密信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2Github-Pages"><span class="nav-number">5.</span> <span class="nav-text">部署Github Pages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%BB%93%E6%9D%9F%E3%80%82"><span class="nav-number">6.</span> <span class="nav-text">文章结束。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/06/27/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/02%20%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%9002%20Travis%20CI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="持续集成02 Travis CI | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          持续集成02 Travis CI
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-27 10:52:03" itemprop="dateCreated datePublished" datetime="2019-06-27T10:52:03+08:00">2019-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-10-20 21:55:30" itemprop="dateModified" datetime="2019-10-20T21:55:30+08:00">2019-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">前端工程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://travis-ci.org/">Travis CI</a>是市场份额最大的持续集成工具，它对于开源项目是免费的，但是对私人项目和公司项目则是收费的。</p>
+<p>Travis CI提供的是持续集成服务，它绑定Github上的项目，只要有新的diamante，就会自动抓取，然后提供一个运行环境，执行测试，完成构建，然后部署到服务器。</p>
+<span id="more"></span>
+
+<h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a>使用准备</h2><p>Travis CI只支持Github，不支持其他代码托管项目，所以使用Travis CI的前提是:</p>
+<ol>
+<li>代码位于Github的仓库</li>
+<li>项目中有可运行的代码</li>
+<li>项目中包含构建或者测试脚本</li>
+</ol>
+<p>满足上述条件之后，需要访问其<a target="_blank" rel="noopener" href="https://travis-ci.org/">官网</a>，使用Github账户登陆Travis CI。登陆后Travis CI会列出Github上的所有代码仓库</p>
+<p><img src="http://image.oldzhou.cn/FtpyeOe4CS49Zkzgb08QyCEQdsUt"></p>
+<p>选择按钮打开，就激活了这个仓库，Travis会监听这个仓库的所有变化。</p>
+<h2 id="traivs-yml"><a href="#traivs-yml" class="headerlink" title=".traivs.yml"></a><code>.traivs.yml</code></h2><p>Travis要求项目下面，必须有一个<code>.travis.yml</code>文件，且必须提交到代码仓库。这是一个配置文件，指定了Travis的行为，是必不可少的。</p>
+<p>文件是<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/07/yaml.html">YAML格式</a>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定默认运行环境</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">node_js</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">## 指定 node 版本</span></span><br><span class="line"><span class="attr">node_js:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;node&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定执行的脚本</span></span><br><span class="line"><span class="attr">script:</span> <span class="string">test.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 需要 sudo 权限</span></span><br><span class="line"><span class="attr">sudo:</span> <span class="string">required</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖之前执行</span></span><br><span class="line"><span class="attr">before_instasll:</span> <span class="string">sudo</span> <span class="string">pip</span> <span class="string">install</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h2><p>Travis的运行流程包括两个阶段： <code>install</code>阶段（安装依赖）和<code>script</code>阶段（运行脚本）</p>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a><code>install</code></h3><p><code>install</code>字段用来指定安装脚本：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install:</span> <span class="string">npm</span> <span class="string">install</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有多个脚本，可以写成下面的形式：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">command1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">command2</span></span><br></pre></td></tr></table></figure>
+
+<p>如果<code>command1</code>失败了，整个构建就会停下来，不再向下进行。</p>
+<p>如果不需要安装，则跳过安装阶段，直接设为<code>true</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="script"><a href="#script" class="headerlink" title="script"></a><code>script</code></h3><p><code>script</code>字段用来指定构建或者测试脚本</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">script:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">test</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有多个脚本，可以写成下面的形式：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">command1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">command2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>script</code>与<code>install</code>不一样，如果<code>command1</code>失败，<code>command2</code>会继续执行，但整个构建阶段的状态是失败的。</p>
+<p>如果<code>command2</code>只有在<code>command1</code>成功后才能执行，就需要写成</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">script:</span> <span class="string">command1</span> <span class="string">&amp;&amp;</span> <span class="string">command2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Node项目"><a href="#Node项目" class="headerlink" title="Node项目"></a>Node项目</h3><p>Node项目的<code>install</code>和<code>script</code>都有默认脚本，可以省略：</p>
+<ul>
+<li><code>install</code>默认值<code>npm install</code></li>
+<li><code>script</code>默认值<code>npm test</code></li>
+</ul>
+<p>更多配置见<a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/languages/javascript-with-nodejs/">官方文档</a>。</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p><code>script</code>阶段结束后，可以设置<a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/notifications/">通知步骤</a>和<a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/notifications/">部署步骤</a>，它们不是必须的。</p>
+<p>部署的脚本可以在script阶段执行，也可以使用Travis为几十种常见服务提供的快捷部署功能。</p>
+<h3 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h3><p>在<code>.travis.yml</code>进行如下配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifications:</span></span><br><span class="line">  <span class="attr">email:</span></span><br><span class="line">    <span class="attr">recipients:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">duola8789@126.com</span></span><br><span class="line">  <span class="attr">slack:</span></span><br><span class="line">    <span class="attr">on_success:</span> <span class="string">never</span></span><br><span class="line">    <span class="attr">on_failure:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<p>当失败时会发邮件进行通知</p>
+<h3 id="钩子方法"><a href="#钩子方法" class="headerlink" title="钩子方法"></a>钩子方法</h3><p>Travis为上面这些阶段提供了七个钩子：</p>
+<ul>
+<li><code>before_install</code>，<code>install</code>阶段之前执行</li>
+<li><code>before_script</code>，<code>script</code>阶段之前执行</li>
+<li><code>after_failure</code>，<code>script</code>阶段失败后执行</li>
+<li><code>after_success</code>，<code>script</code>阶段成功后执行</li>
+<li><code>before_deploy</code>，<code>depoly</code>步骤之前执行</li>
+<li><code>after_depoly</code>，<code>depoly</code>步骤之后执行</li>
+<li><code>after_script</code>，<code>script</code>阶段之后执行</li>
+</ul>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>完整的生命周期：</p>
+<ol>
+<li><code>before_install</code></li>
+<li><code>install</code></li>
+<li><code>before_script</code></li>
+<li><code>script</code></li>
+<li><code>aftersuccess</code>&#x2F;<code>afterfailure</code></li>
+<li><code>before_deploy</code>（可选的）</li>
+<li><code>deploy</code>（可选的）</li>
+<li><code>after_deploy</code>（可选的）</li>
+<li><code>after_script</code></li>
+</ol>
+<h3 id="运行状态"><a href="#运行状态" class="headerlink" title="运行状态"></a>运行状态</h3><p>Travis每次运行后，可能会返回四种状态</p>
+<ul>
+<li><code>passed</code>，运行成功，所有步骤的退出码都是<code>0</code></li>
+<li><code>canceled</code>，用户取消执行</li>
+<li><code>errored</code>，<code>before_install</code>、<code>install</code>、<code>before_script</code>有非零退出码，运行会立即停止</li>
+<li><code>failed</code>，<code>script</code>有非零状态码，会继续执行</li>
+</ul>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p><code>.travis.yml</code>的<code>env</code>字段可以定义环境变量。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">env:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DB=postgres</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">SH=bash</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">PACKAGE_VERSION=&quot;1.0.*&quot;</span></span><br></pre></td></tr></table></figure>
+<p>脚本内部就可以使用这些变量了，使用时前面加<code>$</code>符号<br>有一些环境变量（比如密码）不能同开，可以通过Travis网站，写在每个项目的设置里面，Travis会将其自动加入环境变量，这样脚本内部依然可以使用环境变量，但是只有管理员才能看到变量的值</p>
+<p><img src="http://image.oldzhou.cn/FjcfvJPpJLiravK1zBc5JAqPZCKE"></p>
+<h3 id="加密信息"><a href="#加密信息" class="headerlink" title="加密信息"></a>加密信息</h3><p>如果不放心保密信息明文存在Travis的网站，可以使用Travis提供的加密功能。可以参考<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html">阮老师的介绍</a>和<a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/encryption-keys/">官方文档</a>。</p>
+<h2 id="部署Github-Pages"><a href="#部署Github-Pages" class="headerlink" title="部署Github Pages"></a>部署Github Pages</h2><p>以我的Github Pages博客的部署做例子，根据<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/github-pages.html">官网文档</a>，<code>.travis.yml</code>配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span> <span class="string">npm</span></span><br><span class="line"></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span> <span class="comment"># build master branch only</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">generate</span> <span class="comment"># generate static files</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">pages</span></span><br><span class="line">  <span class="attr">skip_cleanup:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">github_token:</span> <span class="string">$GH_TOKEN</span></span><br><span class="line">  <span class="attr">keep_history:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">local_dir:</span> <span class="string">public</span></span><br><span class="line">  <span class="attr">on:</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">notifications:</span></span><br><span class="line">  <span class="attr">email:</span></span><br><span class="line">    <span class="attr">recipients:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">duola8789@126.com</span></span><br><span class="line">  <span class="attr">slack:</span></span><br><span class="line">    <span class="attr">on_success:</span> <span class="string">never</span></span><br><span class="line">    <span class="attr">on_failure:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<p>要说明的是：</p>
+<p>（1）通过<code>.travis.yml</code>配置后，就不再需要<code>_config.yml</code>中配置<code>deploy</code>相关东西了，但是要注意，使用<code>.travis.yml</code>配置，Travis-CI网站上存放<code>github_token</code>的变量名必须是<code>$GH_TOKEN</code></p>
+<p>（2）<code>github_token</code>需要提供Github的个人凭证，生成方式参考<a target="_blank" rel="noopener" href="https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line">Github的文档</a></p>
+<p><img src="http://image.oldzhou.cn/Fm5YpSC1WIhonBFudILNit9Zs9uz"></p>
+<p><img src="http://image.oldzhou.cn/Fp0lrCW8WwkTEJucgIpVNR9ASPDO"></p>
+<p><img src="http://image.oldzhou.cn/Fv1KDfUVNNhsgjqOGX4nT5xp_s54"></p>
+<p><img src="http://image.oldzhou.cn/Fv1KDfUVNNhsgjqOGX4nT5xp_s54"></p>
+<p>这里个人凭证需要勾选<code>public_repo</code>或<code>repo</code>。</p>
+<p><img src="http://image.oldzhou.cn/FhEw_g9Kt7yUkDdFJLmOjINT0huu"></p>
+<p>生成凭证后，为了防止个人凭证的泄露，不能直接在<code>.travis.yml</code>直接填写个人凭证，需要将凭证一边量的方式添加到Travis CI的对应的项目中的设置里面</p>
+<p><img src="http://image.oldzhou.cn/FikGhMaTB1jE_KQw0xc37gVw2EWr"></p>
+<p>（3）需要将<code>skip_cleanup</code>设为<code>true</code>，否则Travis CI会将在构建过程中生成的文件全部删除，可能会导致本来想上传的文件删除</p>
+<p>更多的配置项参考<a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/deployment/pages/">文档</a>。</p>
+<p>配置完成后来实验一下，新添加一篇文章《持续集成01 入门》。</p>
+<p>（2019.10.20更新）根据Hexo的<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/github-pages.html">新的文档</a>配置了<code>.travis.yml</code>，很详细却准确，不需要下面的步骤了。</p>
+<h2 id="文章结束。"><a href="#文章结束。" class="headerlink" title="文章结束。"></a>文章结束。</h2><p>本以为会很顺利，结果尝试了多次才按照上面Travis CI的配置推送成功，因为我的博客的源码和页面是放在了两个不同的仓库，源码的仓库是<code>https://github.com/duola8789/blog.git</code>，而页面的仓库是<code>https://github.com/duola8789/duola8789.github.io.git</code>，所以直接推送的时候总是推送失败，是因为它默认将<code>duola8789/blog</code>仓库的本地全部目录推送到<code>duola8789/blog</code>的<code>gh-pages</code>分支，而我现在想要的是将<code>duola8789/blog</code>仓库的<code>public</code>目录推送到<code>duola8789.github.io.git</code>的<code>master</code>分支，所以根据<a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/deployment/pages/">文档</a>的提示，在<code>.travis.yml</code>中增加下面的配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="comment"># 新增</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">duola8789/duola8789.github.io</span></span><br><span class="line">  <span class="attr">local_dir:</span> <span class="string">public/</span></span><br><span class="line">  <span class="attr">target_branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>新增的第一项指明要推送的页面所在的仓库，第二项后者指明要推送的本地目录，第三项修改要推送的分支。同时将<code>_config.yml</code>的Hexo的推送配置注释掉：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># repo: https://$github_token@github.com/duola8789/duola8789.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p>这样修改完成后就推送成功了：</p>
+<p><img src="http://image.oldzhou.cn/FnBzQXwAUgehD99enHE0Fagm2pdD"></p>
+<p>在网上查找的资料，都没有用Travis CI的辅助配置，而是使用了自定义的配置，也都可以成功，下面这种是<a target="_blank" rel="noopener" href="https://juejin.im/post/5c887419e51d45334d2f9a00">比较简单的一种</a>，也推荐使用（将<code>_config.yml</code>的Hexo的推送配置注释掉）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">directories:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules</span></span><br><span class="line"></span><br><span class="line"><span class="attr">before_install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.name</span> <span class="string">&quot;zh&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.email</span> <span class="string">&quot;duola8789@126.com&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">-g</span> <span class="string">hexo-cli</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">export</span> <span class="string">HEXO_DEPLOYER_REPO=https://$github_token@github.com/duola8789/duola8789.github.io.git</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">deploy</span></span><br></pre></td></tr></table></figure>
+
+<p>果然不亲自尝试，都是没有说服力的。</p>
+<p>如果遇到403无权限推送的错误，一般是Github Token的问题，是否没有在环境变量中正确的设置，挥着没有在<code>.travis.yml</code>正确引用。</p>
+<p>原来管理博客，在文章写完之后需要分两步，首先<code>npm run deploy</code>，本地重新生成、打包文章，将文章发布到<code>https://github.com/duola8789/duola8789.github.io.git</code>，再<code>commit</code>、<code>push</code>当前的源码，提交到<code>https://github.com/duola8789/blog.git</code>。现在配置过后，直接提交源码到仓库即可，其他的Travis CI都会帮助我们完成。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html">持续集成服务 Travis CI 教程@阮一峰的网络日志</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/deployment/pages/">GitHub Pages Deployment@Travis CI</a></li>
+<li><a target="_blank" rel="noopener" href="https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line">Creating a personal access token for the command line@Github</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5c887419e51d45334d2f9a00">通过travis自动部署hexo博客到github pages@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/notifications/">Configuring Build Notifications@Travis CI</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/" rel="tag"># 持续集成</a>
+              <a href="/tags/%E6%8C%81%E7%BB%AD%E9%83%A8%E7%BD%B2/" rel="tag"># 持续部署</a>
+              <a href="/tags/Travis-ci/" rel="tag"># Travis ci</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/02%20%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%9001%20%E5%85%A5%E9%97%A8/" rel="prev" title="持续集成01 入门">
+                  <i class="fa fa-chevron-left"></i> 持续集成01 入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/27/06%20%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/03%20%E5%B0%8F%E7%B1%B3/03%20%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%87%8D%E6%9E%84%E6%80%BB%E7%BB%93/" rel="next" title="03 服务端重构总结">
+                  03 服务端重构总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="重新学习Node，整理以前的日志。Express学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node08 Express">
+<meta property="og:url" content="https://duola8789.github.io/2017/04/04/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node08%20Express/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="重新学习Node，整理以前的日志。Express学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/3FC2ADAAECA44BF5BE60E8A1038AA4D1/19981">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/C0F2241788CF4B50A64846C77F449033/19933">
+<meta property="article:published_time" content="2017-04-04T01:18:17.000Z">
+<meta property="article:modified_time" content="2019-04-30T03:06:03.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Express">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/3FC2ADAAECA44BF5BE60E8A1038AA4D1/19981">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2017/04/04/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node08%20Express/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2017/04/04/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node08%20Express/","path":"2017/04/04/05 全栈开发/01 Node/Node08 Express/","title":"Node08 Express"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Node08 Express | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">验证版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">项目目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-js"><span class="nav-number">4.</span> <span class="nav-text">app.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bin"><span class="nav-number">5.</span> <span class="nav-text">bin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">6.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VIEW%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">VIEW处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2017/04/04/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node08%20Express/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Node08 Express | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node08 Express
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-04-04 09:18:17" itemprop="dateCreated datePublished" datetime="2017-04-04T09:18:17+08:00">2017-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-04-30 11:06:03" itemprop="dateModified" datetime="2019-04-30T11:06:03+08:00">2019-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Node/" itemprop="url" rel="index"><span itemprop="name">Node</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>重新学习Node，整理以前的日志。Express学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>express是基于nodejs平台的web框架，它可以让我们快速开发出&#x3D;&#x3D;web应用&#x3D;&#x3D;。Express主要解决了 请求路由 和 视图模板 的问题</p>
+<p>安装express项目的命令如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">express -e nodejs-product</span><br><span class="line">//-e, --ejs add ejs engine support </span><br><span class="line">//-J, --jshtml add jshtml engine support (defaults to jade)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="验证版本"><a href="#验证版本" class="headerlink" title="验证版本"></a>验证版本</h2><p>如果是express 4.0之前版本，那么执行“express -V”就可以得到版本号了，可express 4.0之后还需要再安装express-generator包，如果没有安装还执行“express -V”命令会报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g express-generator</span><br><span class="line">express -V</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h2><p><img src="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/3FC2ADAAECA44BF5BE60E8A1038AA4D1/19981" alt="image"></p>
+<ul>
+<li><p>bin:真实的执行程序（在命令行输入express命令时，其实对应的其实是去执行bin目录下的express程序）。</p>
+</li>
+<li><p>app.js： 项目的启动文件(项目入口)，可以改成index.js或者main.js都成</p>
+</li>
+<li><p>node_modules： 存放项目的依赖库</p>
+</li>
+<li><p>package.json： 项目依赖配置及开发者信息</p>
+</li>
+<li><p>public： 静态文件如 css,js,img (PS:俺其实习惯叫static)</p>
+</li>
+<li><p>routes： 路由文件</p>
+</li>
+<li><p>Views： 页面文件(Ejs或者jade的模板，默认是jade)</p>
+</li>
+</ul>
+<p>express() 表示创建express应用程序。简单几行代码其实就可以创建一个应用，如下：</p>
+<p><img src="http://note.youdao.com/yws/public/resource/676feab4918c01e107b827b44bd71894/xmlnote/C0F2241788CF4B50A64846C77F449033/19933" alt="image"></p>
+<p>express默认的模版是jade模版，想要更改模版需要在app.js中更改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 原本是“app.set(&#x27;view engine&#x27;, &#x27;ejs&#x27;);</span><br><span class="line">// 修改为</span><br><span class="line">app.engine(&#x27;.html&#x27;, ejs.__express);</span><br><span class="line">app.set(&#x27;view engine&#x27;, &#x27;html&#x27;);</span><br></pre></td></tr></table></figure>
+<p>app.engine方法用来重新设置模板文件的扩展名，上面的代码意思是用ejs模板引擎来处理“.html”后缀的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.engine(ext, callback) </span><br><span class="line">//注册模板引擎的 callback 用来处理ext扩展名的文件。</span><br></pre></td></tr></table></figure>
+<p>PS：__express不用去care，其实就是ejs模块的一个公共属性，表示要渲染的文件扩展名。</p>
+<p>app.use用来指定中间件function：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use([path], function)</span><br></pre></td></tr></table></figure>
+<p>可选参数path默认为”&#x2F;“。使用 app.use() “定义的”中间件的顺序非常重要，它们将会顺序执行，use的先后顺序决定了中间件的优先级;</p>
+<p>app.render用来渲染view同时传进对应的数据:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.render(view, [options], callback)</span><br><span class="line">// 渲染 view, callback 用来处理返回的渲染后的字符串。</span><br></pre></td></tr></table></figure>
+<h2 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h2><p>app.js是项目的主文件,为这个主文件里面有创建服务和监听端口的语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&#x27;express&#x27;); //引入express框架</span><br><span class="line">var session = require(&#x27;express-session&#x27;); //设置session的中间件</span><br><span class="line">var redisStore = require(&#x27;connect-redis&#x27;)(session); //实现redis存储session</span><br><span class="line">var glob = require(&#x27;glob&#x27;); //使用类似shell的模式语法匹配文件路径</span><br><span class="line">var path = require(&#x27;path&#x27;); //path模块用于处理和转换文件路径</span><br><span class="line">var bodyParser = require(&#x27;body-parser&#x27;); //解析请求的body的中间件</span><br><span class="line"></span><br><span class="line">var swig = require(&#x27;swig&#x27;); //swig模板引擎</span><br><span class="line">var staticTag = require(&#x27;./swig/static&#x27;); //swig模板相关设置</span><br><span class="line">var morgan = require(&quot;morgan&quot;); //控制台日志</span><br><span class="line"></span><br><span class="line">var app = express(); //创建一个express应用</span><br><span class="line"></span><br><span class="line">app.locals.ENV = NODE_ENV; //将环境变量NODE_ENV存在app.locals里</span><br><span class="line">app.locals.ENV_DEV = (NODE_ENV === &#x27;dev&#x27;); //是否是dev环境</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// view engine setup</span><br><span class="line">app.engine(&#x27;html&#x27;, swig.renderFile); //使用swig渲染html文件</span><br><span class="line">app.set(&#x27;view engine&#x27;, &#x27;html&#x27;); //设置默认页面扩展名</span><br><span class="line">app.set(&#x27;view cache&#x27;, false); //设置模板编译无缓存</span><br><span class="line">app.set(&#x27;views&#x27;, path.join(__dirname, &#x27;views&#x27;)); //设置项目的页面文件，也就是html文件的位置</span><br><span class="line">swig.setDefaults(&#123;cache: false&#125;); //关闭swig模板缓存</span><br><span class="line">swig.setDefaults(&#123;loader: swig.loaders.fs(__dirname + &#x27;/views&#x27;)&#125;); //从文件载入模板，请写绝对路径，不要使用相对路径</span><br><span class="line"></span><br><span class="line">staticTag.init(swig); //这个init函数是自定义的，对swig模板做了一些自定义设置</span><br><span class="line"></span><br><span class="line">app.use(session(&#123; //设置session中间件的写法，session会存在服务端</span><br><span class="line">    cookie: &#123;</span><br><span class="line">        maxAge: 2502000 * 1000 //设置最大生命周期，过了这个时间后cookie会失效，单位毫秒</span><br><span class="line">    &#125;,</span><br><span class="line">    name: &#x27;lbn_sid&#x27;, //用来保存session的cookie名称</span><br><span class="line">    secret: &#x27;what are you thinking?&#x27;, //用来对session数据进行加密的字符串.这个属性值为必须指定的属性</span><br><span class="line">    store: new redisStore(&#123; //设置session的存储仓库为redis数据库</span><br><span class="line">        ttl: 2502000, //redis session生命周期，单位秒</span><br><span class="line">        url: REDIS_URL //redis缓存服务地址</span><br><span class="line">    &#125;),</span><br><span class="line">    saveUninitialized: false, //false选项不会强制存储未初始化的session到redis里，未初始化意味着新的还没有修改的</span><br><span class="line">    resave: false //如果是true选项，强制重新存储session到redis里，即使session没有被修改，false意味着如果没有变化就不用重新存</span><br><span class="line">&#125;));</span><br><span class="line">// app.use(morgan(&#x27;combined&#x27;)); //morgan控制台日志，会在控制台输出所有http请求日志，combined是标准Apache日志格式</span><br><span class="line">app.use(bodyParser.json()); //bodyParser.json是用来解析请求体的json数据格式</span><br><span class="line">app.use(bodyParser.urlencoded(&#123;</span><br><span class="line">    extended: true,</span><br><span class="line">    limit: &#x27;10mb&#x27;</span><br><span class="line">&#125;));</span><br><span class="line">/*bodyParser.urlencoded则是用来解析我们通常的form表单提交的数据，</span><br><span class="line"> *也就是请求头中包含这样的信息： Content-Type: application/x-www-form-urlencoded</span><br><span class="line"> *extended选项为true会使用qs library来解析数据，false会使用querystring来解析</span><br><span class="line"> *limit选项限制请求体的大小</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">app.use(&#x27;/&#x27; + global.STATIC_URL, express.static(path.join(__dirname, STATIC_DIR)));</span><br><span class="line">//为静态资源的请求添加虚拟路径，只有请求静态资源的路径前加了global.STATIC_URL前缀后，才可请求成功</span><br><span class="line"></span><br><span class="line">var controllers = glob.sync(&#x27;./controllers/*.js&#x27;); //获取到controllers文件夹下的所有js文件，这些文件里都是路由</span><br><span class="line">controllers.forEach(function (controller) &#123;</span><br><span class="line">    require(controller)(app);</span><br><span class="line">&#125;);</span><br><span class="line">//将所有路由循环到主文件中使其生效</span><br><span class="line"></span><br><span class="line">app.use(function (err, req, res, next) &#123; //当请求出现500错误，渲染500错误页面</span><br><span class="line">    res.locals = &#123;env: NODE_ENV&#125;;</span><br><span class="line">    // treat as 404</span><br><span class="line">    if (err.message</span><br><span class="line">        &amp;&amp; (~err.message.indexOf(&#x27;not found&#x27;)</span><br><span class="line">        || (~err.message.indexOf(&#x27;Cast to ObjectId failed&#x27;)))) &#123;</span><br><span class="line">        return next();</span><br><span class="line">    &#125;</span><br><span class="line">    res.status(500).render(&#x27;500&#x27;, &#123; error: err.stack &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(function (req, res, next) &#123; //当请求出现404错误，渲染404错误页面</span><br><span class="line">    res.status(404).render(&#x27;404&#x27;, &#123;</span><br><span class="line">        url: req.originalUrl,</span><br><span class="line">        error: &#x27;Not found&#x27;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">module.exports = app; //将app应用导出成模块</span><br></pre></td></tr></table></figure>
+
+<p>这其中session的设置值得注意，session的设置写在了app.use()中，也就是中间件中，中间件也是路由，只是所有的请求都会经过它的处理。这里设置session时有一个cookie的设置，这个cookie就是session的唯一标示，是sessionId，也就是说，第一次访问网站的时候，在请求通过session设置的中间件时，响应头里会设置一个set-cookie来强制浏览器存储一个cookie，也就是在浏览器存下sessionId，然后会在node端新建一个session，这里浏览器存的sessionId和node端的session是对应关系，之后的请求也会经过session设置的中间件，此时的请求头里会自动带上浏览器的所有cookie，当中间件发现已经有sessionId的时候，就不会新建了，只用更新对应的session就可以了。</p>
+<h2 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h2><p>express4.0之后的版本，项目目录下会有bin&#x2F;这个目录，这个目录专门用于自定义启动脚本，这样就把与启动服务的代码和主文件分离了，而且你可以定义多个启动脚本，而不用去修改app.js这个主文件。</p>
+<p>文件内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br><span class="line">/*这一句是写给类unix系统看的</span><br><span class="line"> *如果用户没有将nodejs装在默认的/usr/bin路径里</span><br><span class="line"> *当系统看到这一行的时候，首先会到env设置里查找nodejs的安装路径</span><br><span class="line"> *再调用对应路径下的解释器程序完成操作</span><br><span class="line"> */</span><br><span class="line">var app = require(&#x27;../app&#x27;);</span><br><span class="line">//引入app主应用</span><br><span class="line"></span><br><span class="line">app.set(&#x27;port&#x27;, PORT || 3000);</span><br><span class="line">//设置端口为环境变量.env文件里的PORT，如果.env里没有，就默认3000</span><br><span class="line"></span><br><span class="line">var server = app.listen(app.get(&#x27;port&#x27;), function() &#123;</span><br><span class="line">    console.log(&#x27;Express server listening on port &#x27;, app.get(&#x27;port&#x27;), &quot; with pid &quot;, process.pid);</span><br><span class="line">&#125;);</span><br><span class="line">/*app.listen(path,[callback])的写法是启动一个socket连接，然后在给定的端口上监听连接</span><br><span class="line"> *app.get(name)的写法是获取app设置，设置的时候通过app.set(&#x27;port&#x27;, &#x27;my port&#x27;);来设置。</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>Web需要通过不同uri区分功能，如：&#x2F;user&#x2F;profile 表示用户信息，&#x2F;about 表示网站简介，路由可以实现这一功能。</p>
+<blockquote>
+<p>我个人理解的就是当在地址栏输入一个地址，要对应的页面去往何处，完成这一功能的命令就是路由。</p>
+</blockquote>
+<p>路由用get去设置，默认的路由&#x2F;对应routes.index,&#x2F;user对应应routes.user</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&quot;express&quot;);</span><br><span class="line">var http = require(&quot;http&quot;);</span><br><span class="line">var app = express();</span><br><span class="line"></span><br><span class="line">app.all(&quot;*&quot;, function(request, response, next) &#123;</span><br><span class="line">  console.log(&quot;step1&quot;);</span><br><span class="line">  next();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(&quot;/&quot;, function(request, response) &#123;</span><br><span class="line">  response.end(&quot;Home Page!&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(&quot;/about&quot;, function(request, response) &#123;</span><br><span class="line">  response.end(&quot;About Page!&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(&quot;*&quot;, function(request, response) &#123;</span><br><span class="line">  response.end(&quot;404!&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">http.createServer(app).listen(1984);</span><br></pre></td></tr></table></figure>
+
+<h2 id="VIEW处理"><a href="#VIEW处理" class="headerlink" title="VIEW处理"></a>VIEW处理</h2><p>Express加入了View处理机制，一起看看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&quot;express&quot;);</span><br><span class="line">var app = express();</span><br><span class="line"></span><br><span class="line">// 模板目录：./views</span><br><span class="line">app.set(&quot;views&quot;, __dirname + &quot;/views&quot;);</span><br><span class="line"></span><br><span class="line">// 使用jade引擎</span><br><span class="line">app.set(&quot;view engine&quot;, &quot;jade&quot;);</span><br><span class="line"> </span><br><span class="line">// 寻址views/index，提交jade渲染，并返回结果</span><br><span class="line">app.get(&quot;/&quot;, function(request, response) &#123; response.render(&quot;index&quot;, &#123; message: &quot;I&#x27;m hyddd&quot; &#125;); &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/Darren_code/p/node_express.html">http://www.cnblogs.com/Darren_code/p/node_express.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hyddd/p/4237099.html">http://www.cnblogs.com/hyddd/p/4237099.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hahazexia/p/6027787.html">http://www.cnblogs.com/hahazexia/p/6027787.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hahazexia/p/6213286.html">http://www.cnblogs.com/hahazexia/p/6213286.html</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Express/" rel="tag"># Express</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/04/03/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node07%20events%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9D%97/" rel="prev" title="Node07 events事件模块">
+                  <i class="fa fa-chevron-left"></i> Node07 events事件模块
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/04/04/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node09%20swig%E6%A8%A1%E7%89%88%E5%BC%95%E6%93%8E/" rel="next" title="Node09 swig模版引擎">
+                  Node09 swig模版引擎 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

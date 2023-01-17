@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="EditorConfig + ESLint + ESLint + Husky + Stylelint学习小结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="零散专题16 代码检查和格式化">
+<meta property="og:url" content="https://duola8789.github.io/2017/12/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9816%20%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="EditorConfig + ESLint + ESLint + Husky + Stylelint学习小结。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-05T02:33:30.000Z">
+<meta property="article:modified_time" content="2019-12-25T08:20:49.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="WebStorm">
+<meta property="article:tag" content="EditorConfig">
+<meta property="article:tag" content="ESLint">
+<meta property="article:tag" content="Stylelint">
+<meta property="article:tag" content="Prettier">
+<meta property="article:tag" content="Husky">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2017/12/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9816%20%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2017/12/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9816%20%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/","path":"2017/12/05/01 前端笔记/07 零散专题/零散专题16 代码检查和格式化/","title":"零散专题16 代码检查和格式化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>零散专题16 代码检查和格式化 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#EditorConfig"><span class="nav-number">1.</span> <span class="nav-text">EditorConfig</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESLint"><span class="nav-number">2.</span> <span class="nav-text">ESLint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Webstorm%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">在Webstorm中使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%90%88Vue%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">配合Vue项目使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%90%88React%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">配合React项目使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%90%88TypeScript%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8"><span class="nav-number">2.5.</span> <span class="nav-text">配合TypeScript项目使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%90%88TypeScript-React%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%EF%BC%88-tsx%E6%96%87%E4%BB%B6%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">配合TypeScript + React项目使用（.tsx文件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ESlint%E5%AF%B9Async%E6%8A%A5%E9%94%99%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.7.</span> <span class="nav-text">ESlint对Async报错的解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prettier"><span class="nav-number">3.</span> <span class="nav-text">Prettier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E5%90%88FECS%E4%BD%BF%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">配合FECS使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stylelint"><span class="nav-number">4.</span> <span class="nav-text">stylelint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lint-staged-husky"><span class="nav-number">5.</span> <span class="nav-text">lint-staged + husky</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2017/12/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9816%20%E4%BB%A3%E7%A0%81%E6%A3%80%E6%9F%A5%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="零散专题16 代码检查和格式化 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          零散专题16 代码检查和格式化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-12-05 10:33:30" itemprop="dateCreated datePublished" datetime="2017-12-05T10:33:30+08:00">2017-12-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-12-25 16:20:49" itemprop="dateModified" datetime="2019-12-25T16:20:49+08:00">2019-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>EditorConfig + ESLint + ESLint + Husky + Stylelint学习小结。</p>
+<span id="more"></span>
+
+<h2 id="EditorConfig"><a href="#EditorConfig" class="headerlink" title="EditorConfig"></a>EditorConfig</h2><p>为了保持项目中代码缩进风格的一致，可以使用<code>.editorconfig</code>文件，来定义和维护一致的编码风格，例如范缩进风格，缩进大小，Tab长度以及字符集等。一般情况会覆盖IDE本身的设置，所以放在项目的根目录中，提交到代码仓库进行维护。</p>
+<p><code>.editorconfig</code>中第一行用于指明<code>.editorconfig</code>文件的位置，<code>[*]</code>表明规则应用所有文件，可以针对不同文件（比如<code>[*.md]</code>）添加不同的规则，再下面是具体对应的规则</p>
+<p>下面是我在项目中尝试用的一份<code>.editorconfig</code>文件，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">root = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[*]</span><br><span class="line"><span class="comment"># 缩进风格：空格</span></span><br><span class="line">indent_style = space</span><br><span class="line"></span><br><span class="line"><span class="comment"># 缩进大小2</span></span><br><span class="line">indent_size = 2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符集utf-8</span></span><br><span class="line">charset = utf-8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 除去换行行首的任意空白字符</span></span><br><span class="line">trim_trailing_whitespace = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使文件以一个空白行结尾</span></span><br><span class="line">insert_final_newline = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[*.md]</span><br><span class="line">trim_trailing_whitespace = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>没有加入的属性几个，比如定义换行符的<code>end_of_line</code>，可以取值<code>lf</code>、<code>cr</code>和<code>crlf</code>，更详细的介绍可以参考腾讯AlloyTeam的<a target="_blank" rel="noopener" href="http://www.alloyteam.com/2014/12/editor-config/">文章</a>。</p>
+<h2 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a>ESLint</h2><p><a target="_blank" rel="noopener" href="https://eslint.org/">Eslint</a>是一个用来识别ECMAScript并且按照规则给出报告的代码检测工具，使用它可以避免低级错误和统一代码的风格。ESLint被设计为完全可配置的，一般使用配置文件来配置ESLint，在项目的根目录下创建<code>.eslintrc.js</code></p>
+<p>可以被配置的信息主要分为3类：</p>
+<ul>
+<li>Environments：你的Javascript脚本将要运行在什么环境（如：Node，浏览器等）中。</li>
+<li>Globals：执行代码时脚步需要访问的额外全局变量。</li>
+<li>Rules：开启某些规则，也可以设置规则的等级。</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装推荐局部安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D eslint</span><br></pre></td></tr></table></figure>
+
+<p>安装完毕后，接下来新建一个配置文件<code>.eslintrc.js</code>，或者使用如下的命令行来自动生成。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/eslint --init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是全局安装的话可以执行</span></span><br><span class="line">eslint --init</span><br></pre></td></tr></table></figure>
+
+<p>配置文件中的<a target="_blank" rel="noopener" href="https://eslint.org/docs/user-guide/configuring">配置规则</a>分为三种等级：</p>
+<ul>
+<li><code>off</code>或者<code>0</code>：关闭规则</li>
+<li><code>warn</code>或者<code>1</code>：打开规则，并且作为一个警告</li>
+<li><code>error</code>或者<code>2</code>：打开规则，并且作为一个错误</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .eslintrc.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="attr">browser</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">node</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>具体的配置规则非常多，具体见<a target="_blank" rel="noopener" href="https://eslint.org/docs/rules/">这里</a>。</p>
+<h3 id="在Webstorm中使用"><a href="#在Webstorm中使用" class="headerlink" title="在Webstorm中使用"></a>在Webstorm中使用</h3><p>在Webstorm中配置ESLint，需要在<code>Language &amp; Frameworks</code> → <code>Javascript</code> → <code>Code Quality Tools</code> → <code>ESLint</code>中进行配置，勾选<code>Enable</code>。</p>
+<p>一般情况下下面的对应的配置和地址都会自动填好。</p>
+<p>开启之后Webstorm就会在代码中对违反ESLint规则的代码进行高亮提示。</p>
+<h3 id="配合Vue项目使用"><a href="#配合Vue项目使用" class="headerlink" title="配合Vue项目使用"></a>配合Vue项目使用</h3><p>Vue Cli在创建项目时，可以选择是否启用ESLint，并且可以选择使用哪种扩展，基本上不需要自己再进行配置，但是如果需要自己手动配置时，可以自己安装<a target="_blank" rel="noopener" href="https://github.com/vuejs/eslint-plugin-vue"><code>eslint-plugin-vue</code></a>这个插件</p>
+<blockquote>
+<p>ESLint配置中的<code>plugin</code>和<code>extend</code>的区别是，<code>extend</code>提供的是ESLint现有规则的一些列预设，而<code>plugin</code>除了提供预设之外的自定义规则，当现有格式的代码（比如<code>.vue</code>）在ESLint的规则中没有对应的规则是，就需要借用插件来实现了</p>
+</blockquote>
+<p>插件的安装有三种方式，推荐使用第一种：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vue add @vue/cli-plugin-eslint</span><br><span class="line"></span><br><span class="line">npm install --save-dev eslint eslint-plugin-vue</span><br><span class="line"></span><br><span class="line">yarn add -D eslint eslint-plugin-vue</span><br></pre></td></tr></table></figure>
+
+<p>对应的配置文件<code>eslintrc.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="comment">// add more generic rulesets here, such as:</span></span><br><span class="line">    <span class="comment">// &#x27;eslint:recommended&#x27;,</span></span><br><span class="line">    <span class="string">&#x27;plugin:vue/recommended&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// override/add rules settings here, such as:</span></span><br><span class="line">    <span class="comment">// &#x27;vue/no-unused-vars&#x27;: &#x27;error&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>规则分为Essential、Strongly Recommended和Recommended三个等级，具体的规则可以参考<a target="_blank" rel="noopener" href="https://eslint.vuejs.org/rules/">官网</a>。</p>
+<p>我在项目中使用的配置是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ESLint 中文文档：http://eslint.cn/docs/rules/</span></span><br><span class="line"><span class="comment">// eslint-plugin-vue: https://eslint.vuejs.org/</span></span><br><span class="line"><span class="comment">// 百度 EFE 团队使用的 eslint 配置：https://github.com/ecomfe/eslint-config/blob/master/index.js</span></span><br><span class="line"><span class="comment">// JavaScript 编码规范(百度): http://gitlab.baidu.com/fe/spec/blob/master/javascript.md#2-1</span></span><br><span class="line"><span class="comment">// Vue 组件代码规范(百度): http://gitlab.baidu.com/fe/spec/blob/master/vue.md#2-1</span></span><br><span class="line"><span class="comment">// iCode校验规则说明：http://bugbye.baidu.com/rules</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="string">&#x27;parser&#x27;</span>: <span class="string">&#x27;vue-eslint-parser&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;env&#x27;</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;browser&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&#x27;amd&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&#x27;node&#x27;</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">parserOptions</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;ecmaVersion&#x27;</span>: <span class="number">8</span>,</span><br><span class="line">    <span class="string">&#x27;parser&#x27;</span>: <span class="string">&#x27;babel-eslint&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;sourceType&#x27;</span>: <span class="string">&#x27;module&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&#x27;extends&#x27;</span>: [<span class="string">&#x27;plugin:vue/essential&#x27;</span>, ],</span><br><span class="line">  <span class="string">&#x27;rules&#x27;</span>: &#123;</span><br><span class="line">    <span class="comment">/* ---------------- 禁止 ---------------- */</span></span><br><span class="line">    <span class="comment">// 4个空格缩进</span></span><br><span class="line">    <span class="string">&#x27;indent&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="number">4</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;SwitchCase&#x27;</span>: <span class="number">1</span>, <span class="comment">// switch 的 case 子句缩进4个空格</span></span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="comment">// 只允许最大连续2行空行</span></span><br><span class="line">    <span class="string">&#x27;no-multiple-empty-lines&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>],</span><br><span class="line">    <span class="comment">// 禁止不写分号</span></span><br><span class="line">    <span class="string">&#x27;semi&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;always&#x27;</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;omitLastInOneLineBlock&#x27;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="comment">// 使用单引号</span></span><br><span class="line">    <span class="string">&#x27;quotes&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;single&#x27;</span>],</span><br><span class="line">    <span class="comment">// Vue 模板标签开始、结束位置不能有空格，自闭合标签有空格</span></span><br><span class="line">    <span class="string">&#x27;vue/html-closing-bracket-spacing&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;startTag&#x27;</span>: <span class="string">&#x27;never&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;endTag&#x27;</span>: <span class="string">&#x27;never&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;selfClosingTag&#x27;</span>: <span class="string">&#x27;always&#x27;</span>,</span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="comment">// Vue 模板结束标签</span></span><br><span class="line">    <span class="string">&#x27;vue/html-closing-bracket-newline&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;singleline&#x27;</span>: <span class="string">&#x27;never&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;multiline&#x27;</span>: <span class="string">&#x27;never&#x27;</span>,</span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="comment">// Vue 模板标签对齐方式</span></span><br><span class="line">    <span class="string">&#x27;vue/html-indent&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="number">4</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;attribute&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="string">&#x27;baseIndent&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="string">&#x27;closeBracket&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="string">&#x27;alignAttributesVertically&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">&#x27;ignores&#x27;</span>: []</span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="comment">// Vue script 标签对齐</span></span><br><span class="line">    <span class="string">&#x27;vue/script-indent&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="number">4</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;baseIndent&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="string">&#x27;switchCase&#x27;</span>: <span class="number">1</span>, <span class="comment">// switch 的 case 子句缩进4个空格</span></span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="comment">// Vue 模板标签必须成对出现</span></span><br><span class="line">    <span class="string">&#x27;vue/html-end-tags&#x27;</span>: <span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">    <span class="comment">// 对象和数组字面量中，最后一个选项的逗号，多行时必须有，单行时不能用</span></span><br><span class="line">    <span class="string">&#x27;comma-dangle&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;arrays&#x27;</span>: <span class="string">&#x27;always-multiline&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;objects&#x27;</span>: <span class="string">&#x27;always-multiline&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;imports&#x27;</span>: <span class="string">&#x27;always-multiline&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;exports&#x27;</span>: <span class="string">&#x27;always-multiline&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;functions&#x27;</span>: <span class="string">&#x27;never&#x27;</span>,</span><br><span class="line">    &#125;, ],</span><br><span class="line">    <span class="comment">// 禁止在数组括号内出现空格</span></span><br><span class="line">    <span class="string">&#x27;array-bracket-spacing&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;never&#x27;</span>],</span><br><span class="line">    <span class="comment">// 禁止在对象的大括号内出现空格</span></span><br><span class="line">    <span class="string">&#x27;object-curly-spacing&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;never&#x27;</span>],</span><br><span class="line">    <span class="comment">// 禁止在对象字面量的键和冒号之间存在空格，要求在对象字面量的键和冒号之间存在至少有一个空格</span></span><br><span class="line">    <span class="string">&#x27;key-spacing&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;beforeColon&#x27;</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="string">&#x27;afterColon&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;, ],</span><br><span class="line">    <span class="comment">/* ---------------- 建议 ---------------- */</span></span><br><span class="line">    <span class="comment">// 建议提交时不要出现alert, prompt 和 confirm,</span></span><br><span class="line">    <span class="string">&#x27;no-alert&#x27;</span>: <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">    <span class="comment">// 建议提交时不要出现console</span></span><br><span class="line">    <span class="string">&#x27;no-console&#x27;</span>: <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">    <span class="comment">// 建议提交时不要出现debugger</span></span><br><span class="line">    <span class="string">&#x27;no-debugger&#x27;</span>: <span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">    <span class="comment">// 建议不要出现常量作为判断条件</span></span><br><span class="line">    <span class="string">&#x27;no-constant-condition&#x27;</span>: <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">    <span class="comment">// 建议注释符要有空白隔开</span></span><br><span class="line">    <span class="string">&#x27;spaced-comment&#x27;</span>: [<span class="string">&#x27;warn&#x27;</span>, <span class="string">&#x27;always&#x27;</span>],</span><br><span class="line">    <span class="comment">// 建议将操作符放到行首, 而不是行尾</span></span><br><span class="line">    <span class="string">&#x27;operator-linebreak&#x27;</span>: [<span class="string">&#x27;warn&#x27;</span>, <span class="string">&#x27;before&#x27;</span>],</span><br><span class="line">    <span class="comment">// 建议代码列数不能超过120行</span></span><br><span class="line">    <span class="string">&#x27;max-len&#x27;</span>: [<span class="string">&#x27;warn&#x27;</span>, <span class="number">120</span>],</span><br><span class="line">    <span class="comment">/* ---------------- 允许 ---------------- */</span></span><br><span class="line">    <span class="comment">// 允许if (!!foo) 这种形式</span></span><br><span class="line">    <span class="string">&#x27;no-extra-boolean-cast&#x27;</span>: <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="comment">// 允许对函数声明进行覆盖赋值</span></span><br><span class="line">    <span class="string">&#x27;no-func-assign&#x27;</span>: <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="comment">// 允许函数在不同的情况下返回不同类型的值</span></span><br><span class="line">    <span class="string">&#x27;consistent-return&#x27;</span>: <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="comment">// 允许覆盖外部变量</span></span><br><span class="line">    <span class="string">&#x27;no-shadow&#x27;</span>: <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="comment">// 允许使用下划线开头命名变量</span></span><br><span class="line">    <span class="string">&#x27;no-underscore-dangle&#x27;</span>: <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 覆盖规则</span></span><br><span class="line">  <span class="string">&#x27;overrides&#x27;</span>: [&#123;</span><br><span class="line">    <span class="comment">// vue 文件的 intent 规则使用</span></span><br><span class="line">    <span class="string">&#x27;files&#x27;</span>: [<span class="string">&#x27;*.vue&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;rules&#x27;</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;indent&#x27;</span>: <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配合React项目使用"><a href="#配合React项目使用" class="headerlink" title="配合React项目使用"></a>配合React项目使用</h3><p>需要安装<a target="_blank" rel="noopener" href="https://github.com/yannickcr/eslint-plugin-react"><code>ESLint-plugin-React</code>插件</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint eslint-plugin-react --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>详细的规则参考<a target="_blank" rel="noopener" href="https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules">官网</a>。</p>
+<p>下面是我的一份<code>.eslintrc.js</code>配置文件，在<code>extends</code>中使用这个插件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;eslint:recommended&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;plugin:react/recommended&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="string">&#x27;reacte&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;react-hooks&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">parserOptions</span>: &#123;</span><br><span class="line">    <span class="attr">sourceType</span>: <span class="string">&#x27;module&#x27;</span>,</span><br><span class="line">    <span class="attr">ecmaFeatures</span>: &#123;</span><br><span class="line">      <span class="comment">// 开启 JSX 支持</span></span><br><span class="line">      <span class="attr">jsx</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="attr">jest</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">browser</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">node</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">settings</span>: &#123;</span><br><span class="line">    <span class="attr">react</span>: &#123;</span><br><span class="line">      <span class="comment">// React version. &#x27;detect&#x27; automatically picks the version you have installed.</span></span><br><span class="line">      <span class="comment">// You can also use `16.0`, `16.3`, etc, if you want to override the detected value.</span></span><br><span class="line">      <span class="string">&#x27;version&#x27;</span>: <span class="string">&#x27;detect&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="comment">// 这里填入你的项目需要的全局变量</span></span><br><span class="line">    <span class="comment">// 这里值为 false 表示这个全局变量不允许被重新赋值，比如：</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// jQuery: false,</span></span><br><span class="line">    <span class="comment">// $: false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// 这里填入你的项目需要的个性化配置，比如：</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// @fixable 一个缩进必须用两个空格替代</span></span><br><span class="line">    <span class="string">&#x27;indent&#x27;</span>: [</span><br><span class="line">      <span class="number">2</span>,</span><br><span class="line">      <span class="number">2</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// 强制 switch 语句中的 case 子句的缩进级别</span></span><br><span class="line">        <span class="string">&#x27;SwitchCase&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="comment">// 要求三元表达式内的三元表达式不能有缩进</span></span><br><span class="line">        <span class="string">&#x27;flatTernaryExpressions&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">// 对于 JSX 属性对其不进行约束，在下面的 react/jsx-indent-props 进行约束</span></span><br><span class="line">        <span class="string">&#x27;ignoredNodes&#x27;</span>: [<span class="string">&#x27;JSXAttribute&#x27;</span>, <span class="string">&#x27;JSXSpreadAttribute&#x27;</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&#x27;semi&#x27;</span>: [<span class="string">&#x27;warn&#x27;</span>, <span class="string">&#x27;always&#x27;</span>],</span><br><span class="line">    <span class="comment">// JSX 的 children 缩进必须为两个空格</span></span><br><span class="line">    <span class="string">&#x27;react/jsx-indent&#x27;</span>: [<span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">    <span class="comment">// JSX 的 props 缩进必须为两个空格</span></span><br><span class="line">    <span class="string">&#x27;react/jsx-indent-props&#x27;</span>: [<span class="number">2</span>, <span class="string">&#x27;first&#x27;</span>],</span><br><span class="line">    <span class="comment">// JSX 自闭和标签结束位置</span></span><br><span class="line">    <span class="string">&#x27;react/jsx-closing-bracket-location&#x27;</span>: [<span class="number">2</span>, <span class="string">&#x27;after-props&#x27;</span>],</span><br><span class="line">    <span class="comment">// 禁止出现超过两行的连续空行</span></span><br><span class="line">    <span class="string">&#x27;no-multiple-empty-lines&#x27;</span>: [<span class="number">2</span>, &#123; <span class="string">&#x27;max&#x27;</span>: <span class="number">2</span>&#125;],</span><br><span class="line">    <span class="comment">// 一行长度不应该超过120个字符</span></span><br><span class="line">    <span class="string">&#x27;max-len&#x27;</span>: [<span class="number">2</span>, <span class="number">120</span>],</span><br><span class="line">    <span class="comment">// React Hooks只能应用顶级函数和React函数中</span></span><br><span class="line">    <span class="string">&#x27;react-hooks/rules-of-hooks&#x27;</span>: <span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;react-hooks/exhaustive-deps&#x27;</span>: <span class="string">&#x27;error&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;no-unused-vars&#x27;</span>: <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// no-debugger</span></span><br><span class="line">    <span class="string">&#x27;no-debugger&#x27;</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="number">2</span> : <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接使用腾讯的<a target="_blank" rel="noopener" href="https://github.com/AlloyTeam/eslint-config-alloy">AlloyTeam的ESLint规则</a>（推荐），有<a target="_blank" rel="noopener" href="https://github.com/AlloyTeam/eslint-config-alloy">详细的规则描述和示例</a>，可以在此基础上进行定制。</p>
+<p>使用时需要首先安装<code>eslint</code>、<code>babel-eslint</code>、<code>eslint-config-alloy</code>，这是AlloyTeam的ESLint规则的最基础的所需要安装的依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D eslint babel-eslint eslint-config-alloy eslint-plugin-react</span><br></pre></td></tr></table></figure>
+
+<p>并将以下内容复制到<code>.eslintrc.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;alloy&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;alloy/react&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="comment">// 你的环境变量（包含多个预定义的全局变量）</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// browser: true,</span></span><br><span class="line">    <span class="comment">// node: true,</span></span><br><span class="line">    <span class="comment">// mocha: true,</span></span><br><span class="line">    <span class="comment">// jest: true,</span></span><br><span class="line">    <span class="comment">// jquery: true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="comment">// 你的全局变量（设置为 false 表示它不允许被重新赋值）</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// myGlobal: false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// 自定义你的规则</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>AlloyTeam也有针对Vue项目、TypeScript项目、React+TypeScript项目的<a target="_blank" rel="noopener" href="https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md#react">各种规则</a>，可以按需选择。</p>
+<p>需要注意的是，如果使用的Create React App脚手架工具来搭建React项目，由于它将默认的构建配置封装了起来，而ESLint仅仅开启了最基本的规则，更重要的是默认情况下，ESLint仅仅会在IDE中对违反规则的情况进行提示，并不会在构建时在终端的输出进行终端和提示。</p>
+<p>如果这种情况可以满足需要，而只需要开启更多的规则，那么在<code>.eslintrc.js</code>中的<code>extends</code>中添加对应的规则集即可</p>
+<p>但是如果要起到更强制性的提示作用（中断构建、终端提示），Create React App建议使用<a target="_blank" rel="noopener" href="https://github.com/prettier/prettier">Prettier</a>代替ESLint。如果要使用ESLint，那么就需要使用<code>npm run eject</code>，将配置文件吐出，按照AlloyTeam的提示进行配置即可。</p>
+<h3 id="配合TypeScript项目使用"><a href="#配合TypeScript项目使用" class="headerlink" title="配合TypeScript项目使用"></a>配合TypeScript项目使用</h3><p>由于ESLint默认使用Espree进行语法解析，无法识别TypeScript的某些语法，需要安装<a target="_blank" rel="noopener" href="https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser"><code>@typescript-eslint/parser</code></a>替代默认的解析器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @typescript-eslint/parser</span><br></pre></td></tr></table></figure>
+
+<p>最后安装对应的规则插件<a target="_blank" rel="noopener" href="https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin"><code>@typescript-eslint/eslint-plugin</code></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @typescript-eslint/eslint-plugin</span><br></pre></td></tr></table></figure>
+
+<p>对ESLint进行配置，在根目录下创建<code>.eslintrc.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">parser</span>: <span class="string">&#x27;@typescript-eslint/parser&#x27;</span>,</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;@typescript-eslint&#x27;</span>],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>上面提到了，AlloyTeam也有<a target="_blank" rel="noopener" href="https://github.com/AlloyTeam/eslint-config-alloy#typescript">对应TypeScript的规则</a></p>
+<p>安装和配置时直接按照下面的进行即可，已经包含了上面的安装和配置步骤</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-alloy</span><br></pre></td></tr></table></figure>
+
+<p>配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;alloy&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;alloy/typescript&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="comment">// 您的环境变量（包含多个预定义的全局变量）</span></span><br><span class="line">    <span class="comment">// Your environments (which contains several predefined global variables)</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// browser: true,</span></span><br><span class="line">    <span class="comment">// node: true,</span></span><br><span class="line">    <span class="comment">// mocha: true,</span></span><br><span class="line">    <span class="comment">// jest: true,</span></span><br><span class="line">    <span class="comment">// jquery: true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="comment">// 您的全局变量（设置为 false 表示它不允许被重新赋值）</span></span><br><span class="line">    <span class="comment">// Your global variables (setting to false means it&#x27;s not allowed to be reassigned)</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// myGlobal: false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// 自定义您的规则</span></span><br><span class="line">    <span class="comment">// Customize your rules</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配合TypeScript-React项目使用（-tsx文件）"><a href="#配合TypeScript-React项目使用（-tsx文件）" class="headerlink" title="配合TypeScript + React项目使用（.tsx文件）"></a>配合TypeScript + React项目使用（<code>.tsx</code>文件）</h3><p>要检查React的<code>.tsc</code>文件，首先需要安装<code>eslint-plugin-react</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev eslint-plugin-react</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>lint</code>命令后面需要添加<code>.tsx</code>后缀：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;eslint&quot;</span>: <span class="string">&quot;eslint src --ext .ts,.tsx&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用<a target="_blank" rel="noopener" href="https://github.com/AlloyTeam/eslint-config-alloy#typescript-react">AlloyTeam的ESLint规则的TypeScript React版本</a>。</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy</span><br></pre></td></tr></table></figure>
+
+<p>配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;alloy&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;alloy/react&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;alloy/typescript&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="comment">// Your environments (which contains several predefined global variables)</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// browser: true,</span></span><br><span class="line">    <span class="comment">// node: true,</span></span><br><span class="line">    <span class="comment">// mocha: true,</span></span><br><span class="line">    <span class="comment">// jest: true,</span></span><br><span class="line">    <span class="comment">// jquery: true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="comment">// Your global variables (setting to false means it&#x27;s not allowed to be reassigned)</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// myGlobal: false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// Customize your rules</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ESlint对Async报错的解决方法"><a href="#ESlint对Async报错的解决方法" class="headerlink" title="ESlint对Async报错的解决方法"></a>ESlint对<code>Async</code>报错的解决方法</h3><p>在ESlint配置文件中增加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">parserOptions: &#123;</span><br><span class="line">  <span class="string">&quot;ecmaVersion&quot;</span>: 8,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Prettier"><a href="#Prettier" class="headerlink" title="Prettier"></a>Prettier</h2><p><a target="_blank" rel="noopener" href="https://prettier.io/">Prettier</a>是一个流行的代码格式化工具，Webstorm的代码格式化就使用了这个插件。</p>
+<p>一般情况下，ESLint会包含对代码格式的检查（比如缩进、结尾分号等），但是很多ESLint的插件（比如<code>eslint-config-alloy</code>）将所有样式相关的规则都剔除了。这是因为相比与ESLint中的代码格式规则，它提供了更少的选项，但是却更加专业。所以让ESLint来检查它更擅长的逻辑错误，使用Prettier中检查样式错误。</p>
+<p>使用Prettier有两种方式，一种是结合ESLint使用（推荐），首先安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D prettier eslint-config-prettier eslint-plugin-prettier</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>prettier</code>是Prettier插件的核心代码，<a target="_blank" rel="noopener" href="https://github.com/prettier/eslint-config-prettier"><code>eslint-config-prettier</code></a>用来解决ESLint中的样式规范和Prettier中样式规范的冲突，以Prettier的样式规范为准，使ESLint中的样式规范自动失效，<code>eslint-plugin-prettier</code>用来将Prettier作为ESLint规范来使用</p>
+<p>然后在项目的根目录下创建<code>.prettierrc.js</code>文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基于 AlloyTeam 使用的 .prettierrc.js 配置进行修改</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="comment">// max 120 characters per line</span></span><br><span class="line">  <span class="attr">printWidth</span>: <span class="number">120</span>,</span><br><span class="line">  <span class="comment">// use 2 spaces for indentation</span></span><br><span class="line">  <span class="attr">tabWidth</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="comment">// use spaces instead of indentations</span></span><br><span class="line">  <span class="attr">useTabs</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// semicolon at the end of the line</span></span><br><span class="line">  <span class="attr">semi</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">// use single quotes</span></span><br><span class="line">  <span class="attr">singleQuote</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">// object&#x27;s key is quoted only when necessary</span></span><br><span class="line">  <span class="attr">quoteProps</span>: <span class="string">&#x27;as-needed&#x27;</span>,</span><br><span class="line">  <span class="comment">// use double quotes instead of single quotes in jsx</span></span><br><span class="line">  <span class="attr">jsxSingleQuote</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// no comma at the end</span></span><br><span class="line">  <span class="attr">trailingComma</span>: <span class="string">&#x27;none&#x27;</span>,</span><br><span class="line">  <span class="comment">// spaces are required at the beginning and end of the braces</span></span><br><span class="line">  <span class="attr">bracketSpacing</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">// end tag of jsx need to wrap</span></span><br><span class="line">  <span class="attr">jsxBracketSameLine</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// brackets are required for arrow function parameter, even when there is only one parameter</span></span><br><span class="line">  <span class="attr">arrowParens</span>: <span class="string">&#x27;always&#x27;</span>,</span><br><span class="line">  <span class="comment">// format the entire contents of the file</span></span><br><span class="line">  <span class="attr">rangeStart</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">rangeEnd</span>: <span class="title class_">Infinity</span>,</span><br><span class="line">  <span class="comment">// no need to write the beginning @prettier of the file</span></span><br><span class="line">  <span class="attr">requirePragma</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// No need to automatically insert @prettier at the beginning of the file</span></span><br><span class="line">  <span class="attr">insertPragma</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// use default break criteria</span></span><br><span class="line">  <span class="attr">proseWrap</span>: <span class="string">&#x27;preserve&#x27;</span>,</span><br><span class="line">  <span class="comment">// decide whether to break the html according to the display style</span></span><br><span class="line">  <span class="attr">htmlWhitespaceSensitivity</span>: <span class="string">&#x27;ignore&#x27;</span>,</span><br><span class="line">  <span class="comment">// lf for newline</span></span><br><span class="line">  <span class="attr">endOfLine</span>: <span class="string">&#x27;lf&#x27;</span>,</span><br><span class="line">  <span class="comment">// Whether or not to indent the code inside &lt;script&gt; and &lt;style&gt; tags in Vue files</span></span><br><span class="line">  <span class="attr">vueIndentScriptAndStyle</span>: <span class="literal">false</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>关于规则的说明可以参考<a target="_blank" rel="noopener" href="https://prettier.io/docs/en/options.html">官方文档</a>。</p>
+<p>接着修改<code>.eslintrc.js</code>文件，引入Prettier（下面项目是TypeScript项目，其他项目配置参考<a target="_blank" rel="noopener" href="https://github.com/prettier/eslint-config-prettier"><code>eslint-config-prettier</code>的文档</a>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">parser</span>: <span class="string">&#x27;@typescript-eslint/parser&#x27;</span>,</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;prettier/@typescript-eslint&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;plugin:prettier/recommended&quot;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="string">&#x27;@typescript-eslint&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>prettier/@typescript-eslint</code>使得<code>@typescript-eslint</code>中的样式规范失效，遵循Prettier中的样式规范，<code>plugin:prettier/recommended</code>使用Prettier中的样式规范，且如果使得ESLint会检测prettier的格式问题，同样将格式问题以Error的形式抛出</p>
+<p>这种形式的好处是，将Prettier与ESLint配合使用，当使用Lint-Staged进行检查时，只需要配置ESLint相关的命令即可。如果不符合规则，会进行提示，让你手动修改。</p>
+<p>另一个方式就是单独使用Preitter，不使用<code>eslint-plugin-prettier</code>等插件，然后同样在<code>.prettierrc.js</code>中进行配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev --save-exact prettier</span><br></pre></td></tr></table></figure>
+
+<p>这样的缺点是需要单独配置Prettier，优点是当代码风格不符合规则时，会直接按照配置的风格重新输出代码。当ESLint的规则与Prittier冲突时，还是通过上面提到的<code>eslint-config-prettier</code>来解决冲突</p>
+<h3 id="配合FECS使用"><a href="#配合FECS使用" class="headerlink" title="配合FECS使用"></a>配合FECS使用</h3><p>由于百度使用了统一制定的个性化的ESLint规则，可以直接使用<a target="_blank" rel="noopener" href="https://github.com/ecomfe/fecs">fecs</a>来检查代码</p>
+<p>常规的<a target="_blank" rel="noopener" href="https://github.com/ecomfe/fecs/wiki/ESLint">使用方法</a>不能满足每次提交时只检测对应改动的文件的要求，想要结合husky使用，需要新建一个<code>.lintstagedrc</code>文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="comment">// 使用 fecs 进行校验</span></span><br><span class="line">  <span class="string">&#x27;*.js&#x27;</span>: filenames = &gt; filenames.<span class="title function_">map</span>(filename = &gt; <span class="string">`fecs check &#x27;<span class="subst">$&#123;filename&#125;</span>&#x27;--level = 2--rule = true--type = js, vue`</span>)</span><br><span class="line">  <span class="comment">// &#x27;*.js&#x27;: filenames =&gt; filenames.map(file =&gt; `eslint $&#123;file&#125;`)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>将<code>package.json</code>的<code>lint-staged</code>的配置删除，这样每次提交时就会针对改动的文件进行配置。</p>
+<p>它采用的JavaScript的编码规范在<a target="_blank" rel="noopener" href="https://github.com/ecomfe/spec/blob/master/javascript-style-guide.md">这里</a>。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ecomfe/fecs/wiki/Format">Fecs还提供了格式化的功能</a>，<code>fesc format</code>。</p>
+<h2 id="stylelint"><a href="#stylelint" class="headerlink" title="stylelint"></a>stylelint</h2><p>ESLint检查的JavaScript代码，对于CSS代码的检查就需要使用<a target="_blank" rel="noopener" href="https://note.youdao.com/">stylelint</a>，它的使用和配置与ESLint非常类似，关于它的实践安可以参考<a target="_blank" rel="noopener" href="https://devework.com/stylelint-in-wechat-work-css.html">企业微信的文章</a>。</p>
+<p>它的具体<a target="_blank" rel="noopener" href="https://stylelint.io/user-guide/rules">规则集</a>在这里。预设的规则集有<a target="_blank" rel="noopener" href="https://github.com/stylelint/stylelint-config-recommended">stylelint-config-recommended</a>和<a target="_blank" rel="noopener" href="https://github.com/stylelint/stylelint-config-standard">stylelint-config-standard</a>，前者只会检验可能导致错误的规则，后者在前者基础上还增加了<a target="_blank" rel="noopener" href="https://stylelint.io/user-guide/rules#stylistic-issues">60条规则</a>，官方的选择建议是，如果使用了Prettier选择stylelint-config-recommended，如果希望统一样式的编写格式，那么可以选择stylelint-config-standard。在选择了某一种后，也可以在<code>.stylelintrc.js</code>中进行自定义的配置。</p>
+<p>支持多种引入方式，一般常用的有下面两种</p>
+<p>（1）命令行使用</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install stylelint  stylelint-config-standard -D</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>.stylelintrc.js</code>中进行配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stylelint规则集：https://stylelint.io/user-guide/rules</span></span><br><span class="line"><span class="comment">// stylelint-config-standard扩展规则集：https://github.com/stylelint/stylelint-config-standard</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="string">&#x27;extends&#x27;</span>: <span class="string">&#x27;stylelint-config-standard&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;rules&#x27;</span>: &#123;</span><br><span class="line">    <span class="comment">// add your onw rules</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这样在命令行中就可以对CSS文件进行校验：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stylelint <span class="string">&quot;foo/*.css&quot;</span></span><br><span class="line"><span class="comment"># 校验HTML文件中的 style 标签内的样式内容</span></span><br><span class="line">stylelint <span class="string">&quot;bar/*.html&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>（2）与Webpack等构建工具配合使用</p>
+<p>stylelint可以与各种构建工具配合使用，例如它提供了Webpack的插件<a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/stylelint-webpack-plugin">stylelint-webpack-plugin</a>，首先安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install stylelint  stylelint-config-standard stylelint-webpack-plugin  -D</span><br></pre></td></tr></table></figure>
+
+<p>然后在Webpack中配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">StyleLintPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;stylelint-webpack-plugin&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">lintOnSave</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">  <span class="attr">configureWebpack</span>: &#123;</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">StyleLintPlugin</span>(&#123;</span><br><span class="line">        <span class="attr">files</span>: [<span class="string">&#x27;src/**/*.&#123;vue,htm,html,css,sss,less,scss,sass&#125;&#x27;</span>],</span><br><span class="line">        <span class="attr">lintDirtyModulesOnly</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">failOnError</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">failOnWarning</span>: <span class="literal">false</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="lint-staged-husky"><a href="#lint-staged-husky" class="headerlink" title="lint-staged + husky"></a><code>lint-staged</code> + <code>husky</code></h2><p>使用<a target="_blank" rel="noopener" href="https://github.com/okonet/lint-staged">lint-staged</a>配合<a target="_blank" rel="noopener" href="https://github.com/typicode/husky">Husky</a>，可以实现在Git某种操作前（一般是<code>commit</code>）仅检测有改动的代码。</p>
+<p>首先进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install -D lint-staged husky;</span><br><span class="line"></span><br><span class="line">// 这一行就可以安装husky和lint-stage，并且配置好husky。</span><br><span class="line">npx mrm lint-staged</span><br></pre></td></tr></table></figure>
+
+<p>然后修改<code>package.json</code>，增加配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;husky&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;hooks&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;pre-commit&quot;</span>: <span class="string">&quot;lint-staged&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;lint-staged&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;*.&#123;js,vue&#125;&quot;</span>: [<span class="string">&quot;eslint&quot;</span>, <span class="string">&quot;stylelint&quot;</span>],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样在Commit之前就会使用ESLint进行校验。</p>
+<p>如果配合Prettier使用，则可以自动格式化代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;precommit&quot;</span>: <span class="string">&quot;lint-staged&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;lint-staged&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;src/**/*.js&quot;</span>: [<span class="string">&quot;prettier --write&quot;</span>, <span class="string">&quot;git add&quot;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.alloyteam.com/2014/12/editor-config/">【译】EditorConfig 介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/itpinpai/article/details/53887818">在WebStorm中使用editorConfig插件@CSDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://eslint.org/">rules@ESLint</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vuejs/eslint-plugin-vue">eslint-plugin-vue</a></li>
+<li><a target="_blank" rel="noopener" href="https://facebook.github.io/create-react-app/docs/setting-up-your-editor#displaying-lint-output-in-the-editor">Displaying Lint Output in the Editor@Create React App</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/AlloyTeam/eslint-config-alloy">AlloyTeam&#x2F;eslint-config-alloy@github</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000009546913">用 husky 和 lint-staged 构建超溜的代码检查工作流@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5d1d5fe96fb9a07eaf2bae29">在Typescript项目中，如何优雅的使用ESLint和Prettier@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000009546913">用 husky 和 lint-staged 构建超溜的代码检查工作流@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/81764012/">Prettier看这一篇就行了@知乎</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WebStorm/" rel="tag"># WebStorm</a>
+              <a href="/tags/EditorConfig/" rel="tag"># EditorConfig</a>
+              <a href="/tags/ESLint/" rel="tag"># ESLint</a>
+              <a href="/tags/Stylelint/" rel="tag"># Stylelint</a>
+              <a href="/tags/Prettier/" rel="tag"># Prettier</a>
+              <a href="/tags/Husky/" rel="tag"># Husky</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/12%20Git/Git13%20%E6%92%A4%E9%94%80%E6%8F%90%E4%BA%A4/" rel="prev" title="Git13 撤销提交">
+                  <i class="fa fa-chevron-left"></i> Git13 撤销提交
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/12/06/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A314%20JS%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%EF%BC%88Event%20Loop%EF%BC%89/" rel="next" title="JS语言理解14 JS中的事件循环（Event Loop">
+                  JS语言理解14 JS中的事件循环（Event Loop <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

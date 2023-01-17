@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="学习Redux中间件的概念，以及使用Redux中间件完成异步操作的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux02 异步操作和中间件">
+<meta property="og:url" content="https://duola8789.github.io/2019/03/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux02%20%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%B6/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="学习Redux中间件的概念，以及使用Redux中间件完成异步操作的方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-07T02:00:42.000Z">
+<meta property="article:modified_time" content="2019-03-18T07:26:12.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Redux">
+<meta property="article:tag" content="异步操作">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/03/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux02%20%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/03/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux02%20%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%B6/","path":"2019/03/07/01 前端笔记/06 Redux/Redux02 异步操作和中间件/","title":"Redux02 异步操作和中间件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Redux02 异步操作和中间件 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">同步和异步流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">中间件的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">中间件的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#applyMiddleware"><span class="nav-number">4.</span> <span class="nav-text">applyMiddleware()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compose"><span class="nav-number">5.</span> <span class="nav-text">compose()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">6.</span> <span class="nav-text">异步操作的基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-thunk%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">redux-thunk中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redux-promise%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">redux-promise中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/03/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux02%20%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Redux02 异步操作和中间件 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redux02 异步操作和中间件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-07 10:00:42" itemprop="dateCreated datePublished" datetime="2019-03-07T10:00:42+08:00">2019-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-03-18 15:26:12" itemprop="dateModified" datetime="2019-03-18T15:26:12+08:00">2019-03-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redux/" itemprop="url" rel="index"><span itemprop="name">Redux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>学习Redux中间件的概念，以及使用Redux中间件完成异步操作的方法。</p>
+<span id="more"></span>
+
+<h2 id="同步和异步流程"><a href="#同步和异步流程" class="headerlink" title="同步和异步流程"></a>同步和异步流程</h2><p>先来复习一下Redux的基本流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 用户发出Action</span><br><span class="line"></span><br><span class="line">2. Store自动调用Reducer，计算返回一个新的State</span><br><span class="line"></span><br><span class="line">3. Store就会调用监听函数</span><br><span class="line"></span><br><span class="line">4. 监听函数listener中重新渲染View</span><br></pre></td></tr></table></figure>
+
+<p>在第1、2步之间有一个问题，之前考虑的情况都是在Action发出之后，Reducer立刻计算出State，这是一个同步的过程。如果在Action发出之后，过一段时间再执行Reducer，这是异步过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 用户发出Action</span><br><span class="line"></span><br><span class="line">1.5 异步操作（等待一段时间）</span><br><span class="line"></span><br><span class="line">2. Store自动调用Reducer，计算返回一个新的State</span><br><span class="line"></span><br><span class="line">3. Store就会调用监听函数</span><br><span class="line"></span><br><span class="line">4. 监听函数listener中重新渲染View</span><br></pre></td></tr></table></figure>
+
+<p>现在我们希望的是在异步操作结束后，自动执行Reducer，这就要用到中间件（middleware）</p>
+<h2 id="中间件的概念"><a href="#中间件的概念" class="headerlink" title="中间件的概念"></a>中间件的概念</h2><p>什么是中间件？中间件（middleware）是一种很常见、也很强大的模式，被广泛应用在Express、Koa、Redux等类库和框架当中。</p>
+<p>简单来说，中间件就是在调用目标函数之前，可以随意插入其他函数预先对数据进行处理、过滤，在这个过程里面你可以打印数据、或者停止往下执行中间件等。数据就像水流一样经过中间件的层层的处理、过滤，最终到达目标函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 中间件可以把 A 发送数据到 B 的形式从</span><br><span class="line">// A -----&gt; B</span><br><span class="line">// 变成:</span><br><span class="line">// A ---&gt; middleware 1 ---&gt; middleware 2 ---&gt; middleware 3 --&gt; ... ---&gt; B</span><br></pre></td></tr></table></figure>
+
+<p>具体到Redux来看，如果要实现中间件，最合适环节就是在发送Action的环节，即使用中间件包裹<code>store.dispatch</code>来添加功能，比如要增加打印功能，将Action和State打印出来，我们就可以编写这样一个中间件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> next = store.<span class="property">dispatch</span>;</span><br><span class="line"></span><br><span class="line">store.<span class="property">dispatch</span> = <span class="keyword">function</span> (<span class="params">action</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;action: &#x27;</span>, action);</span><br><span class="line">  <span class="title function_">next</span>(action);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;next state: &#x27;</span>, store.<span class="title function_">getState</span>())</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>中间件对<code>store.dispatch</code>进行了改造，在发出Action和执行Reducer之间添加了其他功能。但是实际上中间件的写法不是这样的。</p>
+<p>在Redux中，中间件是纯函数，有明确的使用方法，并且要严格的遵循以下格式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anyMiddleware = <span class="keyword">function</span> (<span class="params">&#123; dispatch, getState &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">next</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">action</span>) &#123;</span><br><span class="line">      <span class="comment">// 你的中间件业务相关代码</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>中间件由三个嵌套的函数构成（会依次调用）：</p>
+<p>（1）第一层向其余两层提供分发函数<code>dispatch</code>和<code>getState</code>函数</p>
+<p>（2）第二层提供<code>next</code>函数，它允许你显示的将处理过的输入传递给下一个中间件或Redux（这样Redux才能调用所有reducer）。实际上<code>next</code>作为参数，就是通过<code>componse</code>传入的下一个要执行的函数，通过<code>next(action)</code>就将<code>action</code>传递给了下一中间件</p>
+<p>（3）第三层提供从上一个中间件或者从<code>dispatch</code>传递过来的Action，这个Action可以调用下一个中间件（让Action继续流动）或者以想要的方式处理action</p>
+<p>所以一个Log的中间件应该这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">logMiddleware</span> (&#123; dispatch, getState &#125;) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">next</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">action</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;logMiddleware action received:&#x27;</span>, action)</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">next</span>(action)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>next(action)</code>就是继续传递Action，如果不进行这一步，所有的Action都会被丢弃。</p>
+<h2 id="中间件的用法"><a href="#中间件的用法" class="headerlink" title="中间件的用法"></a>中间件的用法</h2><p>常用的中间件都有现成的，不用我们自行编写，只需要直接引用别人写好的模块即可，比如上面的打印日志的中间件，就可以使用现成的<a target="_blank" rel="noopener" href="https://github.com/LogRocket/redux-logger">redux-logger</a>模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; applyMiddleware, createStore &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> createLogger <span class="keyword">from</span> <span class="string">&#x27;redux-logger&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> logger = <span class="title function_">createLogger</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(</span><br><span class="line">  reducer,</span><br><span class="line">  <span class="title function_">applyMiddleware</span>(logger)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>使用的时候首先通过redux-logger提供的生成方法<code>createLogger</code>创建一个中间件实例<code>logger</code>，然后将它放在Redux提供的<code>applyMiddleware</code>方法中，放到<code>createStore</code>方法中（由于<code>createStore</code>方法可以接受应用的初始状态作为第二个参数，这个时候<code>applyMiddleware</code>方法就是第三个参数了）</p>
+<p>有的中间件有次序要求，必须放在何时的位置才能正确输出，使用之前要查看文档。</p>
+<h2 id="applyMiddleware"><a href="#applyMiddleware" class="headerlink" title="applyMiddleware()"></a><code>applyMiddleware()</code></h2><p><code>applyMiddleware()</code>是Redux的原生方法，会将所有中间件组成一个数组，依次执行，下面是它的源码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">applyMiddleware</span>(<span class="params">...middlewares</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">createStore</span>) =&gt;</span> <span class="function">(<span class="params">reducer, preloadedState, enhancer</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> store = <span class="title function_">createStore</span>(reducer, preloadedState, enhancer);</span><br><span class="line">    <span class="keyword">var</span> dispatch = store.<span class="property">dispatch</span>;</span><br><span class="line">    <span class="keyword">var</span> chain = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> middlewareAPI = &#123;</span><br><span class="line">      <span class="attr">getState</span>: store.<span class="property">getState</span>,</span><br><span class="line">      <span class="attr">dispatch</span>: <span class="function">(<span class="params">action</span>) =&gt;</span> <span class="title function_">dispatch</span>(action)</span><br><span class="line">    &#125;;</span><br><span class="line">    chain = middlewares.<span class="title function_">map</span>(<span class="function"><span class="params">middleware</span> =&gt;</span> <span class="title function_">middleware</span>(middlewareAPI));</span><br><span class="line">    dispatch = <span class="title function_">compose</span>(...chain)(store.<span class="property">dispatch</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;...store, dispatch&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>applyMiddleware</code>可以接受多个中间件作为参数，全部放进了数组<code>chain</code>中，每个中间件接受Store的<code>dispatch</code>和<code>getState</code>函数作为命名参数，返回一个函数。该函数会被传入称为<code>next</code>的下一个中间件的<code>dispatch</code>方法，并返回一个接受Action的新函数，这个函数可以直接调用<code>next(action)</code>。这个过程是通过<code>compose</code>方法完成的。</p>
+<p>多个中间件形成了一个调用链，调用链中的最后一个中间件会接受真实Store的<code>dispatch</code>作为<code>next</code>参数，并借此结束调用链。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 中间件函数的函数签名</span></span><br><span class="line">(&#123; getState, dispatch &#125;) =&gt; <span class="function"><span class="params">next</span> =&gt;</span> action</span><br></pre></td></tr></table></figure>
+
+<h2 id="compose"><a href="#compose" class="headerlink" title="compose()"></a><code>compose()</code></h2><p><code>compose(...functions)</code>的功能是从右到左来组合多个函数，这是函数式编程的方法，其中每个函数的返回值作为参数提供给左边的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">compose</span>(funcA, funcB, funcC); </span><br><span class="line"><span class="comment">// 同等于</span></span><br><span class="line"><span class="title function_">funcA</span>(<span class="title function_">funcB</span>(<span class="title function_">funcC</span>()))</span><br></pre></td></tr></table></figure>
+<p>关于<code>compose</code>方法，以前做过一道练习题<a target="_blank" rel="noopener" href="https://blog.csdn.net/duola8789/article/details/85039248">《前端练习17 函数式编程的compose函数》</a>，手写简易的<code>compose</code>方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(</span><br><span class="line">  reducer,</span><br><span class="line">  <span class="title function_">applyMiddleware</span>(thunk, promise, logger)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="异步操作的基本思路"><a href="#异步操作的基本思路" class="headerlink" title="异步操作的基本思路"></a>异步操作的基本思路</h2><p>处理异步操作需要使用中间件。</p>
+<p>同步操作只要发出一种Action即可，异步操作的差别是要发出三种Action</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 操作发起时的Action</span><br><span class="line">- 操作成功时的Action</span><br><span class="line">- 操作失败时的Action</span><br></pre></td></tr></table></figure>
+<p>以向服务器取出数据为例，三种Action有两种不同的写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法一，名称相同，参数不同</span></span><br><span class="line">&#123; <span class="attr">type</span>: <span class="string">&#x27;FETCH_POSTS&#x27;</span> &#125;</span><br><span class="line">&#123; <span class="attr">type</span>: <span class="string">&#x27;FETCH_POSTS&#x27;</span>, <span class="attr">status</span>: <span class="string">&#x27;error&#x27;</span>, <span class="attr">error</span>: <span class="string">&#x27;Oops&#x27;</span> &#125;</span><br><span class="line">&#123; <span class="attr">type</span>: <span class="string">&#x27;FETCH_POSTS&#x27;</span>, <span class="attr">status</span>: <span class="string">&#x27;success&#x27;</span>, <span class="attr">respose</span>: &#123;&#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法二， 名称不同</span></span><br><span class="line">&#123; <span class="attr">type</span>: <span class="string">&#x27;FETCH_POSTS&#x27;</span> &#125;</span><br><span class="line">&#123; <span class="attr">type</span>: <span class="string">&#x27;FETCH_POSTS_FAILURE&#x27;</span>, <span class="attr">error</span>: <span class="string">&#x27;Oops&#x27;</span> &#125;</span><br><span class="line">&#123; <span class="attr">type</span>: <span class="string">&#x27;FETCH_POSTS_SUCCESS&#x27;</span>, <span class="attr">respose</span>: &#123;&#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了Action种类不同，异步操作的State也要进行改造，反映不同的操作状态，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">isFetching</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">didInvalidate</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">lastUpdated</span>: <span class="string">&#x27;xxxxxxx&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>State中的属性<code>isFetching</code>表示是否正在抓取数据，<code>didInvalidate</code>表示是否正过期，<code>lastUpdated</code>表示上一次更新事件。</p>
+<p>现在整个异步操作的思路就很清晰了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 操作开始，发出一个Action，触发State更新为“正在操作”状态，View重新渲染</span><br><span class="line">2. 操作结束，再次发出一个Action，触发State更新为“操作结束”状态，View再次重新渲染</span><br></pre></td></tr></table></figure>
+
+<h2 id="redux-thunk中间件"><a href="#redux-thunk中间件" class="headerlink" title="redux-thunk中间件"></a>redux-thunk中间件</h2><p>异步操作至少要发出两个Action，用户操作触发第一个Action，这个和同步操作一样，标识着异步操作的开始，现在要做的是在异步操作结束时，自动发送第二个Action</p>
+<p>奥妙就在Action Creator中，需要对其进行改造。我们有一个组件，点击按钮后会发出一个Ajax请求，将返回的结果填充在视图中，按钮的点击事件如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">sendQuestion</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> question = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">questionInput</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Action Creator1</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">requestPost</span> = (<span class="params">question</span>) =&gt; (&#123; <span class="attr">type</span>: <span class="string">&#x27;SEND_QUESTION&#x27;</span>, <span class="attr">status</span>: <span class="string">&#x27;sending...&#x27;</span>, question &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Action Creator2</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">receivePost</span> = (<span class="params">answer</span>) =&gt; (&#123; <span class="attr">type</span>: <span class="string">&#x27;RECEIVE_ANSWER&#x27;</span>, <span class="attr">status</span>: <span class="string">&#x27;&#x27;</span>, answer &#125;);</span><br><span class="line">  </span><br><span class="line">   <span class="comment">// Action Creator3</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">actionCreator</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">dispatch, getState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">dispatch</span>(<span class="title function_">requestPost</span>(question));</span><br><span class="line">    <span class="comment">// 重置输入框</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">      <span class="attr">questionInput</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Request</span>.<span class="property">demo2</span>.<span class="title function_">getAnswer</span>(&#123; question &#125;)</span><br><span class="line">      .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> <span class="title function_">dispatch</span>(<span class="title function_">receivePost</span>(res)))</span><br><span class="line">  &#125;;</span><br><span class="line">  store.<span class="title function_">dispatch</span>(<span class="title function_">actionCreator</span>())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中最关键的就是<code>actionCreator</code>，它的返回值是一个函数，这个函数执行时，会先发出一个Action<code>requestPost</code>（由Action Creator生成）并进行其他同步操作，然后进行异步操作<code>Request.demo2.getAnswer(&#123; question &#125;)</code>，在异步操作的回调函数中发出第二个Action<code>actionCreator</code>（由Action Creator2生成）。</p>
+<p>上面的代码中，有几点要注意：</p>
+<p>（1）完成异步操作的Action Creator<code>actionCreator</code>返回的是一个函数，普通的Action Creator返回的是Action对象</p>
+<p>（2）返回的这个函数参数是<code>dispatch</code>和<code>getState</code>这两个Redux方法，普通的Action Creator参数是Action的内容。</p>
+<p>（3）在返回的函数中，先发出的Action<code>dispatch(requestPost(question))</code>表示操作开始</p>
+<p>（4）异步操作结束后，在发出的Action<code>dispatch(receivePost(res))</code>表示操作结束</p>
+<p>第二点中，返回函数的两个Redux方法是执行时由函数的执行者传进去的，函数的执行者是谁呢？就是中间件<a target="_blank" rel="noopener" href="https://github.com/reduxjs/redux-thunk">redux-thunk</a></p>
+<p>为什么要使用redux-thunk？因为Action是由<code>store.dispatch</code>发出的，这个方法接受的参数是一个对象，而我们的Action Creator返回的是一个函数，使用redux-thunk对<code>store.dispatch</code>进行改造，改造后在执行Action Creator返回的函数时就传入了<code>dispatch</code>和<code>getState</code>两个参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">&quot;redux&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">&quot;./reducers/index&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用thunk中间件，使dispatch可以接受函数作为参数（默认只能接受Action对象作为参数）</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Store</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(reducer, <span class="title function_">applyMiddleware</span>(thunk));</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+
+<p>因此，异步操作的第一种解决方案就是，&#x3D;&#x3D;编写一个返回函数的Action Creator，然后使用redux-thunk中间件改造<code>store.dispatch</code>&#x3D;&#x3D;</p>
+<h2 id="redux-promise中间件"><a href="#redux-promise中间件" class="headerlink" title="redux-promise中间件"></a>redux-promise中间件</h2><p>在上面的Action Creator返回了一个函数，也可以返回其他值，另一种异步操作的解决方案，就是让Action Creator返回一个Promise对象</p>
+<p>这需要使用redux-promise中间件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">&quot;redux&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">&quot;./reducers/index&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用redux-promise中间件，使dispatch可以接受Promise作为参数</span></span><br><span class="line"><span class="keyword">import</span> promiseMiddleware <span class="keyword">from</span> <span class="string">&#x27;redux-promise&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Store</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(reducer, <span class="title function_">applyMiddleware</span>(promiseMiddleware));</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+
+<p>来看一下它的源码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> isPromise <span class="keyword">from</span> <span class="string">&#x27;is-promise&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; isFSA &#125; <span class="keyword">from</span> <span class="string">&#x27;flux-standard-action&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">promiseMiddleware</span>(<span class="params">&#123; dispatch &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">next</span> =&gt;</span> <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isFSA</span>(action)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">isPromise</span>(action)</span><br><span class="line">        ? action.<span class="title function_">then</span>(dispatch)</span><br><span class="line">        : <span class="title function_">next</span>(action);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">isPromise</span>(action.<span class="property">payload</span>)</span><br><span class="line">      ? action.<span class="property">payload</span>.<span class="title function_">then</span>(</span><br><span class="line">          <span class="function"><span class="params">result</span> =&gt;</span> <span class="title function_">dispatch</span>(&#123; ...action, <span class="attr">payload</span>: result &#125;),</span><br><span class="line">          <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">dispatch</span>(&#123; ...action, <span class="attr">payload</span>: error, <span class="attr">error</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">            <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">          &#125;</span><br><span class="line">        )</span><br><span class="line">      : <span class="title function_">next</span>(action);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果Action本身是一个Promise，它resolve后的值是一个Action对象，会被<code>dispatch</code>方法送出，<code>reject</code>后不会有任何动作，如果Action本身不是一个Promise对象，而Action对象的<code>payload</code>属性是一个Promise对象，那么无论其resolve或reject，<code>dispatch</code>都会发出Action</p>
+<p>所以有两种写法，一种是让Action本身返回一个Promise对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">sendQuestion</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> question = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">questionInput</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Action Creator1</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">requestPost</span> = (<span class="params">question</span>) =&gt; (&#123; <span class="attr">type</span>: <span class="string">&#x27;SEND_QUESTION&#x27;</span>, <span class="attr">status</span>: <span class="string">&#x27;sending...&#x27;</span>, question &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Action Creator2</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">receivePost</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; (&#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;RECEIVE_ANSWER&#x27;</span>,</span><br><span class="line">    <span class="attr">status</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">answer</span>: <span class="keyword">await</span> <span class="title class_">Request</span>.<span class="property">demo2</span>.<span class="title function_">getAnswer</span>(&#123; question &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  store.<span class="title function_">dispatch</span>(<span class="title function_">requestPost</span>(question));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 重置输入框</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">    <span class="attr">questionInput</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  store.<span class="title function_">dispatch</span>(<span class="title function_">receivePost</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更常见的是第二种写法，一般会配合<a target="_blank" rel="noopener" href="https://github.com/redux-utilities/redux-actions">redux-action</a>中间件使用。</p>
+<p>redux-action中<code>createAction</code>的用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="title function_">createAction</span>(<span class="string">&#x27;test1&#x27;</span>, <span class="function">() =&gt;</span> <span class="number">10</span>);</span><br><span class="line"><span class="title function_">a</span>(); </span><br><span class="line"><span class="comment">// &#123;type: &quot;test1&quot;, payload: 10&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = <span class="title function_">createAction</span>(<span class="string">&#x27;test2&#x27;</span>);</span><br><span class="line"><span class="title function_">b</span>(<span class="number">100</span>); </span><br><span class="line"><span class="comment">// &#123;type: &quot;test2&quot;, payload: 100&#125;</span></span><br></pre></td></tr></table></figure>
+<p>使用redux-action将上面的写法改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用redux-promise中间件解决异步操作第二种写法</span></span><br><span class="line"><span class="title function_">sendQuestion</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> question = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">questionInput</span>;</span><br><span class="line">  <span class="comment">// Action Creator1</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">requestPost</span> = (<span class="params">question</span>) =&gt; (&#123;<span class="attr">type</span>: <span class="string">&#x27;SEND_QUESTION&#x27;</span>, <span class="attr">status</span>: <span class="string">&#x27;sending...&#x27;</span>, question&#125;);</span><br><span class="line">  <span class="comment">// 发出同步Action</span></span><br><span class="line">  store.<span class="title function_">dispatch</span>(<span class="title function_">requestPost</span>(question));</span><br><span class="line">  <span class="comment">// 重置输入框</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">    <span class="attr">questionInput</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 发出异步Action</span></span><br><span class="line">  store.<span class="title function_">dispatch</span>(</span><br><span class="line">    <span class="title function_">createAction</span>(<span class="string">&#x27;RECEIVE_ANSWER&#x27;</span>)(</span><br><span class="line">      <span class="comment">// Promise的then函数返回值才是createAction的第二个参数</span></span><br><span class="line">      <span class="title class_">Request</span>.<span class="property">demo2</span>.<span class="title function_">getAnswer</span>(&#123;question&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">v</span> =&gt;</span> (&#123;</span><br><span class="line">          <span class="attr">status</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">          <span class="attr">answer</span>: v</span><br><span class="line">        &#125;)</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，createAction的第二个参数实际上就是向要发送的Action的<code>payload</code>属性值，这里必须是一个Promise对象。（在reducer里面也必须从<code>action.payload</code>属性中获取对应的值）</p>
+<p>明显，使用redux-promise的代码量更小一些，但是也因此失去了一定的灵活度，它的同步Action是脱离在异步操作之外单独存在的（即无法在一个Action Creator完成多个<code>dispatch</code>动作）</p>
+<p>其他的比较热门的解决方案还有<a target="_blank" rel="noopener" href="https://github.com/pburtchaell/redux-promise-middleware">redux-promise-middleware</a>（感觉像是前两者的一个集合）、<a target="_blank" rel="noopener" href="https://github.com/kpaxqin/redux-action-tools">redux-action-tools</a>、<a target="_blank" rel="noopener" href="https://github.com/redux-saga/redux-saga">redux-saga</a>，可以学习<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007248878#articleHeader7">这篇文章</a>的讲解。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>学习Redux的异步操作和中间件之后，最大的体会就是太繁琐了，各种解决方案太多了。如果是复杂的项目中，有着复杂的业务逻辑，使用Redux会是一个很麻烦的事情。</p>
+<p>以前在做一个React项目时，项目组选型使用的Mobx，当时没觉得有好用（当然也有用的比较浅的原因），但是仅仅是学习Redux，就发现Mobx或者是Vuex真的比Redux好上手太多了，Redux的函数式编程的思想带来的难度不仅是阅读、学习的难度，更是过多的范式代码带来的苦恼。</p>
+<p>我认为会经久流传的解决方案一定会在可阅读性、可维护性以及入手难度上取得一个比较好的平衡，除非它是为了解决一些别人无法解决的问题而提出的，是一个时间段内近乎唯一的解决方案，但我感觉Redux好像并不是这样。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_two_async_operations.html">Redux 入门教程（二）：中间件与异步操作</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redux.org.cn/docs/api/compose.html">compose@Redux中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redux.org.cn/docs/api/applyMiddleware.html">applyMiddleware@Redux中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/react-guide/redux-tutorial-cn/blob/master/07_dispatch-async-action-1.js">redux-tutorial-cn@github</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007248878#articleHeader7">Redux异步方案选型@segmentfault</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/Redux/" rel="tag"># Redux</a>
+              <a href="/tags/%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/" rel="tag"># 异步操作</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux01%20%E5%85%A5%E9%97%A8/" rel="prev" title="Redux01 入门">
+                  <i class="fa fa-chevron-left"></i> Redux01 入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/02%20Vue%E6%8F%90%E9%AB%98/Vue%E6%8F%90%E9%AB%9818%20%E6%9B%B4%E6%8D%A2%E6%89%93%E5%8C%85%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/" rel="next" title="Vue提高18 更换打包文件路径">
+                  Vue提高18 更换打包文件路径 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

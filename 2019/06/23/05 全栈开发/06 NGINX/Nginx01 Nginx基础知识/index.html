@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Nginx是一个强大的轻量级的高性能网页服务器、反向代理服务器和电子邮件代理服务器。作为负载均衡服务器，Nginx可以在内部直接支持Rails和PHP程序对外进行服务，也可以支持作为HTTP代理服务器对外进行服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx01 Nginx基础知识">
+<meta property="og:url" content="https://duola8789.github.io/2019/06/23/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/06%20NGINX/Nginx01%20Nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Nginx是一个强大的轻量级的高性能网页服务器、反向代理服务器和电子邮件代理服务器。作为负载均衡服务器，Nginx可以在内部直接支持Rails和PHP程序对外进行服务，也可以支持作为HTTP代理服务器对外进行服务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/18-11-15/20784963.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/18-11-15/23647615.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/Fj11NRzqCe24KCIMQWmb0U81vRQO">
+<meta property="og:image" content="http://image.oldzhou.cn/FpmutJqv9nekezJRPjcWJAV7bA6L">
+<meta property="og:image" content="http://image.oldzhou.cn/FjmlXAq82rM10u8-TVzBiHxs0--b">
+<meta property="og:image" content="http://image.oldzhou.cn/FnnSs8kLR2yySIPf8CLJ7cqfsyFQ">
+<meta property="article:published_time" content="2019-06-23T13:09:33.000Z">
+<meta property="article:modified_time" content="2020-03-25T06:38:32.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="跨域">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/18-11-15/20784963.jpg">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/06/23/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/06%20NGINX/Nginx01%20Nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/06/23/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/06%20NGINX/Nginx01%20Nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/","path":"2019/06/23/05 全栈开发/06 NGINX/Nginx01 Nginx基础知识/","title":"Nginx01 Nginx基础知识"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nginx01 Nginx基础知识 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">基本知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac%E7%B3%BB%E7%BB%9F%E4%B8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">Mac系统下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Elocation"><span class="nav-number">2.4.</span> <span class="nav-text">关于location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Erewrite"><span class="nav-number">2.5.</span> <span class="nav-text">关于rewrite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eproxy-pass"><span class="nav-number">2.6.</span> <span class="nav-text">关于proxy_pass</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx%E9%83%A8%E7%BD%B2%E5%A4%9A%E4%B8%AA%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">Nginx部署多个前端代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx%E7%9A%84%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Nginx的正向代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx%E7%9A%84%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">Nginx的反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">什么是反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">反向代理的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8Nginx%E7%9A%84%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E8%B7%A8%E5%9F%9F"><span class="nav-number">6.</span> <span class="nav-text">利用Nginx的反向代理实现跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">6.1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">6.2.</span> <span class="nav-text">基础配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%951%EF%BC%9Alocation-proxy-pass"><span class="nav-number">6.3.</span> <span class="nav-text">实现方法1：location + proxy_pass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%952%EF%BC%9Alocation-proxy-pass-rewrite"><span class="nav-number">6.4.</span> <span class="nav-text">实现方法2：location + proxy_pass + rewrite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%88%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="nav-number">6.5.</span> <span class="nav-text">又一个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="nav-number">6.6.</span> <span class="nav-text">最后一个例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/06/23/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/06%20NGINX/Nginx01%20Nginx%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Nginx01 Nginx基础知识 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nginx01 Nginx基础知识
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-23 21:09:33" itemprop="dateCreated datePublished" datetime="2019-06-23T21:09:33+08:00">2019-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-03-25 14:38:32" itemprop="dateModified" datetime="2020-03-25T14:38:32+08:00">2020-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">全栈开发</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Nginx是一个强大的轻量级的高性能网页服务器、反向代理服务器和电子邮件代理服务器。作为负载均衡服务器，Nginx可以在内部直接支持Rails和PHP程序对外进行服务，也可以支持作为HTTP代理服务器对外进行服务。</p>
+<span id="more"></span>
+
+<h1 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h1><p>在介绍下面的使用Nginx进行跨域之前，需要对Nginx的一些基本知识有所了解。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="Mac系统下"><a href="#Mac系统下" class="headerlink" title="Mac系统下"></a>Mac系统下</h2><p>需要借助<code>homebrew</code>来安装，可以通过<code>brew -v</code>来查看是否安装了homebrew，如果没有安装，则通过终端命令安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>安装成功就可以直接使用<code>homebrew</code>来安装Nginx：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，主页的<code>index</code>文件在<code>/usr/local/var/www</code>目录下，对应的配置文件在<code>/usr/local/etc/nginx/nginx.conf</code>目录下</p>
+<p>然后使用<code>nginx</code>命令就可以启动Nginx，默认<code>8080</code>端口</p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><p>使用Nginx的命令需要首先定位到<code>nginx.exe</code>所在的目录（Windows系统）</p>
+<p>Nginx的一些基本命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">nginx -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">nginx -s stop  <span class="comment"># 快速停止Nginx，可能并不保存相关信息</span></span><br><span class="line">nginx -s quit  <span class="comment"># quit完整有序的停止Nginx，并保存相关信息。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新启动</span></span><br><span class="line">nginx -s reload  <span class="comment"># 当配置信息修改，需要重新载入这些配置时使用此命令</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新打开日志文件</span></span><br><span class="line">nginx -s reope</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看配置文件路径及是否调用有效</span></span><br><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>Nginx的功能都是通过<code>nginx.conf</code>配置文件来实现的，一个服务器上可能会有多个配置文件，可以执行<code>nginx -t</code>来查看配置文件的路径以及是否调用有效。</p>
+<p>Nginx的配置文件主要分为四部分：</p>
+<ol>
+<li><code>main</code>，全局设置，设置的指令将影响其他所有部分的设置</li>
+<li><code>server</code>，主机设置，用于指定虚拟主机域名、IP和端口</li>
+<li><code>upstream</code>，上游服务器设置，主要为反向代理、负载均衡相关配置</li>
+<li><code>location</code>，URL匹配特定设置</li>
+</ol>
+<p>他们之间，<code>location</code>继承<code>server</code>，<code>server</code>继承<code>main</code>，<code>upstream</code>既不会继承指令也不会被继承。</p>
+<h2 id="关于location"><a href="#关于location" class="headerlink" title="关于location"></a>关于<code>location</code></h2><p>Nginx配置文件中的<code>loaction</code>是主机访问的地址，在Nginx服务器做一个代理，转发到<code>location</code>中配置的地址。它有如下的匹配指令：</p>
+<ul>
+<li><code>=</code>表示进行普通字符精确匹配，只有请求的URL路径与后面的字符串完全相等时，才会命中</li>
+<li><code>~</code>表示执行一个正则匹配，区分大小写</li>
+<li><code>~*</code>表示执行一个正则匹配，不区分大小写</li>
+<li><code>^~</code>表示普通字符匹配，如果该选项匹配，只匹配该选项，不匹配别的选项，一般用来匹配目录</li>
+<li><code>@</code>定义一个命名的<code>location</code>，使用在内部定向时，例如<code>error_page</code>, <code>try_files</code></li>
+</ul>
+<p><code>loaction</code>匹配的优先级（与<code>loaction</code>在配置文件中的顺序无关）</p>
+<ul>
+<li><code>=</code>精确匹配会第一个被处理。如果发现精确匹配，Nginx停止搜索其他匹配。</li>
+<li>普通字符匹配，正则表达式规则和长的块规则将被优先和查询匹配，也就是说如果该项匹配还需去看有没有正则表达式匹配和更长的匹配。</li>
+<li><code>^~ </code>则只匹配该规则，Nginx停止搜索其他匹配，否则Nginx会继续处理其他<code>loaction</code>指令。</li>
+<li>最后匹配理带有<code>~</code>和<code>~*</code>的指令，如果找到相应的匹配，则Nginx停止搜索其他匹配；当没有正则表达式或者没有正则表达式被匹配的情况下，那么匹配程度最高的逐字匹配指令会被使用。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">location  = / &#123;</span><br><span class="line">  <span class="comment"># 只匹配&quot;/&quot;.</span></span><br><span class="line">  [ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location  / &#123;</span><br><span class="line">  <span class="comment"># 匹配任何请求，因为所有请求都是以&quot;/&quot;开始</span></span><br><span class="line">  <span class="comment"># 但是更长字符匹配或者正则表达式匹配会优先匹配</span></span><br><span class="line">  [ configuration B ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">  <span class="comment"># 匹配任何以 /images/ 开始的请求，并停止匹配 其它location</span></span><br><span class="line">  [ configuration C ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~* \.(gif|jpg|jpeg)$ &#123;</span><br><span class="line">  <span class="comment"># 匹配以 gif, jpg, or jpeg结尾的请求.</span></span><br><span class="line">  <span class="comment"># 但是所有 /images/ 目录的请求将由 [Configuration C]处理.</span></span><br><span class="line">  [ configuration D ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="关于rewrite"><a href="#关于rewrite" class="headerlink" title="关于rewrite"></a>关于<code>rewrite</code></h2><p><code>rewrite</code>只能对URL中的路径部分除去传递的参数外的字符串起作用，不关心域名部分和查询参数，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com/a/bb/ccc.php?id=1&amp;uu=str</span><br></pre></td></tr></table></figure>
+
+<p><code>rewrite</code>只会对<code>/a/bb/ccc.php</code>重写。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rewrite regex replacement [flag]</span><br></pre></td></tr></table></figure>
+
+<p>执行顺序是首先执行<code>location</code>匹配，然后执行<code>location</code>中的<code>rewirte</code>指令。</p>
+<h2 id="关于proxy-pass"><a href="#关于proxy-pass" class="headerlink" title="关于proxy_pass"></a>关于<code>proxy_pass</code></h2><p><code>proxy_pass</code>地址后面加上了<code>/</code>则相当于转发到绝对根路径，Nginx不会对<code>loaction</code>中匹配的路径部分进行转发，例如：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span><span class="regexp"> ^~/proxy/html/</span> &#123;</span><br><span class="line">  <span class="comment"># 匹配任何以/proxy/html/开头的地址，匹配符合以后不继续往下搜索</span></span><br><span class="line">  <span class="attribute">proxy_pass</span> http://www.b.com/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果请求的url为：<code>http://localhost/proxy/html/test.json</code>，则转发后的地址是：<code>http://www.b.com/test.json</code>。</p>
+<p>如果<code>proxy_pass</code>地址后面不加<code>/</code>，则Nginx会对<code>loaction</code>中匹配的路径部分进行转发，例如:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span><span class="regexp"> ^~/proxy/html/</span>&#123;</span><br><span class="line">  <span class="comment"># 匹配任何以/proxy/html/开头的地址，匹配符合以后不继续往下搜索</span></span><br><span class="line">  <span class="attribute">proxy_pass</span> http://www.b.com</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果请求的url为：<code>http://localhost/proxy/html/test.json</code>，则转发后的地址是：<code>http://www.b.com/proxy/html/test.json</code>。</p>
+<h1 id="Nginx部署多个前端代码"><a href="#Nginx部署多个前端代码" class="headerlink" title="Nginx部署多个前端代码"></a>Nginx部署多个前端代码</h1><p>前一段项目中要在同一个端口下部署两套前端代码，实现的效果是：</p>
+<ul>
+<li>根目录匹配A系统打包的前端代码</li>
+<li><code>v0</code>目录下匹配B系统打包的前端代码</li>
+</ul>
+<p>配置文件如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">	<span class="attribute">listen</span> <span class="number">9001</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># static front page for new system</span></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>        /etc/nginx/html;</span><br><span class="line">        <span class="attribute">index</span>       index.html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># static front page for old system</span></span><br><span class="line">	<span class="section">location</span> /v0 &#123;</span><br><span class="line">	    <span class="attribute">alias</span>   	/etc/nginx/html/v0;</span><br><span class="line">	    <span class="attribute">index</span>	    index.html;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根目录下使用的<code>root</code>来匹配目录，<code>v0</code>下使用的<code>alias</code>来匹配目录，由于使用的是Dockert径向部署，对应的目录都应该是指向的是容器内部的地址，而实际资源在服务器上的目录应该是与Docker设置的镜像相匹配的</p>
+<p>注意<code>root</code>与<code>alias</code>的区别，例如：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误写法，会报404</span></span><br><span class="line"><span class="section">location</span> /admin &#123;</span><br><span class="line">    <span class="attribute">root</span> /projects/admin/;</span><br><span class="line">    <span class="attribute">index</span> index.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">location</span> /admin &#123;</span><br><span class="line">    <span class="attribute">alias</span> /projects/admin/;</span><br><span class="line">    <span class="attribute">index</span> index.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当访问<code>http://***/admin</code>，<code>root</code>实际指向的是<code>http://***/admin/projects/admin/</code>, <code>alias</code>实际指向的是<code>http://***/admin</code>, 可以在<code>/projects/admin/</code>找到<code>index.html</code></p>
+<h1 id="Nginx的正向代理"><a href="#Nginx的正向代理" class="headerlink" title="Nginx的正向代理"></a>Nginx的正向代理</h1><p>正向代理的工作原理就像一个跳板，简单的说，我是一个用户，我访问不了某网站，但是我能访问一个代理服务器这个代理服务器呢,他能访问那个我不能访问的网站。</p>
+<p>于是我先连上代理服务器，告诉他我需要那个无法访问网站的内容，代理服务器去取回来,然后返回给我。从网站的角度,只在代理服务器来取内容的时候有一次记录。有时候并不知道是用户的请求,也隐藏了用户的资料,这取决于代理告不告诉网站。</p>
+<p>结论就是正向代理是一个位于客户端和原始服务器(Origin Server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。</p>
+<h1 id="Nginx的反向代理"><a href="#Nginx的反向代理" class="headerlink" title="Nginx的反向代理"></a>Nginx的反向代理</h1><blockquote>
+<p>正向代理代理的是客户端，反向代理代理的服务器</p>
+</blockquote>
+<h2 id="什么是反向代理"><a href="#什么是反向代理" class="headerlink" title="什么是反向代理"></a>什么是反向代理</h2><p>所谓反向代理（Reverse Proxy）方式是指以代理服务器来接受Internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。</p>
+<p><img src="http://image.oldzhou.cn/18-11-15/20784963.jpg"></p>
+<p>从上图可以看出，反向代理服务器位于网站机房，代理网站web服务器接受Http请求，对请求进行转发。</p>
+<p>例用户访问<code>http://ooxx.me/readme</code>，但<code>ooxx.me</code>上并不存在<code>readme</code>页面，他是偷偷从另外一台服务器上取回来,然后作为自己的内容吐给用户，但用户并不知情。这里所提到的<code>ooxx.me</code>这个域名对应的服务器就设置了反向代理功能。</p>
+<p>反向代理对于客户端而言它就像是原始服务器，并且客户端不需要进行任何特别的设置。客户端向反向代理发送普通请求，接着反向代理将判断向何处(原始服务器)转交请求，并将获得的内容返回给客户端，就像这些内容原本就是它自己的一样。</p>
+<h2 id="反向代理的作用"><a href="#反向代理的作用" class="headerlink" title="反向代理的作用"></a>反向代理的作用</h2><p>（1）保护网站安全：任何来自Internet的请求都必须先经过代理服务器；</p>
+<p><img src="http://image.oldzhou.cn/18-11-15/23647615.jpg"></p>
+<p>（2）通过配置缓存功能加速Web请求：可以缓存真实Web服务器上的某些静态资源，减轻真实Web服务器的负载压力；</p>
+<p><img src="http://image.oldzhou.cn/Fj11NRzqCe24KCIMQWmb0U81vRQO"></p>
+<p>（3）实现负载均衡：充当负载均衡服务器均衡的分发请求，平衡集群中各个服务器的负载压力；</p>
+<p><img src="http://image.oldzhou.cn/FpmutJqv9nekezJRPjcWJAV7bA6L"></p>
+<h1 id="利用Nginx的反向代理实现跨域"><a href="#利用Nginx的反向代理实现跨域" class="headerlink" title="利用Nginx的反向代理实现跨域"></a>利用Nginx的反向代理实现跨域</h1><p>利用Nginx反向代理实现跨域，不需要目标服务器配合，但需要搭建中转Nginx服务器，用于转发请求。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p><img src="http://image.oldzhou.cn/FjmlXAq82rM10u8-TVzBiHxs0--b"></p>
+<p>对于请求者而言，发送的不是跨域的请求，而是对本地资源的请求，Nginx识别出特定的本地资源请求，转发到真实的跨域的资源的地址。</p>
+<p>而作为服务端而言，是不存在跨域的（需要添加对应的请求头），所以会把资源返回给Nginx服务，再由Nginx服务将资源返回给真正的请求页面。</p>
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><p>首先找到<code>nginx.conf</code>中的下面这部分内容：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">  <span class="attribute">server_name</span> localhost;</span><br><span class="line">  <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">root</span>   ../Project;</span><br><span class="line">    <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>server</code>代表启动的一个服务，<code>location</code>是一个定位规则，是Nginx用来跨域的入口。</p>
+<p><code>location /</code>的意思是所有以<code>/</code>开头的地址，实际上是所有请求，后面的地址可以是绝对地址，也可以是相对地址；<code>root</code>的意思是去请求相对上一层中的Project文件夹里的文件，<code>index</code>是去指定首页。</p>
+<p>在<code>location /&#123;&#125;</code>中添加一下代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">add_header &#x27;Access-Control-Allow-Origin&#x27; &#x27;*&#x27;&#x27;;</span><br><span class="line">add_header &#x27;Access-Control-Allow-Credentials&#x27; &#x27;true&#x27;;</span><br><span class="line">add_header &#x27;Access-Control-Allow-Methods&#x27; &#x27;GET, POST, OPTIONS&#x27;;</span><br><span class="line">rewrite regex replacement [flag]</span><br><span class="line">proxy_pass http://ip:port/;</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<p>（1）第一条指令：授权从<code>other.subdomain.com</code>的请求；是W3C标准里用来检查该跨域请求是否可以被通过；</p>
+<p>（2）第二条指令：当该标志为<code>true</code>时，响应于该请求可以被暴露；</p>
+<p>（3）第三条指令：制定请求的方式，可以使<code>GET</code>&#x2F;<code>POST</code>等；</p>
+<p>（4）第四条指令：对域名（根路径）后面除去传递的参数外的字符串的<code>url</code>进行重写及重定向；</p>
+<blockquote>
+<p>URL是URI的子集。任何东西，只要能够唯一地标识出来，都可以说这个标识是URI。如果这个标识是一个可获取到上述对象的路径，那么同时它也可以是一个URL；但如果这个标识不提供获取到对象的路径，那么它就必然不是URL。</p>
+</blockquote>
+<p>（4）第五条指令：实际要访问的请求地址；</p>
+<p>前三条是用来指定自己的服务器是否可以被跨域访问的指令，是可以没有的。</p>
+<p>第四条利用Nginx提供的变量，结合正则表示和标志位来实现比较复杂的重定向，简单的情况也是可以没有的。</p>
+<h2 id="实现方法1：location-proxy-pass"><a href="#实现方法1：location-proxy-pass" class="headerlink" title="实现方法1：location + proxy_pass"></a>实现方法1：<code>location</code> + <code>proxy_pass</code></h2><p>适用于将<code>location</code>直接转发至<code>proxy_pass</code>地址的情况，这种情况一般比较简单。</p>
+<p>比如我们要访问的跨域资源位于<code> http://115.29.203.53:10013/students/</code>，前端代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> button = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;button&quot;</span>);</span><br><span class="line"></span><br><span class="line">$(button).<span class="title function_">click</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  $.<span class="title function_">get</span>(<span class="string">&quot;students&quot;</span>, <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(data.<span class="property">data</span>[<span class="number">0</span>].<span class="property">id</span>)</span><br><span class="line">  &#125;, <span class="string">&quot;json&quot;</span>);</span><br><span class="line"></span><br><span class="line">  $.<span class="title function_">getJSON</span>(<span class="string">&quot;students&quot;</span>, <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(data.<span class="property">data</span>[<span class="number">0</span>].<span class="property">id</span>)</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  $.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;students&quot;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="attr">dataType</span>: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">      <span class="title function_">alert</span>(data.<span class="property">data</span>[<span class="number">0</span>].<span class="property">id</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面的三种方法都可以实现跨域，要注意的是使用<code>get</code>方法获取JSON数据时一定要声明第四个参数<code>dataType</code>为<code>JSON</code>，否则总是无法获得正确的对象。</p>
+<p>跨域的部分，<code>url</code>地址是一个相对地址<code>students</code>，转化为绝对地址就是<code>http://localhost/Project2/task5/students/</code>。而本地并没有这样的资源，所以需要利用Nginx进行转发处理。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">  <span class="attribute">server_name</span> localhost;</span><br><span class="line">  <span class="section">location</span><span class="regexp"> ^~/Project2/task5/students/</span> &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://115.29.203.53:10013/students/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后重启Nginx服务，首先定位到<code>nginx.exe</code>所在的目录（Windows系统），然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx.exe -s reload</span><br></pre></td></tr></table></figure>
+
+<p>这个是比较蠢的做法，直接将全部的URL替换为最终的真实URL，这样就将地址转发出去了，实现了跨域。</p>
+<h2 id="实现方法2：location-proxy-pass-rewrite"><a href="#实现方法2：location-proxy-pass-rewrite" class="headerlink" title="实现方法2：location + proxy_pass + rewrite"></a>实现方法2：<code>location</code> + <code>proxy_pass</code> + <code>rewrite</code></h2><p>适用于直接将<code>location</code>转发至<code>proxy_pass</code>不能满足需要，需要对虚拟根路径及后面的路径使用<code>rewrite</code>进行改写的情况。例如：</p>
+<p>我们主机的地址是<code>www.a.com/html/index.html</code>，想请求<code>www.b.com/api/msg?method=1&amp;para=2</code>，请求如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;www.b.com/api/msg?method=1&amp;para=2&quot;</span>,</span><br><span class="line">  <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;success&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这样必然因为跨域问题发生错误，无法获得<code>b</code>网站的数据。将请求更改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;proxy/api/msg?method=1&amp;para=2&quot;</span>,</span><br><span class="line">  <span class="comment">// 绝对路径是 www.a.com/proxy/html/api/msg?method=1&amp;para=2</span></span><br><span class="line">  <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;success&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这是的URL请求的就是本地的资源了，但是在本地并不存在相应的数据，所以需要将这个地址通过Nginx转发出去。</p>
+<p>在刚才的路径中匹配到这个请求，在<code>location</code>下面再添加一个<code>location</code>：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">  <span class="attribute">server_name</span> localhost;</span><br><span class="line">  <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">root</span>   ../Project;</span><br><span class="line">    <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 匹配任何以 /proxy/html/ 开头的地址，匹配符合以后不继续往下搜索</span></span><br><span class="line">  <span class="section">location</span><span class="regexp"> ^~/proxy/html/</span> &#123;</span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/proxy/html/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://www.b.com/</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>location ^~/proxy/html/</code>用于拦截请求，是一个匹配规则，匹配任何以<code>proxy/html/</code>开头的地址，这里匹配到的就是<code>proxy/html/api/msg?method=1&amp;para=2</code></p>
+<p><code>rewrite ^proxy/html/(.*)$ /$1 break</code>用来重写拦截的请求，并且只对<strong>域名后面除去传递参数外的字符</strong>起作用，即重写上面匹配到的地址的这一部分进行重写：<code>proxy/html/api/msg</code></p>
+<p><code>rewrite</code>后面是一个正则表达式，表示匹配以<code>/proxy/html/</code>开头的任何字符至结尾，并且将<code>proxy/html/</code>后面的任意字符存到第一个捕获组<code>$1</code>之中，<code>break</code>表示匹配一个后停止。</p>
+<p>重写的结果是：<code>/api/msg</code></p>
+<p><code>proxy_pass http://www.b.com/</code>用来把请求代理到其他主机，即<code>www.a.com</code>代理到<code>www.b.com</code>，请求路径最终变为<code>http://www.b.com/api/msg? method=1&amp;para=2</code></p>
+<p>配置完成后重启Nginx服务即可。</p>
+<p>这样就可以更改上面的情况1中的做法，JS文件不变，Nginx的<code>location</code>的配置如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">  <span class="attribute">server_name</span> localhost;</span><br><span class="line">  <span class="section">location</span><span class="regexp"> ^~/Project2/task5/students/</span> &#123;</span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/Project2/task5/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://115.29.203.53:10013/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样可以实现跨域</p>
+<h2 id="又一个例子"><a href="#又一个例子" class="headerlink" title="又一个例子"></a>又一个例子</h2><p>前端请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;sohu/api/msg?method=1&amp;para=2&quot;</span>,</span><br><span class="line">  <span class="comment">// 真实地址是 www.c.com/proxy/html/api/msg?method=1&amp;para=2</span></span><br><span class="line">  <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;success&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Nginx进行如下配置：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">  <span class="attribute">server_name</span> localhost;</span><br><span class="line">  <span class="section">location</span><span class="regexp"> ^~/sohu</span>&#123;</span><br><span class="line">    <span class="comment"># 匹配任何以/proxy/html/开头的地址，匹配符合以后不继续往下搜索</span></span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^.+sohu/?(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://www.sohu.com/</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以：</p>
+<ul>
+<li><code>location</code>定位到：<code>/sohu/api/msg?method=1&amp;para=2</code></li>
+<li><code>rewrite</code>的结果：<code>api/msg</code></li>
+<li><code>proxy_pass</code>后的结果：<code>http://www.sohu.com/api/msg?method=1&amp;para=2</code></li>
+</ul>
+<h2 id="最后一个例子"><a href="#最后一个例子" class="headerlink" title="最后一个例子"></a>最后一个例子</h2><p><img src="http://image.oldzhou.cn/FnnSs8kLR2yySIPf8CLJ7cqfsyFQ"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016020328">MAC下安装nginx@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="http://seanlook.com/2015/05/17/nginx-install-and-config/">nginx服务器安装及配置文件详解@Sean’s Note</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ywl570717586/article/details/51556912">nginx反向代理服务器的工作原理@CSDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002797606">nginx配置location总结及rewrite规则写法@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/stevenlee87/1188295">Nginx proxy pass简单用法@51CTO</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/shendl/article/details/48443299">最简单实现跨域的方法—-使用nginx反向代理@CSDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013267839">一文弄懂Nginx的location匹配@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5d7b72b7e51d453b386a63bc">Nginx同一个server部署多个静态资源目录@掘金</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag"># 跨域</a>
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/23/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/05%20%E7%AE%97%E6%B3%95/02%20%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A007%20%E6%95%B0%E5%AD%97%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C/" rel="prev" title="算法练习07 数字组合总和">
+                  <i class="fa fa-chevron-left"></i> 算法练习07 数字组合总和
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/02%20%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%9001%20%E5%85%A5%E9%97%A8/" rel="next" title="持续集成01 入门">
+                  持续集成01 入门 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
