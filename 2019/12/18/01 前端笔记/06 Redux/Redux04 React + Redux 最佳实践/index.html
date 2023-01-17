@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="看到一篇文章，总结了React和Redux的最佳实践，可以作为参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux04 React + Redux 最佳实践">
+<meta property="og:url" content="https://duola8789.github.io/2019/12/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux04%20React%20+%20Redux%20%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="看到一篇文章，总结了React和Redux的最佳实践，可以作为参考。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FvIVdTBSmmHShVjwdX0t78I7HZb_">
+<meta property="og:image" content="http://image.oldzhou.cn/FrHsrbNprsOjThBqCyF0NVhSm84T">
+<meta property="article:published_time" content="2019-12-18T02:42:02.000Z">
+<meta property="article:modified_time" content="2019-12-18T02:42:02.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Redux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FvIVdTBSmmHShVjwdX0t78I7HZb_">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/12/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux04%20React%20+%20Redux%20%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/12/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux04%20React%20+%20Redux%20%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/","path":"2019/12/18/01 前端笔记/06 Redux/Redux04 React + Redux 最佳实践/","title":"Redux04 React + Redux 最佳实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Redux04 React + Redux 最佳实践 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81URL-gt-Data"><span class="nav-number">1.</span> <span class="nav-text">一、URL &gt; Data</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9"><span class="nav-number">1.2.</span> <span class="nav-text">选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89"><span class="nav-number">1.3.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Data"><span class="nav-number">2.</span> <span class="nav-text">二、Data</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82-1"><span class="nav-number">2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-1"><span class="nav-number">2.3.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Data-gt-View"><span class="nav-number">3.</span> <span class="nav-text">三、Data &gt; View</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82-2"><span class="nav-number">3.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-1"><span class="nav-number">3.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-2"><span class="nav-number">3.3.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81View-%E4%B9%8B-CSS-%E6%96%B9%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">四、View 之 CSS 方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82-3"><span class="nav-number">4.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-2"><span class="nav-number">4.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-3"><span class="nav-number">4.3.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Action-lt-gt-Store%EF%BC%8C%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">五、Action &lt;&gt; Store，业务逻辑处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82-4"><span class="nav-number">5.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-3"><span class="nav-number">5.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-4"><span class="nav-number">5.3.</span> <span class="nav-text">可选</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#saga-%E5%85%A5%E9%97%A8"><span class="nav-number">5.4.</span> <span class="nav-text">saga 入门</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81Data-lt-gt-API-Server"><span class="nav-number">6.</span> <span class="nav-text">六、Data &lt;-&gt; API Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82-5"><span class="nav-number">6.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-4"><span class="nav-number">6.2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-5"><span class="nav-number">6.3.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88"><span class="nav-number">7.</span> <span class="nav-text">最终</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/12/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux04%20React%20+%20Redux%20%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Redux04 React + Redux 最佳实践 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redux04 React + Redux 最佳实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-12-18 10:42:02" itemprop="dateCreated datePublished" datetime="2019-12-18T10:42:02+08:00">2019-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redux/" itemprop="url" rel="index"><span itemprop="name">Redux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>看到一篇文章，总结了React和Redux的最佳实践，可以作为参考。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由 <a target="_blank" rel="noopener" href="http://ksria.com/simpread/">简悦 SimpRead</a> 转码， 原文地址 <a target="_blank" rel="noopener" href="https://github.com/sorrycc/blog/issues/1">https://github.com/sorrycc/blog/issues/1</a></p>
+</blockquote>
+<blockquote>
+<p>更新：我们基于此最佳实践做了一个封装方案：<a target="_blank" rel="noopener" href="https://github.com/sorrycc/dva">dva</a>，可以简化使用 redux 和 redux-saga 时很多繁杂的操作。</p>
+</blockquote>
+<p><img src="http://image.oldzhou.cn/FvIVdTBSmmHShVjwdX0t78I7HZb_"></p>
+<p>前端变化虽快，但其实一直都围绕这几个概念在转：</p>
+<ul>
+<li>URL - 访问什么页面</li>
+<li>Data - 显示什么信息</li>
+<li>View - 页面长成什么样</li>
+<li>Action - 对页面做了什么操作</li>
+<li>API Server - Data 数据的来源</li>
+</ul>
+<p>在 Redux 的生态圈内，每个环节有多种方案，比如 Data 可以是 <code>immutable</code> 或者 <code>plain object</code>，在你选了 <code>immutable</code> 之后，用 <a target="_blank" rel="noopener" href="https://facebook.github.io/immutable-js/">immutable.js</a> 还是 <a target="_blank" rel="noopener" href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</a>，以及是否用 <a target="_blank" rel="noopener" href="https://github.com/gajus/redux-immutable">redux-immutable</a> 来辅助数据修改，都需要选择。</p>
+<p>本文总结目前 react + redux 的最佳实践，解释原因，并提供可选方案。</p>
+<p>心急的朋友可以直接看代码：<a target="_blank" rel="noopener" href="https://github.com/sorrycc/github-stars">https://github.com/sorrycc/github-stars</a></p>
+<h2 id="一、URL-gt-Data"><a href="#一、URL-gt-Data" class="headerlink" title="一、URL &gt; Data"></a>一、URL &gt; Data</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>routing</p>
+<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><p><a target="_blank" rel="noopener" href="https://github.com/rackt/react-router">react-router</a> + <a target="_blank" rel="noopener" href="https://github.com/rackt/react-router-redux">react-router-redux</a>: 前者是业界标准，后者可以同步 route 信息到 state，这样你可以在 view 根据 route 信息调整展现，以及通过 action 来修改 route 。</p>
+<h3 id="可选"><a href="#可选" class="headerlink" title="可选"></a>可选</h3><p>无</p>
+<h2 id="二、Data"><a href="#二、Data" class="headerlink" title="二、Data"></a>二、Data</h2><h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>为 redux 提供数据源，修改容易。</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p><code>plain object</code>: 配合 combineReducer 已经可以满足需求。</p>
+<p>同时在组织 Store 的时候，层次不要太深，尽量保持在 2 - 3 层。如果层次深，可以考虑用 <a target="_blank" rel="noopener" href="https://github.com/substantial/updeep">updeep</a> 来辅助修改数据。</p>
+<h3 id="可选-1"><a href="#可选-1" class="headerlink" title="可选"></a>可选</h3><p><a target="_blank" rel="noopener" href="https://facebook.github.io/immutable-js/">immutable.js</a>: 通过自定义的 api 来操作数据，需要额外的学习成本。不熟悉 immutable.js 的可以先尝试用 <a target="_blank" rel="noopener" href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</a>，JavaScript 原生接口，无学习门槛。</p>
+<p>另外，不推荐用 <a target="_blank" rel="noopener" href="https://github.com/gajus/redux-immutable">redux-immutable</a> 以及 redux-immutablejs，一是没啥必要，具体看他们的实现就知道了，都比较简单；更重要的是他们都改写了 <code>combineReducer</code>，会带来潜在的一些兼容问题。</p>
+<h2 id="三、Data-gt-View"><a href="#三、Data-gt-View" class="headerlink" title="三、Data &gt; View"></a>三、Data &gt; View</h2><h3 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h3><p>数据的过滤和筛选。</p>
+<h3 id="方案-1"><a href="#方案-1" class="headerlink" title="方案"></a>方案</h3><p><a target="_blank" rel="noopener" href="https://github.com/reactjs/reselect">reselect</a>: store 的 select 方案，用于提取数据的筛选逻辑，让 Component 保持简单。选 reselct 看重的是 <code>可组合特性</code> 和 <code>缓存机制</code> 。</p>
+<h3 id="可选-2"><a href="#可选-2" class="headerlink" title="可选"></a>可选</h3><p>无</p>
+<h2 id="四、View-之-CSS-方案"><a href="#四、View-之-CSS-方案" class="headerlink" title="四、View 之 CSS 方案"></a>四、View 之 CSS 方案</h2><h3 id="需求-3"><a href="#需求-3" class="headerlink" title="需求"></a>需求</h3><p>合理的 CSS 方案，考虑团队协作。</p>
+<h3 id="方案-2"><a href="#方案-2" class="headerlink" title="方案"></a>方案</h3><p><a target="_blank" rel="noopener" href="https://github.com/css-modules/css-modules">css-modules</a>: 配合 webpack 的 css-loader 进行打包，会为所有的 class name 和 animation name 加 local scope，避免潜在冲突。</p>
+<p>直接看代码：</p>
+<p>Header.jsx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import style from &#x27;./Header.less&#x27;;</span><br><span class="line">export default () =&gt; &lt;div className=&#123;style.normal&#125; /&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>Header.less</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.normal</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译后，文件中的 <code>style.normal</code> 和 <code>.normal</code> 在会被重命名为类似 <code>Header__normal___VI1de</code> 。</p>
+<h3 id="可选-3"><a href="#可选-3" class="headerlink" title="可选"></a>可选</h3><p><a target="_blank" rel="noopener" href="https://en.bem.info/">bem</a>, <a target="_blank" rel="noopener" href="http://rscss.io/">rscss</a> ，这两个都是基于约定的方案。但基于约定会带来额外的学习成本和不遍，比如 rscss 要求所有的 Component 都是两个词的连接，比如 <code>Header</code> 就必须换成类似 <code>HeaderBox</code> 这样。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/FormidableLabs/radium">radium</a>，inline css 方案，没研究。</p>
+<h2 id="五、Action-lt-gt-Store，业务逻辑处理"><a href="#五、Action-lt-gt-Store，业务逻辑处理" class="headerlink" title="五、Action &lt;&gt; Store，业务逻辑处理"></a>五、Action &lt;&gt; Store，业务逻辑处理</h2><h3 id="需求-4"><a href="#需求-4" class="headerlink" title="需求"></a>需求</h3><p>统一处理业务逻辑，尤其是异步的处理。</p>
+<h3 id="方案-3"><a href="#方案-3" class="headerlink" title="方案"></a>方案</h3><p><a target="_blank" rel="noopener" href="https://github.com/yelouafi/redux-saga">redux-saga</a>: 用于管理 action，处理异步逻辑。可测试、可 mock、声明式的指令。</p>
+<h3 id="可选-4"><a href="#可选-4" class="headerlink" title="可选"></a>可选</h3><p><a target="_blank" rel="noopener" href="https://github.com/raisemarketplace/redux-loop">redux-loop</a>: 适用于相对简单点的场景，可以组合异步和同步的 action 。但他有个问题是改写了 <code>combineReducer</code>，会导致一些意想不到的兼容问题，比如我在特定场景下用不了 redux-devtool 。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gaearon/redux-thunk">redux-thunk</a>, <a target="_blank" rel="noopener" href="https://github.com/acdlite/redux-promise">redux-promise</a> 等: 相对原始的异步方案，适用于更简单的场景。在 action 需要组合、取消等操作时，会不好处理。</p>
+<h3 id="saga-入门"><a href="#saga-入门" class="headerlink" title="saga 入门"></a>saga 入门</h3><p>在 saga 之前，你可能会在 action creator 里处理业务逻辑，虽然能跑通，但是难以测试。比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// action creator with thunking</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createRequest</span> () &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch, getState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">dispatch</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;REQUEST_STUFF&#x27;</span> &#125;);</span><br><span class="line">    <span class="title function_">someApiCall</span>(<span class="keyword">function</span>(<span class="params">response</span>) &#123;</span><br><span class="line">      <span class="comment">// some processing</span></span><br><span class="line">      <span class="title function_">dispatch</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;RECEIVE_STUFF&#x27;</span> &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后组件里可能这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">onHandlePress</span> () &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">props</span>.<span class="title function_">dispatch</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;SHOW_WAITING_MODAL&#x27;</span> &#125;);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">props</span>.<span class="title function_">dispatch</span>(<span class="title function_">createRequest</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样通过 redux state 和 reducer 把所有的事情串联到起来。</p>
+<p>但问题是：</p>
+<blockquote>
+<p>Code is everywhere.</p>
+</blockquote>
+<p>通过 saga，你只需要触发一个 action 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">onHandlePress</span> () &#123;</span><br><span class="line">  <span class="comment">// createRequest 触发 action `BEGIN_REQUEST`</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">props</span>.<span class="title function_">dispatch</span>(<span class="title function_">createRequest</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后所有后续的操作都通过 saga 来管理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> *<span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 等待 action `BEGIN_REQUEST`</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="title function_">take</span>(<span class="string">&#x27;BEGIN_REQUEST&#x27;</span>);</span><br><span class="line">  <span class="comment">// dispatch action `SHOW_WAITING_MODAL`</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="title function_">put</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;SHOW_WAITING_MODAL&#x27;</span> &#125;);</span><br><span class="line">  <span class="comment">// 发布异步请求</span></span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">yield</span> <span class="title function_">call</span>(myApiFunctionThatWrapsFetch);</span><br><span class="line">  <span class="comment">// dispatch action `PRELOAD_IMAGES`, 附上 response 信息</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="title function_">put</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;PRELOAD_IMAGES&#x27;</span>, response.<span class="property">images</span> &#125;);</span><br><span class="line">  <span class="comment">// dispatch action `HIDE_WAITING_MODAL`</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="title function_">put</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;HIDE_WAITING_MODAL&#x27;</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，调整之后的代码有几个优点：</p>
+<ul>
+<li>所有业务代码都存于 saga 中，不再散落在各处</li>
+<li>全同步执行，就算逻辑再复杂，看起来也不会乱</li>
+</ul>
+<h2 id="六、Data-lt-gt-API-Server"><a href="#六、Data-lt-gt-API-Server" class="headerlink" title="六、Data &lt;-&gt; API Server"></a>六、Data &lt;-&gt; API Server</h2><h3 id="需求-5"><a href="#需求-5" class="headerlink" title="需求"></a>需求</h3><p>异步请求。</p>
+<h3 id="方案-4"><a href="#方案-4" class="headerlink" title="方案"></a>方案</h3><p><a target="_blank" rel="noopener" href="https://github.com/matthew-andrews/isomorphic-fetch">isomorphic-fetch</a>: 便于在同构应用中使用，另外同时要写 node 和 web 的同学可以用一个库，学一套 api 。</p>
+<p>然后通过 <code>async</code> + <code>await</code> 组织代码。</p>
+<p>示例代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fetch <span class="keyword">from</span> <span class="string">&#x27;isomorphic-fetch&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchUser</span>(<span class="params">uid</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`/users/<span class="subst">$&#123;uid&#125;</span>`</span>).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="可选-5"><a href="#可选-5" class="headerlink" title="可选"></a>可选</h3><p><a target="_blank" rel="noopener" href="https://github.com/ded/reqwest">reqwest</a></p>
+<h2 id="最终"><a href="#最终" class="headerlink" title="最终"></a>最终</h2><p><img src="http://image.oldzhou.cn/FrHsrbNprsOjThBqCyF0NVhSm84T"></p>
+<p>（完）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/Redux/" rel="tag"># Redux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS04%20tsconfig.json/" rel="prev" title="TS04 tsconfig.json">
+                  <i class="fa fa-chevron-left"></i> TS04 tsconfig.json
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/06%20Redux/Redux05%20Redux-Saga/" rel="next" title="Redux05 Redux-Saga">
+                  Redux05 Redux-Saga <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

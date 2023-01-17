@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="React-RouterV3&#x2F;V4两个版本理念上的区别。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Router02 静态路由和动态路由">
+<meta property="og:url" content="https://duola8789.github.io/2019/05/13/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router02%20%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%92%8C%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="React-RouterV3&#x2F;V4两个版本理念上的区别。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-13T03:12:03.000Z">
+<meta property="article:modified_time" content="2019-05-13T03:12:03.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React-Router">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/05/13/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router02%20%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%92%8C%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/05/13/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router02%20%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%92%8C%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/","path":"2019/05/13/01 前端笔记/03 React/React03 React-Router/React-Router02 静态路由和动态路由/","title":"React-Router02 静态路由和动态路由"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React-Router02 静态路由和动态路由 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">1.</span> <span class="nav-text">静态路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">2.</span> <span class="nav-text">动态路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1"><span class="nav-number">3.</span> <span class="nav-text">嵌套路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">动态路由的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/05/13/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router02%20%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%92%8C%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React-Router02 静态路由和动态路由 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React-Router02 静态路由和动态路由
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-13 11:12:03" itemprop="dateCreated datePublished" datetime="2019-05-13T11:12:03+08:00">2019-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>React-RouterV3&#x2F;V4两个版本理念上的区别。</p>
+<span id="more"></span>
+
+<h2 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h2><p>传统的路由一般都是静态路由，像Express等框架，使用的都是静态路由：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">React.render((</span><br><span class="line">  &lt;Router&gt;</span><br><span class="line">    &lt;Route path=&quot;/&quot; component=&#123;App&#125;&gt;</span><br><span class="line">      &lt;Route path=&quot;about&quot; component=&#123;About&#125; /&gt;</span><br><span class="line">      &lt;Route path=&quot;inbox&quot; component=&#123;Inbox&#125; /&gt;</span><br><span class="line">    &lt;/Route&gt;</span><br><span class="line">  &lt;/Router&gt;</span><br><span class="line">), document.body)</span><br></pre></td></tr></table></figure>
+
+<p>路由集中配置，UI与路由强绑定。</p>
+<p>React-Router V3版本采用的就是静态路由，本质就是<code>path</code>到模块的映射，这种映射关系是静态的。只要程序已启动，映射关系就不能改变了。</p>
+<p>从V4版本开始变为了动态路由。这是因为静态路由存在着天生的问题：</p>
+<p>（1）路就有写法需要满足约定的格式，比如不能将<code>&lt;Route&gt;</code>脱离<code>&lt;Router&gt;</code>使用，这与React倡导的“可以声明式灵活性进行组件组装”的理念。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 静态路由不支持</span><br><span class="line">const CoolRoute = (props) =&gt; &lt;Route &#123;...props&#125; cool=&#123;true&#125;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>（2）因为<code>&lt;Router&gt;</code>接管了组件，内部实现了<code>createElement</code>、<code>render</code>等方法，同时提供了组件生命周期回调<code>onEnter</code>、<code>onLeave</code>、·onChange&#96;等，而这些生命周期React本身是为组件提供了的。</p>
+<p>（3）为了适应代码拆分，引入了<code>getComponent</code>和<code>getChildRoutes</code></p>
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><p>为了解决以上问题，V4版本中引入了动态路由的概念。</p>
+<p>既然React组件渲染时动态发生的，在V4中可以将路由看成普通的React组件，传递<code>props</code>来正常使用，借助它来控制组件的展现。展示的逻辑及权利回归到了组件本身。这样没有了静态配置的路由规则，取而代之的是程序在运行渲染过程中动态控制的展现。</p>
+<p>这边是V4中的动态路由的概念。</p>
+<p>当<code>&lt;Router&gt;</code>作为普通组件后，React-Router提供的一些特殊的API就不存在了，因为React会为组件提供对应的生命周期函数等API。</p>
+<p>通过代码看一下静态路由和动态路由的区别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// V3</span><br><span class="line">import &#123; Router, Route, IndexRoute &#125; from &#x27;react-router&#x27;</span><br><span class="line"></span><br><span class="line">const PrimaryLayout = props =&gt; (</span><br><span class="line">  &lt;div className=&quot;primary-layout&quot;&gt;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">      Our React Router 3 App</span><br><span class="line">    &lt;/header&gt;</span><br><span class="line">    &lt;main&gt;</span><br><span class="line">      &#123;props.children&#125;</span><br><span class="line">    &lt;/main&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">const HomePage =() =&gt; &lt;div&gt;Home Page&lt;/div&gt;</span><br><span class="line">const UsersPage = () =&gt; &lt;div&gt;Users Page&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">const App = () =&gt; (</span><br><span class="line">  &lt;Router history=&#123;browserHistory&#125;&gt;</span><br><span class="line">    &lt;Route path=&quot;/&quot; component=&#123;PrimaryLayout&#125;&gt;</span><br><span class="line">      &lt;IndexRoute component=&#123;HomePage&#125; /&gt;</span><br><span class="line">      &lt;Route path=&quot;/users&quot; component=&#123;UsersPage&#125; /&gt;</span><br><span class="line">    &lt;/Route&gt;</span><br><span class="line">  &lt;/Router&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>在上面的路由中，配置集中在<code>App</code>中，<code>&lt;Route&gt;</code>直接嵌套与<code>&lt;Router&gt;</code>，页面组件作为路由的一分部分与路由机密耦合。这便是整个路由的配置。</p>
+<p>V4版本的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import &#123; BrowserRouter, Route &#125; from &#x27;react-router-dom&#x27;</span><br><span class="line"></span><br><span class="line">const PrimaryLayout = () =&gt; (</span><br><span class="line">  &lt;div className=&quot;primary-layout&quot;&gt;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">      Our React Router 4 App</span><br><span class="line">    &lt;/header&gt;</span><br><span class="line">    &lt;main&gt;</span><br><span class="line">      &lt;Route path=&quot;/&quot; exact component=&#123;HomePage&#125; /&gt;</span><br><span class="line">      &lt;Route path=&quot;/users&quot; component=&#123;UsersPage&#125; /&gt;</span><br><span class="line">    &lt;/main&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">const HomePage =() =&gt; &lt;div&gt;Home Page&lt;/div&gt;</span><br><span class="line">const UsersPage = () =&gt; &lt;div&gt;Users Page&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">const App = () =&gt; (</span><br><span class="line">  &lt;BrowserRouter&gt;</span><br><span class="line">    &lt;PrimaryLayout /&gt;</span><br><span class="line">  &lt;/BrowserRouter&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>V4中React-Router仓库拆分成了多个包进行发布：</p>
+<ul>
+<li><code>react-router</code>，路由基础库</li>
+<li><code>react-router-dom</code>，浏览器中使用的封装</li>
+<li><code>react-router-native</code>，React Native的封装</li>
+</ul>
+<h2 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h2><p>相比于V3中的集中式的静态路由，V4中似乎看不到路由的影子了，它穿插在了各组件中。尤其是在需要路由嵌套的情况下更加明显，路由嵌套到了组件中，而不再是像V3中那样，<code>&lt;Route&gt;</code>中嵌套<code>&lt;Route&gt;</code>，V4中<code>&lt;Route&gt;</code>中不允许再嵌套<code>&lt;Route&gt;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// V3</span><br><span class="line">const App = () =&gt; (</span><br><span class="line">  &lt;BrowserRouter&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &#123;/* 外层路由 */&#125;</span><br><span class="line">      &lt;Route path=&quot;/tacos&quot; component=&#123;Tacos&#125;/&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/BrowserRouter&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// 当URL匹配`/tacos`时渲染Tacos组件</span><br><span class="line">const Tacos  = (&#123; match &#125;) =&gt; (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &#123;/* 嵌套路由，match.url可以更方便的使用相对地址 */&#125;</span><br><span class="line">    &lt;Route</span><br><span class="line">      path=&#123;match.url + &#x27;/carnitas&#x27;&#125;</span><br><span class="line">      component=&#123;Carnitas&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中，<code>&lt;Tacos&gt;</code>组件是否展示，取决于当前路由是否与<code>/tacos</code>匹配，而<code>&lt;Route&gt;</code>可以理解为一个容器，它做的事情很简单，将传入的<code>path</code>与当前的<code>location</code>进行比较，撇皮则渲染<code>component</code>属性传入的组件，否则<code>return null</code></p>
+<p>在看一个嵌套路由的例子，V3中<code>&lt;Route&gt;</code>中嵌套<code>&lt;Route&gt;</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Router history=&#123;history&#125; createElement=&#123;createElement&#125;&gt;</span><br><span class="line">  &lt;Route path=&quot;/&quot; component=&#123;App&#125;&gt;</span><br><span class="line">    &lt;IndexRoute component=&#123;Home&#125; /&gt;</span><br><span class="line">    &lt;Route path=&quot;home&quot; component=&#123;Home&#125; /&gt;</span><br><span class="line">    &lt;Route path=&quot;about&quot; component=&#123;About&#125; /&gt;</span><br><span class="line">    &lt;Route path=&quot;*&quot; component=&#123;NotFound&#125; /&gt;</span><br><span class="line">  &lt;/Route&gt;</span><br><span class="line">&lt;/Router&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最顶层的<code>&lt;Route&gt;</code>对应的是<code>&lt;App&gt;</code>这个组件，这个组件的事情就是渲染<code>&lt;TopMenu&gt;</code>，并且把传入的子组件全部渲染出来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const App = (&#123;children&#125;) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;TopMenu /&gt;</span><br><span class="line">      &lt;div&gt;&#123;children&#125;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>因为<code>&lt;App&gt;</code>对应的URL是<code>/</code>，所以所有的路由都会鲜明中<code>&lt;App&gt;</code>，然后<code>&lt;App&gt;</code>会渲染子组件，而它的子组件除了<code>&lt;TopMenu&gt;</code>之外就是其他的路由<code>&lt;Route&gt;</code>，于是<code>/home</code>就会命中对应的路由，渲染结果中既包含了<code>&lt;TopMenu&gt;</code>也包含了<code>&lt;Home&gt;</code></p>
+<p>在V4中，<code>&lt;Route&gt;</code>不能再包含<code>&lt;Route&gt;</code>，代码需要改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;Router history=&#123;history&#125;&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;TopMenu /&gt;</span><br><span class="line">    &lt;Switch&gt;</span><br><span class="line">      &lt;Route exact path=&quot;/&quot; component=&#123;Home&#125; /&gt;</span><br><span class="line">      &lt;Route exact path=&quot;/about&quot; component=&#123;About&#125; /&gt;</span><br><span class="line">      &lt;Route path=&quot;*&quot; component=&#123;NotFound&#125; /&gt;</span><br><span class="line">    &lt;/Switch&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/Router&gt;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;Route&gt;</code>变成了普通的React组件，可以认为它是在渲染时动态决定路由对应什么组件的。<code>&lt;Switch&gt;</code>的左右就是只渲染子组件中<code>&lt;Route&gt;</code>第一个匹配的。</p>
+<h2 id="动态路由的问题"><a href="#动态路由的问题" class="headerlink" title="动态路由的问题"></a>动态路由的问题</h2><p>动态路由也有着自己的问题：</p>
+<ol>
+<li>不够直观，由于路由分散，无法一下子了解程序中所有的路由</li>
+<li>测试难度增加，组件中掺杂了路由逻辑，原本针对组件的单元测试需要考虑路由的逻辑</li>
+</ol>
+<p>实际上，React开发者对V4版本的改变也是喜忧参半，React官方也并没有强制开发者升级，因为V2&#x2F;3版本会持续维护。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/wayou/wayou.github.io/issues/16">心中无路由，处处皆自由&#x2F;react-router v4 动态路由@github</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/27433116">React Router v4 几乎误我一生@知乎</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React-Router/" rel="tag"># React-Router</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React01%20%E5%9F%BA%E7%A1%80/React%E5%9F%BA%E7%A1%8012%20React%E4%B8%AD%E7%9A%84this%E7%BB%91%E5%AE%9A/" rel="prev" title="React基础12 React中的this绑定">
+                  <i class="fa fa-chevron-left"></i> React基础12 React中的this绑定
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/13/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router03%20%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD/" rel="next" title="React-Router03 按需加载">
+                  React-Router03 按需加载 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

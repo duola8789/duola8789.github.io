@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="为什么要使用TypeScript？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TS01 为什么要使用TypeScript">
+<meta property="og:url" content="https://duola8789.github.io/2019/12/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8TypeScript/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="为什么要使用TypeScript？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FlGwZESRQcH0vdg14aIHIl5Q8cPJ">
+<meta property="og:image" content="http://image.oldzhou.cn/Fhn5DyNgAfp0rMDjBCggVdgadU4J">
+<meta property="og:image" content="http://image.oldzhou.cn/FuP5ye9HUUsMUH8yqqyBYDQGxrSD">
+<meta property="og:image" content="http://image.oldzhou.cn/FuauA70opUbnzn1V5jT7qgrYvqF2">
+<meta property="article:published_time" content="2019-12-12T06:07:00.000Z">
+<meta property="article:modified_time" content="2019-12-12T06:07:00.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FlGwZESRQcH0vdg14aIHIl5Q8cPJ">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/12/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8TypeScript/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/12/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8TypeScript/","path":"2019/12/12/01 前端笔记/15 TypeScript/TS01 为什么要使用TypeScript/","title":"TS01 为什么要使用TypeScript"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TS01 为什么要使用TypeScript | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeScript-%E4%BD%93%E7%B3%BB%E8%B0%83%E7%A0%94%E6%8A%A5%E5%91%8A"><span class="nav-number">1.</span> <span class="nav-text">TypeScript 体系调研报告</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%BC%95"><span class="nav-number">1.1.</span> <span class="nav-text">导引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TS-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">TS 是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-TS"><span class="nav-number">1.3.</span> <span class="nav-text">为什么要用 TS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TS-%E8%83%BD%E5%B9%B2%E7%82%B9%E4%BB%80%E4%B9%88"><span class="nav-number">1.4.</span> <span class="nav-text">TS 能干点什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5"><span class="nav-number">1.4.1.</span> <span class="nav-text">静态检查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">低级错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E7%A9%BA%E5%88%A4%E6%96%AD"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">非空判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">类型推断</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%A2%9E%E5%BC%BA"><span class="nav-number">1.4.2.</span> <span class="nav-text">面向对象编程增强</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">访问权限控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">泛型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.4.3.</span> <span class="nav-text">类型系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%A2%9E%E5%BC%BA"><span class="nav-number">1.4.4.</span> <span class="nav-text">模块系统增强</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-TS-%E7%9A%84%E6%88%90%E6%9C%AC"><span class="nav-number">1.5.</span> <span class="nav-text">使用 TS 的成本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%88%90%E6%9C%AC"><span class="nav-number">1.5.1.</span> <span class="nav-text">学习成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%88%90%E6%9C%AC"><span class="nav-number">1.5.2.</span> <span class="nav-text">应用成本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%81%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">老项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">新项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E6%9C%AC%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.3.</span> <span class="nav-text">成本对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.5.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BE%E5%8C%BA%E5%8F%91%E5%B1%95"><span class="nav-number">1.6.</span> <span class="nav-text">社区发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%A8%E8%BE%B9%E7%94%9F%E6%80%81"><span class="nav-number">1.7.</span> <span class="nav-text">周边生态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E5%8C%85"><span class="nav-number">1.7.1.</span> <span class="nav-text">类型声明包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IDE"><span class="nav-number">1.7.2.</span> <span class="nav-text">IDE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AF%BB-TS"><span class="nav-number">1.8.</span> <span class="nav-text">深入解读 TS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TS-%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">1.8.1.</span> <span class="nav-text">TS 语言设计目标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.8.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E7%9B%AE%E6%A0%87"><span class="nav-number">1.8.1.2.</span> <span class="nav-text">非目标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS-%E7%AE%80%E5%8F%B2"><span class="nav-number">1.8.2.</span> <span class="nav-text">TS 简史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C-Flow-%E3%80%81Babel-%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">1.8.3.</span> <span class="nav-text">和 Flow 、Babel 的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vs-Flow"><span class="nav-number">1.8.3.1.</span> <span class="nav-text">vs Flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vs-Babel"><span class="nav-number">1.8.3.2.</span> <span class="nav-text">vs Babel</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-%E5%92%8C-Type-System"><span class="nav-number">1.8.4.</span> <span class="nav-text">Type 和 Type System</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">1.8.4.1.</span> <span class="nav-text">类型系统的好处</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E9%94%99%E8%AF%AF"><span class="nav-number">1.8.4.1.1.</span> <span class="nav-text">检测错误</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%8C%96"><span class="nav-number">1.8.4.1.2.</span> <span class="nav-text">抽象化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E5%8C%96"><span class="nav-number">1.8.4.1.3.</span> <span class="nav-text">文档化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%AD%E8%A8%80%E5%AE%89%E5%85%A8"><span class="nav-number">1.8.4.1.4.</span> <span class="nav-text">语言安全</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%88%E7%8E%87"><span class="nav-number">1.8.4.1.5.</span> <span class="nav-text">效率</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E3%80%81%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%B1%E7%B1%BB%E5%9E%8B%E3%80%81%E5%BC%BA%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.8.5.</span> <span class="nav-text">静态类型、动态类型和弱类型、强类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%97-TS"><span class="nav-number">1.9.</span> <span class="nav-text">接受 TS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E8%A1%A1"><span class="nav-number">1.10.</span> <span class="nav-text">权衡</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/12/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8TypeScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TS01 为什么要使用TypeScript | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TS01 为什么要使用TypeScript
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-12-12 14:07:00" itemprop="dateCreated datePublished" datetime="2019-12-12T14:07:00+08:00">2019-12-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>为什么要使用TypeScript？</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由 <a target="_blank" rel="noopener" href="http://ksria.com/simpread/">简悦 SimpRead</a> 转码（有删减）， 原文地址 <a target="_blank" rel="noopener" href="https://github.com/ProtoTeam/blog/blob/master/201709/2.md">https://github.com/ProtoTeam/blog/blob/master/201709/2.md</a></p>
+</blockquote>
+<h1 id="TypeScript-体系调研报告"><a href="#TypeScript-体系调研报告" class="headerlink" title="TypeScript 体系调研报告"></a>TypeScript 体系调研报告</h1><blockquote>
+<p>作者简介：aoto 蚂蚁金服 · 数据体验技术团队</p>
+</blockquote>
+<blockquote>
+<p>Q：为什么要写这边文章？这篇文章要表达什么？</p>
+<p>A：我们考虑在 SPA 应用中使用 TS 作为开发语言，我们需要一篇系统性介绍 TS 本身及周边的文章来论证在项目中使用 TS 作为开发语言是科学合理的，而且是顺势而为的。</p>
+</blockquote>
+<h2 id="导引"><a href="#导引" class="headerlink" title="导引"></a>导引</h2><ul>
+<li>TS 是什么</li>
+<li>为什么要用 TS</li>
+<li>TS 能干点什么</li>
+<li>使用 TS 的成本</li>
+<li>社区发展</li>
+<li>周边生态</li>
+<li>深入解读 TS</li>
+<li>接受 TS</li>
+<li>权衡</li>
+</ul>
+<h2 id="TS-是什么"><a href="#TS-是什么" class="headerlink" title="TS 是什么"></a>TS 是什么</h2><p><img src="http://image.oldzhou.cn/FlGwZESRQcH0vdg14aIHIl5Q8cPJ"></p>
+<p>TypeScript &#x3D; Type + Script（标准 JS）。我们从 TS 的官方网站上就能看到定义：<code>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript</code>。TypeScript 是一个编译到纯 JS 的有类型定义的 JS 超集。</p>
+<h2 id="为什么要用-TS"><a href="#为什么要用-TS" class="headerlink" title="为什么要用 TS"></a>为什么要用 TS</h2><p><strong>目标：生命周期较长（常常持续几年）的复杂 SPA 应用，保障开发效率的同时提升代码的可维护性和线上运行时质量。</strong></p>
+<ul>
+<li><strong>从开发效率上看</strong>，虽然需要多写一些类型定义代码，但 TS 在 VSCode、WebStorm 等 IDE 下可以做到智能提示，智能感知 bug，同时我们项目常用的一些第三方类库框架都有 TS 类型声明，我们也可以给那些没有 TS 类型声明的稳定模块写声明文件，如我们的前端 KOP 框架 (目前还是蚂蚁内部框架，类比 dva)，这在团队协作项目中可以提升整体的开发效率。</li>
+<li><strong>从可维护性上看</strong>，长期迭代维护的项目开发和维护的成员会有很多，团队成员水平会有差异，而软件具有<strong>熵</strong>的特质，长期迭代维护的项目总会遇到可维护性逐渐降低的问题，有了强类型约束和静态检查，以及智能 IDE 的帮助下，可以降低软件腐化的速度，提升可维护性，且在<strong>重构</strong>时，强类型和静态类型检查会帮上大忙，甚至有了类型定义，会不经意间增加重构的频率（更安全、放心）。</li>
+<li><strong>从线上运行时质量上看</strong>，我们现在的 SPA 项目的很多 bug 都是由于一些调用方和被调用方（如组件模块间的协作、接口或函数的调用）的数据格式不匹配引起的，由于 TS 有编译期的静态检查，让我们的 bug 尽可能消灭在编译器，加上 IDE 有智能纠错，编码时就能提前感知 bug 的存在，我们的线上运行时质量会更为稳定可控。</li>
+</ul>
+<blockquote>
+<p>一个复杂软件的常规研发流程，大致分为定义问题、需求分析、规划构建、软件架构、详细设计、编码调试、单元测试、集成测试、集成、系统测试、保障维护。构建活动（主要是编码调试）在中大型项目中的工作量占比大于 50%。同时，一个中大型项目，bug 由构建阶段引起的比例占到 50%~75%，对于一个成功的项目来说，构建活动是必须要做的，而且是工程师更为可控的。【代码大全】</p>
+</blockquote>
+<p>TS 适合大规模 JavaScript 应用，正如他的官方宣传语<code>JavaScript that scales</code>。从以下几点可以看到 TS 在团队协作、可维护性、易读性、稳定性（编译期提前暴露 bug）等方面上有着明显的好处：</p>
+<ul>
+<li>加上了类型系统，对于阅读代码的人和编译器都是友好的。对阅读者来说，类型定义加上 IDE 的智能提示，增强了代码的易读型；对于编译器来说，类型定义可以让编译器揪出隐藏的 bug。</li>
+<li>类型系统 + 静态分析检查 + 智能感知 &#x2F; 提示，使大规模的应用代码质量更高，运行时 bug 更少，更方便维护。</li>
+<li>有类似 VSCode 这样配套的 IDE 支持，方便的查看类型推断和引用关系，可以更方便和安全的进行重构，再也不用全局搜索，一个个修改了。</li>
+<li>给应用配置、应用状态、前后端接口及各种模块定义类型，整个应用都是一个个的类型定义，使协作更为方便、高效和安全。</li>
+</ul>
+<h2 id="TS-能干点什么"><a href="#TS-能干点什么" class="headerlink" title="TS 能干点什么"></a>TS 能干点什么</h2><h3 id="静态检查"><a href="#静态检查" class="headerlink" title="静态检查"></a>静态检查</h3><blockquote>
+<p>这类问题是 ESLint 等工具检测不出来的。</p>
+</blockquote>
+<h4 id="低级错误"><a href="#低级错误" class="headerlink" title="低级错误"></a>低级错误</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> peoples = [&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;tim&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">20</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;alex&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">22</span></span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sortedPeoples = peoples.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a.<span class="property">name</span>.<span class="title function_">localCompare</span>(b.<span class="property">name</span>));</span><br></pre></td></tr></table></figure>
+
+<p>执行 TS 编译命令<code>tsc</code>，检测到错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error TS2339: Property <span class="string">&#x27;localCompare&#x27;</span> does not exist on <span class="built_in">type</span> <span class="string">&#x27;string&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>如果是在支持 TS 的 IDE 中（VS Code、WebStorm 等），则不需等到编译，在 IDE 中就可以非常明显在<code>localCompare </code>位置提示出错误信息。</p>
+<p><code>localCompare</code>这种输入手误（或者手滑不小心删除或添加了字符）时有发生，如果没有编译器静态检查，那有可能就是一个字符引发的血案：埋下了一个<strong>隐藏的</strong>运行时 bug。如果在 SPA 应用中，这个问题需要较长的操作路径才能被发现，一旦用户触发这个地雷，那它就会爆炸：应用直接 crash（在没有页面刷新的 SPA 中问题尤为凸显）。</p>
+<h4 id="非空判断"><a href="#非空判断" class="headerlink" title="非空判断"></a>非空判断</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">  <span class="attr">list</span>: <span class="literal">null</span>,</span><br><span class="line">  <span class="attr">success</span>: <span class="literal">true</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> value = data.<span class="property">list</span>.<span class="property">length</span>;</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>tsc</code>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error TS2532: Object is possibly <span class="string">&#x27;null&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p><code>data.list.length</code>这行直接引用了<code>data.list</code>的属性，但<code>data.list</code>的数据格式有不是数组的可能性，这种场景在前端处理后端接口返回时经常出现，接口返回的数据层级可能非常深，如果在某一级缺少了非空判断逻辑，那就意味着埋下了一个不知道什么时候就会引爆的炸弹。</p>
+<h4 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [];</span><br><span class="line">arr.<span class="title function_">toUpperCase</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Cat</span> &#123;</span><br><span class="line">  <span class="title function_">miao</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> &#123;</span><br><span class="line">  <span class="title function_">wang</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> cat = <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">cat.<span class="title function_">wang</span>();</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>tsc</code>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error TS2339: Property <span class="string">&#x27;toUpperCase&#x27;</span> does not exist on <span class="built_in">type</span> <span class="string">&#x27;any[]&#x27;</span>.</span><br><span class="line">error TS2339: Property <span class="string">&#x27;wang&#x27;</span> does not exist on <span class="built_in">type</span> <span class="string">&#x27;Cat&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>TS 有类型推断，给不同类型的执行对象调用错误的方法都将被检查出来。</p>
+<h3 id="面向对象编程增强"><a href="#面向对象编程增强" class="headerlink" title="面向对象编程增强"></a>面向对象编程增强</h3><h4 id="访问权限控制"><a href="#访问权限控制" class="headerlink" title="访问权限控制"></a>访问权限控制</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  protected <span class="attr">name</span>: string;</span><br><span class="line">  public <span class="attr">age</span>: number;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: string</span>) &#123; <span class="variable language_">this</span>.<span class="property">name</span> = name; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Person</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> someAttr = <span class="number">1</span>;</span><br><span class="line">  private <span class="attr">department</span>: string;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: string, department: string</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(name);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">department</span> = department;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> howard = <span class="keyword">new</span> <span class="title class_">Employee</span>(<span class="string">&quot;Howard&quot;</span>, <span class="string">&quot;Sales&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(howard.<span class="property">name</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>tsc</code>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error TS2445: Property <span class="string">&#x27;name&#x27;</span> is protected and only accessible within class <span class="string">&#x27;Person&#x27;</span> and its subclasses.</span><br></pre></td></tr></table></figure>
+
+<p><code>Person</code>中<code>name</code>属性是<code>protected</code>类型，只能在自己类中或者子类中使用。访问权限控制在面向对象编程中很有用，他能帮忙我们做到信息隐藏，JS 面向对象编程的一个大问题就是没有提供原生支持信息隐藏的方案（很多时候都是通过约定编码方式来做）。信息隐藏有助于更好的管理系统的复杂度，这在软件工程中显得尤为重要。</p>
+<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">interface <span class="title class_">Machine</span> &#123;</span><br><span class="line">  <span class="title function_">move</span>(): <span class="keyword">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">Human</span> &#123;</span><br><span class="line">  <span class="title function_">run</span>(): <span class="keyword">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Robot</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Base</span> implements <span class="title class_">Machine</span>, <span class="title class_">Human</span> &#123;</span><br><span class="line">  <span class="title function_">run</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;run&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">move</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;move&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Robot</code>类可以继承<code>Base</code>类，并实现<code>Machine</code>和<code>Human</code>接口，这种可以组合继承类和实现接口的方式使面向对象编程更为灵活、可扩展性更好。</p>
+<h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GenericNumber</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="attr">zeroValue</span>: T;</span><br><span class="line">    <span class="attr">add</span>: <span class="function">(<span class="params">x: T, y: T</span>) =&gt;</span> T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myGenericNumber = <span class="keyword">new</span> <span class="title class_">GenericNumber</span>&lt;number&gt;();</span><br><span class="line">myGenericNumber.<span class="property">zeroValue</span> = <span class="number">0</span>;</span><br><span class="line">myGenericNumber.<span class="property">add</span> = <span class="keyword">function</span>(<span class="params">x, y</span>) &#123; <span class="keyword">return</span> x + y; &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>定义了一个模板类型<code>T</code>，实例化<code>GenericNumber</code>类时可以传入内置类型或者自定义类型。泛型（模板）在传统面向对象编程语言中是很常见的概念了，在代码逻辑是通用模式化的，参数可以是动态类型的场景下比较有用。</p>
+<h3 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">interface <span class="title class_">SystemConfig</span> &#123;</span><br><span class="line">  <span class="attr">attr1</span>: number;</span><br><span class="line">  <span class="attr">attr2</span>: string;</span><br><span class="line">  <span class="title function_">func1</span>(): string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">ModuleType</span> &#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    attr1?: string,</span><br><span class="line">    attr2?: number</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">visible</span>: boolean</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">config</span>: <span class="title class_">SystemConfig</span> = &#123;</span><br><span class="line">  <span class="attr">attr1</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">attr2</span>: <span class="string">&#x27;str&#x27;</span>,</span><br><span class="line">  <span class="attr">func1</span>: <span class="function">() =&gt;</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">mod</span>: <span class="title class_">ModuleType</span> = &#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">attr1</span>: <span class="string">&#x27;1&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">visible</span>: <span class="literal">true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们定义了一个系统配置类型<code>SystemConfig</code>和一个模块类型<code>ModuleType</code>，我们在使用这些类型时就不能随便修改<code>config</code>和<code>mod</code>的数据了。<strong>每个被调用方负责自己的对外类型展现，调用者只需关心被调用方的类型，不需关心内部细节</strong>，这就是类型约束的好处，这对于多人协作的团队项目非常有帮助。</p>
+<h3 id="模块系统增强"><a href="#模块系统增强" class="headerlink" title="模块系统增强"></a>模块系统增强</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">namespace N &#123;</span><br><span class="line">  <span class="keyword">export</span> namespace <span class="variable constant_">NN</span> &#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;N.a&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">N.<span class="property">NN</span>.<span class="title function_">a</span>();</span><br></pre></td></tr></table></figure>
+
+<p>TS 除了支持 ES6 的模块系统之外，还支持命名空间。这在管理复杂模块的内部时比较有用。</p>
+<h2 id="使用-TS-的成本"><a href="#使用-TS-的成本" class="headerlink" title="使用 TS 的成本"></a>使用 TS 的成本</h2><h3 id="学习成本"><a href="#学习成本" class="headerlink" title="学习成本"></a>学习成本</h3><p>理论上学习并应用一门新语言是需要很高成本的，但好在 TS 本身是 JS 的超集，这也意味着他本身是可以支持现有 JS 代码的，至少理论上是这样。学习一下类型系统的相关知识和面向对象的基础知识，应该可以 hold 住 TS，成本不会很高。<a target="_blank" rel="noopener" href="http://www.typescriptlang.org/index.html">官方文档</a>是最好的学习材料。</p>
+<h3 id="应用成本"><a href="#应用成本" class="headerlink" title="应用成本"></a>应用成本</h3><h4 id="老项目"><a href="#老项目" class="headerlink" title="老项目"></a>老项目</h4><p>对于老项目，由于 TS 兼容 ES 规范，所以可以比较方便的升级现有的 JS（这里指 ES6 及以上）代码，逐渐的加类型注解，渐进式增强代码健壮性。迁移过程：</p>
+<ol>
+<li><p>npm 全局安装 typescript 包，并在工程根目录运行<code>tsc --init</code>，自动产生<code>tsconfig.json</code>文件。 默认的 3 个配置项：<a target="_blank" rel="noopener" href="https://www.typescriptlang.org/docs/handbook/compiler-options.html">更多配置项说明</a></p>
+<ul>
+<li><code>&quot;target&quot;:&quot;es5&quot;</code>: 编译后代码的 ES 版本，还有 es3，es2105 等选项。</li>
+<li><code>&quot;module&quot;:&quot;commonjs&quot;</code>: 编译后代码的模块化组织方式，还有 amd，umd，es2015 等选项。</li>
+<li><code>&quot;strict&quot;:true</code>: 严格校验，包含不能有没意义的 any，null 校验等选项。</li>
+</ul>
+</li>
+<li><p>初始化得到的<code>tsconfig.json</code>无需修改，增加<code>&quot;allowJs&quot;: true</code>选项。</p>
+</li>
+<li><p>配置 webpack 配置，增加 ts 的 loader，如 awesome-typescript-loader。(如果是基于 atool-build 来构建的项目，则它内置了 ts 编译，这步省略)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">loaders</span>: [</span><br><span class="line">	<span class="comment">// All files with a &#x27;.ts&#x27; or &#x27;.tsx&#x27; extension will be handled by &#x27;awesome-typescript-loader&#x27;.</span></span><br><span class="line">	&#123; <span class="attr">test</span>: <span class="regexp">/\.tsx?$/</span>, <span class="attr">loader</span>: <span class="string">&quot;awesome-typescript-loader&quot;</span> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此时你可以写文件名为 ts 和 tsx（React）后缀的代码了，它可以和现有的 ES6 代码共存，VSCode 会自动校验这部分代码，webpack 打包也没问题了。</p>
+</li>
+<li><p>逐渐的，开始打算重构以前的 ES6 代码为 TS 代码，只需将文件后缀改成 ts(x) 就行，就可以享受 TS 及 IDE 智能感知 &#x2F; 纠错带来的好处。</p>
+</li>
+</ol>
+<p>更多迁移教程：<a target="_blank" rel="noopener" href="http://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html">官方迁移教程</a>、<a target="_blank" rel="noopener" href="https://github.com/Microsoft/TypeScript-React-Conversion-Guide">官方 React 项目迁移教程</a>、<a target="_blank" rel="noopener" href="https://basarat.gitbooks.io/typescript/content/docs/types/migrating.html">社区教程 1</a>、<a target="_blank" rel="noopener" href="https://medium.com/@clayallsopp/incrementally-migrating-javascript-to-typescript-565020e49c88">社区教程 2</a>。</p>
+<h4 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h4><p>对于新项目，微软提供了非常棒的一些 <a target="_blank" rel="noopener" href="http://www.typescriptlang.org/samples/index.html">Starter 项目</a>，详细介绍了如何用 TS 和其他框架、库配合使用。如果是 React 项目，可以参考这个 Starter：<a target="_blank" rel="noopener" href="https://github.com/Microsoft/TypeScript-React-Starter">TypeScript-React-Starter</a></p>
+<h3 id="成本对比"><a href="#成本对比" class="headerlink" title="成本对比"></a>成本对比</h3><blockquote>
+<p>星多表示占优</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>成本点</th>
+<th>ES</th>
+<th>TS</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>学习和踩坑成本</td>
+<td>※※※※※</td>
+<td>※※※</td>
+<td>虽然是 JS 超集，但还是要学习 TS 本身及面向对象基础知识，开发环境搭建、使用中的问题和坑也需要自己趟，好在 TS 社区比较成熟，网上沉淀的资料很多</td>
+</tr>
+<tr>
+<td>整体代码量</td>
+<td>※※※※※</td>
+<td>※※※※</td>
+<td>TS 代码增加比较完善的类型定义的话整体代码量比原生 ES 多 5%~10% 左右</td>
+</tr>
+<tr>
+<td>原生 JS（标准 ES、浏览器端、服务器端）</td>
+<td>※※※</td>
+<td>※※※※※</td>
+<td>IDE 内置了详尽的类型声明，可以智能提示方法和参数说明，提升了效率</td>
+</tr>
+<tr>
+<td>依赖外部库（React、Lodash、Antd）</td>
+<td>※※※</td>
+<td>※※※※※</td>
+<td>有 TS 类型声明库，IDE 智能提示和分析，效率提升</td>
+</tr>
+<tr>
+<td>内部公共库、模块</td>
+<td>※※※</td>
+<td>※※※※</td>
+<td>团队内部自行编写类型定义文件，有一定工作量，但开发效率可以有一些提升，逐步完善类型定义后，效率进一步提升</td>
+</tr>
+<tr>
+<td>团队协作效率</td>
+<td>※※</td>
+<td>※※※※※</td>
+<td>对系统配置、外部接口、内部模块做类型定义后，实例对象属性就不能随意改了，每个被调用方负责自己的对外类型展现（可以理解为形状），调用者只需关心被调用方的类型，不需关心内部细节</td>
+</tr>
+<tr>
+<td>代码可维护性</td>
+<td>※※</td>
+<td>※※※※</td>
+<td>由于团队成员水平差异，和软件的<strong>熵</strong>的特质，长期迭代维护的项目总会遇到可维护性的问题，有了强类型约束和静态检查，以及智能 IDE 的帮助下，可以降低软件腐化的速度，提升可维护性，且在<strong>重构</strong>时，强类型和静态类型检查会帮上大忙，甚至有了类型定义，会不经意间增加重构的频率</td>
+</tr>
+<tr>
+<td>运行时稳定性</td>
+<td>※※</td>
+<td>※※※※</td>
+<td>由于 TS 有静态类型检查，很多 bug 都会被消灭在上线前</td>
+</tr>
+</tbody></table>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>从上面的对比中可以看到，使用大家都熟悉的 ES 作为开发语言只在学习和踩坑成本以及整体代码量上占优，如果只是短期项目，那用 ES 无可厚非，但我们的项目生命周期持续好几年，是持续迭代升级的，目前 TS 社区已经比较成熟，学习资料也很多，而且 TS 带来的是内部协作开发效率、可维护性、稳定性的提升，所以从长远来看这个代价是值得付出的。而且各种类型声明定义文件的存在，是可以提升开发效率的；而且静态类型检查可以减少 bug 数量和排查 bug 的难度，变相也提升了效率，而且使整个项目相对变得更为稳定可控。</p>
+<h2 id="社区发展"><a href="#社区发展" class="headerlink" title="社区发展"></a>社区发展</h2><p>从 Stackoverflow 的 <a target="_blank" rel="noopener" href="https://insights.stackoverflow.com/survey/2017#technology-most-loved-dreaded-and-wanted-languages">2017 年开发者调查报告</a>、<a target="_blank" rel="noopener" href="https://trends.google.com/trends/explore?date=today%205-y&q=/m/0n50hxv">Google 趋势</a>、<a target="_blank" rel="noopener" href="http://www.npmtrends.com/typescript">npm 下载量趋势</a>上可以到看，TypeScript 社区发展很快，特别是最近几年。特别是伴随着 VS Code 的诞生（TS 写的，对 TS 支持非常友好），VS Code + TypeScript 的组合让前端圈产生了一股清流，生产力和规范性得到了快速提升。从 Google 对 TS 的支持（Angular 高于 2 的版本是 TS 写的）看到，国际大厂也是支持的。</p>
+<p>从蚂蚁集团内部看，Ant Design、Basement 等产品也是基于 TS 写的（至少是在大量使用），虽然有一些反对的声音，但总体还是看好的，有合适的土壤就会快速发展，如 Ant Design。</p>
+<h2 id="周边生态"><a href="#周边生态" class="headerlink" title="周边生态"></a>周边生态</h2><h3 id="类型声明包"><a href="#类型声明包" class="headerlink" title="类型声明包"></a>类型声明包</h3><p>React、及其他各种著名框架、库都有 TS 类型声明，我们可以在项目中通过<code>npm install @types/react</code>方式安装，可以在<a target="_blank" rel="noopener" href="http://microsoft.github.io/TypeSearch/">这个网站</a>搜索你想要安装的库声明包。安装后，写和那些框架、库相关的代码将会是一种非常爽的体验，函数的定义和注释将会自动提示出来，开发效率将会得到提升。</p>
+<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>VS Code、WebStorm 等前端圈流行的 IDE 都对 TS 有着非常友好的支持，VS Code 甚至自身就是 TS 写成的。</p>
+<h2 id="深入解读-TS"><a href="#深入解读-TS" class="headerlink" title="深入解读 TS"></a>深入解读 TS</h2><h3 id="TS-语言设计目标"><a href="#TS-语言设计目标" class="headerlink" title="TS 语言设计目标"></a>TS 语言设计目标</h3><h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><p>编译期可以做静态检查，为大规模代码提供结构化装置，编译出符合习惯、易读的 JS 代码，和 ECMAScript 标准对齐，使用一贯的、可删除的、结构化的类型系统，保护编译后的 JS 代码的运行时行为等等。</p>
+<h4 id="非目标"><a href="#非目标" class="headerlink" title="非目标"></a>非目标</h4><p>模仿现有语言，优化编译后代码的性能，应用 “正确” 的类型系统，增加运行时类型信息等等。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals">TS 设计目标原文</a></p>
+<h3 id="TS-简史"><a href="#TS-简史" class="headerlink" title="TS 简史"></a>TS 简史</h3><p>在最近几年，随着 V8 平台、各大现代浏览器的起来，JS 的运行平台再不断完善，但，JS 对于大型应用的开发是非常困难的，JS 语言设计出来的目的不是为了大型应用，他是一门脚本语言，他没有静态类型校验，但更重要的是，他没有提供大型应用必须的 classes、modules&#x2F;namespaces、interfaces 等结构化的装置，中间也出来过 GWT 等为了其他语言开发者开发大型 JS 应用的项目，这些项目可以让你利用 Java 等面向对象语言开发大型 Web 应用，也可以利用到 Eclipse 等好用的 IDE，但这些项目不是用 JS 写代码。</p>
+<p>所以如果你想用 JS 里的一些东西，你可能要比较费劲的在其他语言里把它给实现出来，所以我们考虑如何<strong>增强</strong> JS 语言，提供如静态类型检查、classes、modules&#x2F;namespaces、interfaces 等大型应用装置，这就是 TS 语言：<strong>TS 是一种开发大型 JS 应用的语言，更详细一点来说，TS 是有类型的编译到纯 JS 的 JS 超集。</strong> 所以一般来说，JS 代码也是 TS 代码。本身 TS 编译器也是 TS 写的，运行 Node.js 环境。【<a target="_blank" rel="noopener" href="https://channel9.msdn.com/posts/Anders-Hejlsberg-Introducing-TypeScript">Anders Hejlsberg: Introducing TypeScript 2012</a>】</p>
+<p>TS 作者在最近微软 Build 大会给出的一个图：</p>
+<p><img src="http://image.oldzhou.cn/Fhn5DyNgAfp0rMDjBCggVdgadU4J"></p>
+<p>如图，Web 和 Node 平台的 JS 始终与 JS 最新规范有一段距离，Web 平台的距离更远，TS 可以填充这个间隙，让使用者在 Web 和 Node 平台都能用上最新的 Feature，用上优雅的 JS，提高生产力。【<a target="_blank" rel="noopener" href="https://channel9.msdn.com/Events/Build/2017/B8088?ocid=player">Anders Hejlsberg: What’s new in TypeScript? 2017</a>】</p>
+<h3 id="和-Flow-、Babel-的对比"><a href="#和-Flow-、Babel-的对比" class="headerlink" title="和 Flow 、Babel 的对比"></a>和 Flow 、Babel 的对比</h3><h4 id="vs-Flow"><a href="#vs-Flow" class="headerlink" title="vs Flow"></a>vs Flow</h4><p>从<a target="_blank" rel="noopener" href="https://github.com/niieani/typescript-vs-flowtype">这篇文章</a>可以看出，基础的类型检查功能发展到现在已经差别不大了，但在周边生态、文档完整性、社区资源方面 TS 胜过 Flow。</p>
+<h4 id="vs-Babel"><a href="#vs-Babel" class="headerlink" title="vs Babel"></a>vs Babel</h4><p>Babel 也是很不错的 ES6 to 5 编译工具，有不错的插件机制，社区发展也不错，但在同样一段代码编译出的 JS 代码里可以看到，TS 编译后的代码是更符合习惯、简洁易读一些（都用的是官方网站的 Playground 工具）。我曾经维护过 TS 编译后的 JS 代码（TS 源码丢失），感觉还 OK。</p>
+<p>Babel 编译后：</p>
+<p><img src="http://image.oldzhou.cn/FuP5ye9HUUsMUH8yqqyBYDQGxrSD"></p>
+<p>TS 编译后：</p>
+<p><img src="http://image.oldzhou.cn/FuauA70opUbnzn1V5jT7qgrYvqF2"></p>
+<h3 id="Type-和-Type-System"><a href="#Type-和-Type-System" class="headerlink" title="Type 和 Type System"></a>Type 和 Type System</h3><p>TypeScript &#x3D; Type + Script，那么编程语言中的 Type 是怎么定义的呢？</p>
+<blockquote>
+<p>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Computer_science">computer science</a> and <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Computer_programming">computer programming</a>, a <strong>data type</strong> or simply <strong>type</strong> is a classification of data which tells the compiler or interpreter how the programmer intends to use the data.【<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Data_type">维基百科</a>】</p>
+</blockquote>
+<p>在计算机科学中，数据类型或者简单说类型，是数据的类别，用来告诉编译器 &#x2F; 解释器程序员想怎么使用数据。基本的数据类型如整数、布尔值、字符等，组合数据类型如数组、对象等，也有抽象数据类型如队列、栈、集合、字典等等。数据类型用在类型系统中，类型系统提供了类型定义、实现和使用的方式，每种编程语言都有各自的类型系统实现（如果有的话）。</p>
+<p>我们来看看 Type System（类型系统）的定义：</p>
+<blockquote>
+<p>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Programming_language">programming languages</a>, a <strong>type system</strong> is a set of rules that assigns a property called <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_(computer_science)">type</a> to the various constructs of a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Computer_program">computer program</a>, such as <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Variable_(computer_science)">variables</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Expression_(computer_science)">expressions</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Function_(computer_science)">functions</a> or <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Modular_programming">modules</a>.<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system#cite_note-FOOTNOTEPierce20021-1">[1]</a> These types formalize and enforce the (otherwise implicit) categories the programmer uses for data structures and components (ex: “string”, “array of float”, “function returning boolean”). The main purpose of a type system is to reduce possibilities for <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bug_(computer_programming)">bugs</a> in computer programs<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system#cite_note-FOOTNOTECardelli20041-2">[2]</a> by defining interfaces between different parts of a computer program, and then checking that the parts have been connected in a consistent way. 【<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system">维基百科</a>】</p>
+</blockquote>
+<p>在编程语言中，类型系统是一个规则集合，给程序中的变量、表达式、函数、模块等程序构建元素分配叫做类型的属性。这些类型明确并强制（也可能是含蓄的）程序员如何使用数据结构。** 类型系统的主要目的是通过定义程序不同部分间协作的接口，并检查不同部分以始终如一的方式协作，来减少程序可能产生的 bug。** 这种检查可能是静态的（编译期）或动态的（运行时），或者既有静态的也有动态的。</p>
+<h4 id="类型系统的好处"><a href="#类型系统的好处" class="headerlink" title="类型系统的好处"></a>类型系统的好处</h4><h5 id="检测错误"><a href="#检测错误" class="headerlink" title="检测错误"></a>检测错误</h5><blockquote>
+<p>The most obvious benefit of static typechecking is that it allows early detection of some programming errors. Errors that are detected early can be fixed immediately, rather than lurking in the code to be discovered much later,when the programmer is in the middle of something else—or even after the program has been deployed. Moreover, errors can often be pinpointed more accurately during typechecking than at run time, when their effects may not become visible until some time after things begin to go wrong.【<a target="_blank" rel="noopener" href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a>】</p>
+</blockquote>
+<blockquote>
+<p>As your app grows, you can catch a lot of bugs with typechecking. 【<a target="_blank" rel="noopener" href="https://facebook.github.io/react/docs/typechecking-with-proptypes.html">React typechecking</a>】</p>
+</blockquote>
+<p>静态类型检查最明显的好处是可以尽早的检查出程序中的错误。错误被尽早的检查出来可以使它得到快速的修复，而不是潜伏在代码中，在中期甚至部署上线后才被发现。而且，错误在编译期可以被更精确的定位出来，而在运行时，错误产生的影响在程序出现问题前可能是不容易被发现的。</p>
+<p>程序会有各种各样的数据结构，如果改了一个数据类型，前端很多时候都是通过全局查找来处理这种重构问题的。而静态类型检查则可以使再次编译后就能探知所有可能的错误，加上 IDE 的智能错误提示，重构起来更放心、更方便。</p>
+<h5 id="抽象化"><a href="#抽象化" class="headerlink" title="抽象化"></a>抽象化</h5><blockquote>
+<p>Another important way in which type systems support the programming process is by enforcing disciplined programming. In particular, in the context of large-scale software composition, type systems form the backbone of the module languages used to package and tie together the components of large systems. Types show up in the interfaces of modules (and related structures such as classes); indeed, an interface itself can be viewed as “the type of a module,” providing a summary of the facilities provided by the module—a kind of partial contract between implementors and users.</p>
+<p>Structuring large systems in terms of modules with clear interfaces leads to a more abstract style of design, where interfaces are designed and discussed independently from their eventual implementations. More abstract thinking about interfaces generally leads to better design.【<a target="_blank" rel="noopener" href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a>】</p>
+</blockquote>
+<p>类型系统支持编程阶段的另外一个重要方式是强制让编程遵守纪律。在大规模软件系统中，类型系统组成了组件协作系统的脊梁。类型展现在模块（或者相关的结构如类）的接口中。接口可以看做 “模块的类型”，展示了模块所能提供的功能，是一种实现者和用户间的合约。</p>
+<p>在大量模块协作组成的大规模结构化软件系统中清晰的接口可以使设计更为抽象，接口的设计和讨论独立于它们的实现。一般来说，对接口更为抽象的思考可以使得做出更好的设计。</p>
+<blockquote>
+<p>Types enable programmers to think at a higher level than the bit or byte, not bothering with low-level implementation. For example, programmers can begin to think of a string as a set of character values instead of as a mere array of bytes. Higher still, types enable programmers to think about and express <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Interface_(computer_science)">interfaces</a> between two of <em>any</em>-sized subsystems. This enables more levels of localization so that the definitions required for interoperability of the subsystems remain consistent when those two subsystems communicate.【<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system">维基百科</a>】</p>
+</blockquote>
+<p>类型会让程序员在一个更高的维度思考，而不是在底层的计算机实现细节纠缠。例如，我们可以把字符串想成字符集，而不仅仅是比特数组。更高维度，类型系统可以让我们用接口来思考和表达任意子系统 &#x2F; 子程序之间的协作，接口定义可以让子系统 &#x2F; 子程序之间的通信方式始终如一。</p>
+<h5 id="文档化"><a href="#文档化" class="headerlink" title="文档化"></a>文档化</h5><blockquote>
+<p>Types are also useful when reading programs. The type declarations in procedure headers and module interfaces constitute a form of documentation,giving useful hints about behavior. Moreover, unlike descriptions embedded in comments, this form of documentation cannot become outdated, since it is checked during every run of the compiler. This role of types is particularly important in module signatures.【<a target="_blank" rel="noopener" href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a>】</p>
+</blockquote>
+<p>类型对于阅读程序也是有用的。在程序头部的类型声明和模块接口形成了文档的形状，提供程序的行为提示。此外，不同于在注释中的描述，这种形式的文档不会过期，因为每次编译都会校验，这在模块签名里特别重要。</p>
+<blockquote>
+<p>In more expressive type systems, types can serve as a form of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Documentation">documentation</a> clarifying the intent of the programmer. For example, if a programmer declares a function as returning a timestamp type, this documents the function when the timestamp type can be explicitly declared deeper in the code to be an integer type.【<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system">维基百科</a>】</p>
+</blockquote>
+<p>在复用表现力的类型系统中，类型可以看做是一种描述程序员意图的表述方式。例如，我们声明一个函数返回一个时间戳，这样就相当于明确说明了这个函数在更深层次的代码调用中会返回整数类型。</p>
+<h5 id="语言安全"><a href="#语言安全" class="headerlink" title="语言安全"></a>语言安全</h5><blockquote>
+<p>The term “safe language” is, unfortunately, even more contentious than “type system.” Although people generally feel they know one when they see it, their notions of exactly what constitutes language safety are strongly influenced by the language community to which they belong. Informally, though, safe languages can be defined as ones that make it impossible to shoot yourself in the foot while programming.【<a target="_blank" rel="noopener" href="https://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a>】</p>
+</blockquote>
+<p>安全语言这个说法是有争议的。受到该语言社区的严重影响。不正式的来说，安全语言可以被定义为在编程时不可能从底层把自己杀死。</p>
+<blockquote>
+<p>A type system enables the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Compiler">compiler</a> to detect meaningless or probably invalid code. For example, we can identify an expression <code>3 / &quot;Hello, World&quot;</code> as invalid, when the rules do not specify how to divide an <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Integer">integer</a> by a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a>. Strong typing offers more safety, but cannot guarantee complete <em>type safety</em>.【<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system">维基百科</a>】</p>
+</blockquote>
+<p>类型系统会允许编译器检查无意义或者可能不合法的代码。例如，我们知道<code>3/&#39;hello world&#39;</code>不合法，强类型提供了更多的安全性，但也不能完全做到类型安全。</p>
+<h5 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h5><blockquote>
+<p>Static type-checking may provide useful compile-time information. For example, if a type requires that a value must align in memory at a multiple of four bytes, the compiler may be able to use more efficient machine instructions.【<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Type_system">维基百科</a>】</p>
+</blockquote>
+<p>静态类型检查会提供有用的编译期信息。例如，如果一个类型需要在内存中占四个字节，编译器可能会使用更有效率的机器指令。</p>
+<h3 id="静态类型、动态类型和弱类型、强类型"><a href="#静态类型、动态类型和弱类型、强类型" class="headerlink" title="静态类型、动态类型和弱类型、强类型"></a>静态类型、动态类型和弱类型、强类型</h3><ul>
+<li>静态类型：编译期就知道每一个变量的类型。类型错误编译失败是语法问题。如 Java、C++。</li>
+<li>动态类型：编译期不知道类型，运行时才知道。类型错误抛出异常发生在运行时。如 JS、Python。</li>
+<li>弱类型：容忍隐式类型转换。如 JS，<code>1+&#39;1&#39;=&#39;11&#39;</code>，数字型转成了字符型。</li>
+<li>强类型：不容忍隐式类型转换。如 Python，<code>1+&#39;1&#39;</code>会抛出<code>TypeError</code>。</li>
+</ul>
+<h2 id="接受-TS"><a href="#接受-TS" class="headerlink" title="接受 TS"></a>接受 TS</h2><p>TS 刚出来时我是有点抵触的，或者对她的感觉就跟和<code>CoffeeScript</code>、<code>Dart</code>等编译到 JS 语言差不多，感觉就是其他语言往 JS 渗透的产物，近一两年，社区中 TS 的声音越来越强，而我也开始做大型 JavaScript 应用，随之逐渐重新认识 TS，逐渐认识到 TS 的类型系统、TSC 的静态检查、VS Code 等 IDE 的强力支持对于开发出可维护性好、稳定性高的大型 JavaScript 应用的重要性。</p>
+<h2 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h2><p>如何更好的利用 JS 的动态性和 TS 的静态特质，我们需要结合项目的实际情况来进行综合判断。一些建议：</p>
+<ul>
+<li>如果是中小型项目，且生命周期不是很长，那就直接用 JS 吧，不要被 TS 束缚住了手脚。</li>
+<li>如果是大型应用，且生命周期比较长，那建议试试 TS。开源项目如 <a target="_blank" rel="noopener" href="https://github.com/Microsoft/vscode">VS Code</a>、<a target="_blank" rel="noopener" href="https://github.com/desktop/desktop">GitHub 桌面端</a>，不开源的如 Slack 桌面端、Asana、<a target="_blank" rel="noopener" href="https://medium.com/@clayallsopp/incrementally-migrating-javascript-to-typescript-565020e49c88">Palantir</a>。</li>
+<li>如果是框架、库之类的公共模块，那更建议用 TS 了。如 <a target="_blank" rel="noopener" href="https://github.com/ant-design/ant-design">Ant Design</a>、<a target="_blank" rel="noopener" href="https://github.com/angular/angular">Angular</a> 、<a target="_blank" rel="noopener" href="https://github.com/ionic-team/ionic">Ionic</a>。</li>
+</ul>
+<p><strong>至于到底用不用 TS，还是要看实际项目规模、项目生命周期、团队规模、团队成员情况等实际情况综合考虑。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/11/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/08%20%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%8020%20HTTP2/" rel="prev" title="网络基础20 HTTP2">
+                  <i class="fa fa-chevron-left"></i> 网络基础20 HTTP2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS02%20TypeScript%E5%9F%BA%E7%A1%80/" rel="next" title="TS02 TypeScript基础">
+                  TS02 TypeScript基础 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="上一篇笔记学习了通过高阶组件实现React的代码复用，它也有着一些缺点。 除了HOC之外，还有没有别的方法呢？来，学习一下Render Props。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React提高06 Render Props">
+<meta property="og:url" content="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9806%20Render%20Props/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="上一篇笔记学习了通过高阶组件实现React的代码复用，它也有着一些缺点。 除了HOC之外，还有没有别的方法呢？来，学习一下Render Props。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-25T08:07:43.000Z">
+<meta property="article:modified_time" content="2019-03-19T06:43:49.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="坑">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9806%20Render%20Props/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9806%20Render%20Props/","path":"2019/01/25/01 前端笔记/03 React/React02 提高/React提高06 Render Props/","title":"React提高06 Render Props"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React提高06 Render Props | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HOC"><span class="nav-number">1.</span> <span class="nav-text">HOC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AAHOC%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">一个HOC的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOC%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">HOC的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Render-Props"><span class="nav-number">4.</span> <span class="nav-text">Render Props</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8Render-Prop%E4%BB%A3%E6%9B%BFHOC%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">用Render Prop代替HOC？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8EHOC%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.</span> <span class="nav-text">与HOC的实现方式的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9806%20Render%20Props/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React提高06 Render Props | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React提高06 Render Props
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-25 16:07:43" itemprop="dateCreated datePublished" datetime="2019-01-25T16:07:43+08:00">2019-01-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-03-19 14:43:49" itemprop="dateModified" datetime="2019-03-19T14:43:49+08:00">2019-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>上一篇笔记学习了通过高阶组件实现React的代码复用，它也有着一些缺点。</p>
+<p>除了HOC之外，还有没有别的方法呢？来，学习一下Render Props。</p>
+<span id="more"></span>
+
+<h2 id="HOC"><a href="#HOC" class="headerlink" title="HOC"></a>HOC</h2><p>HOC的出现是为了实现代码的复用，是一种React中的编程范式，基本的形式是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function HOCFactory(WrappedComponent, ...args) &#123;</span><br><span class="line">  return class HOC extends React.Component &#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">      return &lt;WrappedComponent &#123;...this.props&#125; /&gt;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码通过一个类似装饰器技术（可以参考《16 ES6标准入门(Decorator)》这篇笔记）共享，接受一个基础组件作为参数，返回了一个新的组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">ResultComponent</span> = <span class="title function_">HOC</span>(<span class="title class_">BaseComponent</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="一个HOC的例子"><a href="#一个HOC的例子" class="headerlink" title="一个HOC的例子"></a>一个HOC的例子</h2><p><a target="_blank" rel="noopener" href="https://github.com/duola8789/react-learning/blob/master/src/components/demo6/index.js">Demo的Github地址在这里</a>。</p>
+<p>一个响应鼠标事件的HOC的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">const withMouseHOC = Component =&gt; &#123;</span><br><span class="line">  return class extends React.Component &#123;</span><br><span class="line">    state = &#123; x: 0, y: 0 &#125;</span><br><span class="line">    </span><br><span class="line">    handleMouseMove = e =&gt; &#123;</span><br><span class="line">      this.setState(&#123;</span><br><span class="line">        x: e.clientX,</span><br><span class="line">        y: e.clientY</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    render() &#123;</span><br><span class="line">      return (</span><br><span class="line">        &lt;div onMouseMove=&#123;this.handleMouseMove.bind(this)&#125;</span><br><span class="line">          &lt;Component &#123;...this.props&#125; mouse=&#123;this.state&#125; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class App extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const &#123;x, y&#125; = this.props.mouse;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;The mouse position is (&#123;x&#125;, &#123;y&#125;)&lt;/h1&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 也可以写成纯函数式组件</span><br><span class="line">const App = props =&gt; &#123;</span><br><span class="line">  const &#123; x, y &#125; = props.mouse;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;The mouse position is (&#123;x&#125;, &#123;y&#125;) &lt;/h1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const AppWithMouse = withMouseHOC(App);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;AppWithMouse /&gt;, document.getElementById(&#x27;root&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="HOC的问题"><a href="#HOC的问题" class="headerlink" title="HOC的问题"></a>HOC的问题</h2><p>HOC存在着几个问题：</p>
+<p>（1）存在着多个HOC时，不知道<code>props</code>从何而来</p>
+<p>（2）名字冲突，如果多个HOC使用了同名的<code>prop</code>，它们将发生冲突并彼此覆盖，React不会发出警告</p>
+<p>（3）HOC使用的是静态组合而不是动态组合（结果组件被创建时发生的组合），不能再Render中调用HOC，不能使用React的生命周期</p>
+<h2 id="Render-Props"><a href="#Render-Props" class="headerlink" title="Render Props"></a>Render Props</h2><p>于是出现了另一门技术来实现代码复用，可以规避上面出现的问题</p>
+<p>那什么是Render Prop呢？一个Render Prop是一个类型为函数的<code>prop</code>，将可复用组件的<code>state</code>作为参数传递给这个函数<code>prop</code>，返回对应的HTML模板（我理解，这也是“Render Prop”的意思吧，一个可以作为render函数返回HTML模板的<code>prop</code>）</p>
+<p>将上面的例子改写成Render Prop的形式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// 用一个普通组件来共享代码</span><br><span class="line">class Mouse extends React.Component &#123;</span><br><span class="line">  state = &#123; x: 0, y: 0 &#125;</span><br><span class="line">  </span><br><span class="line">  handleMouseMove = e =&gt; &#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      x: e.clientX,</span><br><span class="line">      y: e.clientY</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 在render函数中，利用prop.render来进行渲染</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div onMouseMove=&#123;this.handleMouseMove.bind(this)&#125;</span><br><span class="line">        &#123;this.prop.render(this.state)&#125;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const AppWithMouse = () =&gt; &#123;</span><br><span class="line">  // 给组件的render的prop传入了一个函数</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;Mouse render=&#123;(&#123;x, y&#125;) =&gt; (</span><br><span class="line">        &lt;h1&gt;The mouse position is (&#123;x&#125;, &#123;y&#125;) &lt;/h1&gt;</span><br><span class="line">      )&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;AppWithMouse /&gt;, document.getElementById(&#x27;root&#x27;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用的窍门：将一个返回HTML函数作为名为<code>render</code>的<code>prop</code>，传给复用组件，复用组件中调用<code>this.props.render(this.state)</code>，渲染个性组件，最终返回最终组件。</p>
+</blockquote>
+<p>有了Render Prop，我们可以使用一个<code>prop</code>去进行渲染，它解决了HOC的问题</p>
+<p>（1）足够直接，可以通过Render Prop传入的函数的参数列表，有哪些<code>state</code>和<code>prop</code>可以使用</p>
+<p>（2）不会有变量名的冲突，因为不会有任何的自动的属性合并</p>
+<p>（3）组合模型是动态的，每次组合都是在<code>render</code>内部，可以利用React生命周期</p>
+<p>此外，由于Render Prop仅仅是一个函数，所以不会带来过多的复杂的编程范式，更加简洁</p>
+<h2 id="用Render-Prop代替HOC？"><a href="#用Render-Prop代替HOC？" class="headerlink" title="用Render Prop代替HOC？"></a>用Render Prop代替HOC？</h2><p>技术实现上，可以使用Render Prop代替HOC，例如可以用一个一般的、具有Render Prop的<code>&lt;Mouse&gt;</code>组件实现的<code>witchMouse</code>的HOC：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const withMouse = Component =&gt; &#123;</span><br><span class="line">  return class extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">      return (</span><br><span class="line">        &lt;Mouse render=&#123;mouse =&gt; (</span><br><span class="line">          &lt;Component &#123;...this.props&#125; mouse=&#123;mouse&#125; /&gt;</span><br><span class="line">        )&#125; /&gt;</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是我现在也没有具体的实践经验，是否在各种复杂的场下，Render Prop代替HOC都是更优的，还是需要实践慢慢总结证明。</p>
+<h2 id="与HOC的实现方式的区别"><a href="#与HOC的实现方式的区别" class="headerlink" title="与HOC的实现方式的区别"></a>与HOC的实现方式的区别</h2><p>假设包含能够复用的逻辑的公共组件是A，需要继承的个性组件是B，HOC的实现是将用一个函数的形式，B为参数，作为<code>render</code>的内容组合至A中，返回包含B的A，也就是最终的组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const HOCFactory = B =&gt; &#123;</span><br><span class="line">  return &lt;A /&gt;</span><br><span class="line">&#125;</span><br><span class="line">// B组合至A中返回</span><br><span class="line">class A extends from React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;B /&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而Render Props方式的实现是，在A中渲染的是<code>this.props.render</code>函数的返回值，最终的组件形成是在使用A时，为A传入一个<code>render</code>参数，它的返回值就是B的内容（通过Prop传进A的内部进行渲染）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// A </span><br><span class="line">class A extends from React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;A&gt;</span><br><span class="line">        &#123;this.props.render(this.state)&#125;</span><br><span class="line">      &lt;/A&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 最终组件</span><br><span class="line">class App extends from React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;A render=&#123;(state) =&gt; (&lt;B&gt;)&#125; /&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5a3087746fb9a0450c4963a5">[译]使用Render props吧！@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31267131">React中的Render Props@知乎</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/%E5%9D%91/" rel="tag"># 坑</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9805%20%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/" rel="prev" title="React提高05 高阶组件">
+                  <i class="fa fa-chevron-left"></i> React提高05 高阶组件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9807%20Context/" rel="next" title="React提高07 Context">
+                  React提高07 Context <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

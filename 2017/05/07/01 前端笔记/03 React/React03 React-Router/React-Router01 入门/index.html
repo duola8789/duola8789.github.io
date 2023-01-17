@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="React-Router入门学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Router01 入门">
+<meta property="og:url" content="https://duola8789.github.io/2017/05/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router01%20%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="React-Router入门学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-05-07T04:20:20.000Z">
+<meta property="article:modified_time" content="2019-05-09T09:16:20.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React-Router">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2017/05/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router01%20%E5%85%A5%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2017/05/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router01%20%E5%85%A5%E9%97%A8/","path":"2017/05/07/01 前端笔记/03 React/React03 React-Router/React-Router01 入门/","title":"React-Router01 入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React-Router01 入门 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Router"><span class="nav-number">1.</span> <span class="nav-text">React-Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">2.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-link-gt"><span class="nav-number">3.</span> <span class="nav-text">&lt;link&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-BrowserRouter-gt"><span class="nav-number">4.</span> <span class="nav-text">&lt;BrowserRouter&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-Switch-gt"><span class="nav-number">5.</span> <span class="nav-text">&lt;Switch&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">6.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Koa-Router"><span class="nav-number">7.</span> <span class="nav-text">Koa-Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%91"><span class="nav-number">8.</span> <span class="nav-text">坑</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2017/05/07/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React03%20React-Router/React-Router01%20%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React-Router01 入门 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React-Router01 入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-07 12:20:20" itemprop="dateCreated datePublished" datetime="2017-05-07T12:20:20+08:00">2017-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-05-09 17:16:20" itemprop="dateModified" datetime="2019-05-09T17:16:20+08:00">2019-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>React-Router入门学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="React-Router"><a href="#React-Router" class="headerlink" title="React-Router"></a>React-Router</h2><p>React-Router是<a target="_blank" rel="noopener" href="https://github.com/ReactTraining/react-router">官方插件</a>，<a target="_blank" rel="noopener" href="https://reacttraining.com/react-router/web/guides/quick-start">文档在这里</a>。</p>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>安装：(4.0版本后引入的是<code>react-router-dom</code>，而不是原本的<code>react-router</code>，使用方式也有了大的变化，和阮一峰的教程以及慕课网的视频教程都不同，这里按照新版本的API写代码）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save react-router-dom</span><br></pre></td></tr></table></figure>
+
+<p>新建一个<code>root.js</code>，作为入口文件，渲染到文档中，原来的<code>index.js</code>作为其中一个组件嵌入，需要在<code>webpack.config.js</code>中入口文件的更改：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">context</span>: __dirname + <span class="string">&#x27;/app&#x27;</span>,</span><br><span class="line">  <span class="attr">entry</span>:  <span class="string">&quot;./js/root.js&quot;</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用了</p>
+<p>引入需要的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">BrowserRouter</span>, <span class="title class_">Route</span>, <span class="title class_">Link</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="&lt;link&gt;"></a><code>&lt;link&gt;</code></h2><p>连接不使用<code>a</code>标签，使用<code>&lt;link&gt;</code>标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/details&quot;</span>&gt;</span>详情页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/list&quot;</span>&gt;</span>列表页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="lt-BrowserRouter-gt"><a href="#lt-BrowserRouter-gt" class="headerlink" title="&lt;BrowserRouter&gt;"></a><code>&lt;BrowserRouter&gt;</code></h2><p><code>Hash history</code>不支持<code>location.key</code>和<code>location.state</code>。另外由于该技术只是用来支持旧版浏览器，因此更推荐大家使用<code>BrowserRouter</code>，此API不再作多余介绍。</p>
+<p><code>BrowserRouter</code>，里面的元素是在此基础上跳转的页面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import React from &#x27;react&#x27;;</span><br><span class="line">import ReactDOM from &#x27;react-dom&#x27;;</span><br><span class="line">import &#123;BrowserRouter, Route, Link&#125; from &#x27;react-router-dom&#x27;;</span><br><span class="line">import Index from &#x27;./index&#x27;</span><br><span class="line">import ComponentDetails from &#x27;./components/details&#x27;;</span><br><span class="line">import ComponentList from &#x27;./components/list&#x27;;</span><br><span class="line">import ComponentHeader from &#x27;./components/header&#x27;;</span><br><span class="line"></span><br><span class="line">export default class Root extends React.Component&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    return(</span><br><span class="line">      &lt;BrowserRouter basename=&quot;/a/&quot;&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;ul&gt;</span><br><span class="line">            &lt;li&gt;&lt;Link to=&quot;/home&quot;&gt;首页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;Link to=&quot;/details&quot;&gt;详情页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;Link to=&quot;/list&quot;&gt;列表页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">          &lt;Route path=&quot;/home&quot; component=&#123;Index&#125; /&gt;</span><br><span class="line">          &lt;Route path=&quot;/details&quot; component=&#123;ComponentDetails&#125; /&gt;</span><br><span class="line">          &lt;Route path=&quot;/list&quot; component=&#123;ComponentList&#125; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/BrowserRouter&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;Root /&gt;, document.getElementById(&#x27;example&#x27;));</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="lt-Switch-gt"><a href="#lt-Switch-gt" class="headerlink" title="&lt;Switch&gt;"></a><code>&lt;Switch&gt;</code></h2><p>当进行地址匹配的时候，如果有多个匹配项值匹配首个匹配的对象（需要增加<code>exact</code>属性）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">export default class Root extends React.Component&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    return(</span><br><span class="line">      &lt;BrowserRouter basename=&quot;/a/&quot;&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;ul&gt;</span><br><span class="line">            &lt;li&gt;&lt;Link to=&quot;/&quot;&gt;首页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;Link to=&quot;/details&quot;&gt;详情页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;Link to=&quot;/list&quot;&gt;列表页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">          &lt;Route exact path=&quot;/&quot; component=&#123;Index&#125; /&gt;</span><br><span class="line">          &lt;Route path=&quot;/details&quot; component=&#123;ComponentDetails&#125; /&gt;</span><br><span class="line">          &lt;Route path=&quot;/list&quot; component=&#123;ComponentList&#125; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/BrowserRouter&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时点击首页，会将所有三个<code>&lt;Route&gt;</code>全部渲染，但是使用<code>&lt;Switch&gt;</code>只会渲染首个匹配对象</p>
+<p>可以用这个组件实现前端页面404的功能：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import &#123; BrowserRouter as Router, Route, Link, Switch &#125; from &#x27;react-router-dom&#x27;</span><br><span class="line"></span><br><span class="line">const NoMatch = () =&gt; (&lt;div&gt;&lt;h1&gt;Sorry, 404&lt;/h1&gt;&lt;/div&gt;);</span><br><span class="line"></span><br><span class="line">// 路由设置</span><br><span class="line">export default class RouterContainer extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;Router&gt;</span><br><span class="line">        &lt;div className=&quot;container&quot;&gt;</span><br><span class="line">          &lt;nav&gt;</span><br><span class="line">            &lt;div className=&quot;head&quot;&gt;</span><br><span class="line">              &lt;Link to=&quot;/&quot; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;/nav&gt;</span><br><span class="line">          &lt;Switch&gt;</span><br><span class="line">            &lt;Route exact path=&quot;/&quot; component=&#123;App&#125; /&gt;</span><br><span class="line">            &lt;Route path=&quot;/demo1/&quot; component=&#123;Demo1&#125; /&gt;</span><br><span class="line">            &lt;Route path=&quot;/demo2/&quot; component=&#123;Demo2&#125; /&gt;</span><br><span class="line">            &lt;Route path=&quot;/demo3/&quot; component=&#123;Demo3&#125; /&gt;</span><br><span class="line">            &lt;Route component=&#123;NoMatch&#125; /&gt;</span><br><span class="line">          &lt;/Switch&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/Router&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h2><p>传递参数在<code>&lt;Route&gt;</code>中的<code>path</code>参数后面用<code>:+paramName</code>，在组件中使用<code>this.props.match.params.paramName</code>来获取传入的值</p>
+<p>路由：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">BrowserRouter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/home&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/details/123&quot;</span>&gt;</span>详情页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/list&quot;</span>&gt;</span>列表页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/home&quot;</span> <span class="attr">component</span>=<span class="string">&#123;Index&#125;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/details/:id&quot;</span> <span class="attr">component</span>=<span class="string">&#123;ComponentDetails&#125;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/list&quot;</span> <span class="attr">component</span>=<span class="string">&#123;ComponentList&#125;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">BrowserRouter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>页面：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>这是详情页details idd &#123;this.props.match.params.id&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Koa-Router"><a href="#Koa-Router" class="headerlink" title="Koa-Router"></a>Koa-Router</h2><p>之前对二者的理解存在着偏差</p>
+<p><strong>React-Router是前端路由，而Koa-Router控制的是后端路由</strong></p>
+<p>React是单页面应用，也就是在单一一个页面上实现多个组件、布局的切换，React-Router实现的就是在前端页面上根据url的切换对应不同的组件</p>
+<p>实现单页面应用的前提是服务器返回<strong>单页面应用的根地址对应的页面</strong>，也就是需要Koa-Router首先配置好url对应的地址</p>
+<p>比如，我想要实现<code>www.test.com</code>这个单页面应用，并配置了前端路由：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Router</span> <span class="attr">history</span>=<span class="string">&#123;</span> <span class="attr">browserHistory</span> &#125; <span class="attr">key</span>=<span class="string">&#123;</span> <span class="attr">Date.now</span>() &#125;&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/&quot;</span> <span class="attr">components</span>=<span class="string">&#123;keyPointPage&#125;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">IndexRoute</span> <span class="attr">component</span>=<span class="string">&#123;home&#125;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;page1&quot;</span> <span class="attr">components</span>=<span class="string">&#123;page1&#125;/</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Router</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我访问<code>www.test.com</code>对应的是<code>IndexRoute</code>设置的<code>home</code>组件，当我访<code>www.test.com/page1</code>加载<code>page1</code>组件</p>
+<p>但是前提是要服务器首先要对<code>www.test.com</code>这个地址的访问请求给出回应，也就是需要通过Koa-Router配置地址，并且对<code>www.test.co</code>后面的访问进行配置，都需要访问同一个view模版文件（单页面）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对根地址配置</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="title function_">async</span>(ctx) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">dealPageRequest</span>(ctx, <span class="string">&#x27;keypoint_react&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对根地址对应的其他地址指向同一个view</span></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/*&#x27;</span>, <span class="title function_">async</span>(ctx) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">dealPageRequest</span>(ctx, <span class="string">&#x27;keypoint_react&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><ol>
+<li>如果要在<code>&lt;Link&gt;</code>标签中使用<code>target=&quot;_blank&quot;</code>属性时只能使用<code>HashRouter</code>，不知道为什么<code>BrowserRouter</code>不行</li>
+<li>根目录如果是<code>/</code>，一定要在<code>&lt;Route&gt;</code>加上<code>exact</code>属性，要不然都会进行匹配。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React-Router/" rel="tag"># React-Router</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/07/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/01%20Node/Node02%20NPM/" rel="prev" title="Node02 NPM">
+                  <i class="fa fa-chevron-left"></i> Node02 NPM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/08/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9810%20Fetch%20API/" rel="next" title="零散专题10 Fetch API">
+                  零散专题10 Fetch API <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JavaScript中的高精度运算。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS66 高精度运算">
+<meta property="og:url" content="https://duola8789.github.io/2019/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS66%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="JavaScript中的高精度运算。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FkV0GtkdjmMRK4Uvb_DJD3eHH_gE">
+<meta property="article:published_time" content="2019-12-04T11:54:02.000Z">
+<meta property="article:modified_time" content="2019-12-04T11:54:05.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="toFixed">
+<meta property="article:tag" content="toPrecision">
+<meta property="article:tag" content="toLocalString">
+<meta property="article:tag" content="银行家舍入法">
+<meta property="article:tag" content="BigInt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FkV0GtkdjmMRK4Uvb_DJD3eHH_gE">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS66%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS66%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/","path":"2019/12/04/01 前端笔记/02 JavaScript/JS66 高精度运算/","title":"JS66 高精度运算"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS66 高精度运算 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%B6%E8%A1%8C%E5%AE%B6%E8%88%8D%E5%85%A5%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">银行家舍入法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toFixed%E6%96%B9%E6%B3%95%E5%92%8CtoPercision%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">toFixed方法和toPercision方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E8%AF%AF%E5%B7%AE"><span class="nav-number">3.</span> <span class="nav-text">浮点数误差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97"><span class="nav-number">4.</span> <span class="nav-text">高精度运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">5.</span> <span class="nav-text">大数运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS66%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JS66 高精度运算 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS66 高精度运算
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2019-12-04 19:54:02 / 修改时间：19:54:05" itemprop="dateCreated datePublished" datetime="2019-12-04T19:54:02+08:00">2019-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JavaScript中的高精度运算。</p>
+<span id="more"></span>
+
+<h2 id="银行家舍入法"><a href="#银行家舍入法" class="headerlink" title="银行家舍入法"></a>银行家舍入法</h2><p>银行家舍入法是一种国际标准的进行数值取舍的标准，也叫做四舍六入五留双的规则，具体规则是：四舍六入五考虑，五后非零就进一，五后为零看奇偶，五前为偶应舍去，五前为奇要进一</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">11.556 = 11.56  -----   六入</span><br><span class="line">11.554 = 11.55  -----   四舍</span><br><span class="line">11.5551 = 11.56 -----   五后有数进位</span><br><span class="line">11.545 = 11.54  -----   五后无数，若前位为偶数应舍去</span><br><span class="line">11.555 = 11.56  -----   五后无数，若前位为奇数应进位</span><br></pre></td></tr></table></figure>
+
+<p>为什么要使用银行家舍入法呢？从统计学的角度讲，银行家舍入法比通常的四舍五入更精确，具体来讲：</p>
+<p>（1）首先个位数如果不是<code>5</code>，那么该怎么做就怎么做，用哪种方式取整都是一样的。</p>
+<p>（2）个位数是5的情况，假设只有<code>35</code>和<code>45</code>两个数字进行取舍，如果按照四舍五入，就都向上取整了，这样就产生偏差了。</p>
+<p>（3）而按照银行家舍入法进行“取偶”的方式，则一个向上，一个向下，就消除了偏差，就更合理了。</p>
+<h2 id="toFixed方法和toPercision方法"><a href="#toFixed方法和toPercision方法" class="headerlink" title="toFixed方法和toPercision方法"></a><code>toFixed</code>方法和<code>toPercision</code>方法</h2><p><code>Number.prototype.toFixed</code>方法接受一个数字作为参数（如果传入的是小数，将向下取整），将数字按照指定的参数就行取舍，得到的结果字符串，如果不足位将补充<code>&#39;0&#39;</code></p>
+<p>在网上看到很多文章说，<code>toFixed</code>方法采用的就是银行舍入法，但是下面的结果却和银行家舍入法的结果出现了出入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">2.55</span>).<span class="title function_">toFixed</span>(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>按照银行家舍入法，<code>5</code>后面没有数字，前位<code>5</code>为奇数应该进位，但是结果却是<code>&#39;2.5&#39;</code>，这是为什么呢？</p>
+<p>这是因为，银行家舍入法的前提是我们讨论的<code>5</code>必须是精确的为<code>5</code>，而JavaScript中使用浮点数来存储小数，实际上是有误差的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">2.55</span>).<span class="title function_">toFixed</span>(<span class="number">32</span>);</span><br><span class="line"><span class="comment">// &quot;2.54999999999999982236431605997495&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>实际上在进行舍入的时候是对上面的数值进行舍入，所以结果自然是<code>2.5</code>，从V8源码角度进行解析可以参考这篇文章：<a target="_blank" rel="noopener" href="https://juejin.im/post/5a11a9fef265da43284073b4">为什么(2.55).toFixed(1)等于2.5？</a></p>
+<p><code>toPercision</code>方法与<code>toFixed</code>方法有相同之处，但是也有不同之处：</p>
+<ul>
+<li><code>toPercision</code>是处理精度，精度是从左至右第一个不为<code>0</code>的数字开始</li>
+<li><code>toFixed</code>是从小数点开始数起</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">123.456</span>).<span class="title function_">toFixed</span>(<span class="number">1</span>)</span><br><span class="line"><span class="comment">// &quot;123.5&quot;</span></span><br><span class="line">(<span class="number">123.456</span>).<span class="title function_">toPrecision</span>(<span class="number">1</span>)</span><br><span class="line"><span class="comment">// &quot;1e+2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>toPercision</code>也会精度的误差，如果<code>toFixed</code>一样。</p>
+<h2 id="浮点数误差"><a href="#浮点数误差" class="headerlink" title="浮点数误差"></a>浮点数误差</h2><p>之所以会有误差，其实和我们都知道的JavaScript中小数运算的误差是一个原理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> === <span class="number">0.3</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>因为实际上<code>0.1 + 0.2</code>的结果是<code>0.30000000000000004</code>。</p>
+<p>JavaScript中使用双精度浮点数来存储数字，在将小数转换为二进制表示时的方法时“乘2取整，顺序排列”的方法，具体过程是：用<code>2</code>乘以十进制小数，将积的整数部分取出，再用<code>2</code>乘余下的小数部分，再将得到的积的整数部分取出，如此进行，直到积中的小数部分为零或者达到要求的精度为止。</p>
+<p><img src="http://image.oldzhou.cn/FkV0GtkdjmMRK4Uvb_DJD3eHH_gE"></p>
+<p>在将<code>0.1</code>转换为二进制表示时<code>0.0001100110011001100(1100循环)</code>，会进行截取，截取后的二进制再转换为十进制的结果是<code>0.100000000000000005551115123126</code>，这样就出现了误差。</p>
+<h2 id="高精度运算"><a href="#高精度运算" class="headerlink" title="高精度运算"></a>高精度运算</h2><p>上面提到了<code>toFixed</code>和<code>toPercision</code>都有误差，<strong>如果使用二者在进行四舍五入是很有可能差生误差的</strong>，所以<strong>不能在计算的中间过程中使用</strong>，只能用于最终结果的展示。</p>
+<p>（1）用于展示</p>
+<p>拿到一个数字，例如<code>1.4000000001</code>时，可以使用<code>toFixed</code>方法进行取整后，使用<code>parseFloat</code>转为数字后进行展示，封装为函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">strip</span>(<span class="params">num, precision = <span class="number">12</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> +<span class="built_in">parseFloat</span>(num.<span class="title function_">toFixed</span>(precision));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认精度选择<code>12</code>一般能解决掉大部分<code>0001</code>和<code>0009</code>的问题。</p>
+<p>（2）用于计算</p>
+<p>如果是进行运算，就不能使用<code>toFixed</code>了，需要将小数转换为整数后再进行运算，但是要注意，如果直接通过乘以<code>10</code>的倍数来将小数转换为整数（或者反向的过程）同样会引入误差，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">20.24</span> * <span class="number">100</span>;</span><br><span class="line"><span class="comment">// 2023.9999999999998</span></span><br><span class="line"></span><br><span class="line"><span class="number">3</span> * <span class="number">0.1</span></span><br><span class="line"><span class="comment">// 0.30000000000000004</span></span><br></pre></td></tr></table></figure>
+
+<p>在生产环境下，可以选择<a target="_blank" rel="noopener" href="https://github.com/nefe/number-precision">number-precision</a>这个库来解决浮点数的误差问题，它的体积只有1K，远小于Math.js和BigDecimal.js，推荐使用，也可以学习一下它的处理方法。</p>
+<h2 id="大数运算"><a href="#大数运算" class="headerlink" title="大数运算"></a>大数运算</h2><p>JavaScript中能够表达的最大的正整数是<code>2^1024 - 1</code>，超过这个数字就变成了<code>Infinity</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>, <span class="number">1023</span>)</span><br><span class="line"><span class="comment">// 8.98846567431158e+307</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>, <span class="number">1024</span>)</span><br><span class="line"><span class="comment">// Infinity</span></span><br></pre></td></tr></table></figure>
+
+<p>但是能够精确进行运算的数字范围并没有这么大，能够准确计算的最大正整数可以通过<code>Number.MAX_SAFE_INTEGER</code>获得，是<code>9007199254740991</code>，能够准确计算的最大负整数可以通过<code>Number.MIN_SAFE_INTEGER</code>获得，是<code>-9007199254740991</code>，超出这个范围的运算是不准确的。</p>
+<p>如果要进行准确的大数运算，可以引入第三方库<a target="_blank" rel="noopener" href="https://github.com/MikeMcl/bignumber.js//">bigmuber.js</a>，它把所有的数字都当做字符串，重新实现了计算逻辑，但是性能相比原生的要差很多。</p>
+<p>在ES10的提案中提出了<code>BigInt</code>数据类型，它是第七种原始类型，它是一个任意精度的数字，可以表示超过<code>9007199254740991</code>的数字：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> b = <span class="number">1n</span>;  <span class="comment">// 追加 n 以创建 BigInt</span></span><br><span class="line"><span class="keyword">typeof</span> b;</span><br><span class="line"><span class="comment">// bigint</span></span><br></pre></td></tr></table></figure>
+
+<p>如果需要进行准确的大数运算，可以根据需要支持的兼容性，来选择方案解决。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/camsong/blog/issues/9">JavaScript 浮点数陷阱及解法@camsong&#x2F;blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%80%BC%E4%BF%AE%E7%BA%A6">数值修约@维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ituring.com.cn/article/35304">“不科学”的“四舍五入” ？@图灵社区</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/decimal-decimals-are-converted-to-binary-fractions.html">十进制小数转化为二进制小数@菜鸟教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5c75e42d518825406d29535a">ES10特性详解@掘金</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/toFixed/" rel="tag"># toFixed</a>
+              <a href="/tags/toPrecision/" rel="tag"># toPrecision</a>
+              <a href="/tags/toLocalString/" rel="tag"># toLocalString</a>
+              <a href="/tags/%E9%93%B6%E8%A1%8C%E5%AE%B6%E8%88%8D%E5%85%A5%E6%B3%95/" rel="tag"># 银行家舍入法</a>
+              <a href="/tags/BigInt/" rel="tag"># BigInt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/02/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/03%20%E5%8A%A8%E7%94%BB/HTML+CSS40%20CSS%20matrix%E5%87%BD%E6%95%B0/" rel="prev" title="HTML+CSS40 CSS matrix函数">
+                  <i class="fa fa-chevron-left"></i> HTML+CSS40 CSS matrix函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS67%20%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E8%B4%B4%E6%9D%BF/" rel="next" title="JS67 复制到剪贴板">
+                  JS67 复制到剪贴板 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

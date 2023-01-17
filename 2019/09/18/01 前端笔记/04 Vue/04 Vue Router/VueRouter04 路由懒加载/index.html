@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Vue router 路由懒加载学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VueRouter04 路由懒加载">
+<meta property="og:url" content="https://duola8789.github.io/2019/09/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter04%20%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Vue router 路由懒加载学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRmhjck5KaUNfNW5Bb0VmZVVJZm1tUDZrNUpBaw?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRm15MXRvenVORkxmMWZQVWVlQkZpUWtDWDJDTw?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRmhiTmxzcV81VkFDNGVVQ0VaNDh3WFlwa0pUMA?x-oss-process=image/format,png">
+<meta property="article:published_time" content="2019-09-18T11:30:15.000Z">
+<meta property="article:modified_time" content="2019-09-18T11:30:17.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Vue Router">
+<meta property="article:tag" content="懒加载">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRmhjck5KaUNfNW5Bb0VmZVVJZm1tUDZrNUpBaw?x-oss-process=image/format,png">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/09/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter04%20%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/09/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter04%20%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD/","path":"2019/09/18/01 前端笔记/04 Vue/04 Vue Router/VueRouter04 路由懒加载/","title":"VueRouter04 路由懒加载"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VueRouter04 路由懒加载 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">路由懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8DChunk"><span class="nav-number">3.</span> <span class="nav-text">命名Chunk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/09/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter04%20%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="VueRouter04 路由懒加载 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VueRouter04 路由懒加载
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2019-09-18 19:30:15 / 修改时间：19:30:17" itemprop="dateCreated datePublished" datetime="2019-09-18T19:30:15+08:00">2019-09-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Vue router 路由懒加载学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h2><p>路由懒加载解决的是一次加载的JS包过大的问题，将整个的JS包按照不同的路由对应的组件分割成为不同的代码块，路由访问的时候再加载对应的组件</p>
+<p>这样的好处就是首次加载时的速度很加快，但是路由切换的过程，由于组件本身也需要通过网络请求获取，所以性能会降低</p>
+<p>实现需要借助Vue的<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/components-dynamic-async.html#%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6">异步组件</a>和Webpack的<a target="_blank" rel="noopener" href="https://webpack.docschina.org/guides/code-splitting/">代码分割功能</a></p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>（1）配置Babel</p>
+<p>如果使用了Babel，需要安装<code>syntax-dynamic-import</code>插件，才可以使Babel正确解析下面的语法。Babel@6需要使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/babel-plugin-syntax-dynamic-import">babel-plugin-syntax-dynamic-import</a>，Babel@7使用<a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import">@babel&#x2F;plugin-syntax-dynamic-import</a></p>
+<p>同时为了防止Eslint报错：<code>Parsing error: Unexpected token import</code>，需要使用babel-eslint，方法参考<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/47815775/dynamic-imports-for-code-splitting-cause-eslint-parsing-error-import">这里</a>。</p>
+<p>（2）需要将异步组件定义为一个返回Promise的工厂函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Foo</span> = (<span class="params"></span>) =&gt; <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(&#123; <span class="comment">/* 组件定义 */</span>);</span><br></pre></td></tr></table></figure>
+
+<p>也可以提供一个定义异步组件的工厂函数：</p>
+<p>（3）使用Webpack 2 提供的动态<code>import</code>语法来定义代码分块点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">&#x27;./Foo.vue&#x27;</span>) <span class="comment">// 返回 Promise</span></span><br></pre></td></tr></table></figure>
+
+<p>实际工作中更常见的是提供一个定义异步组件的工厂函数，我们只要传入组件名让Webpack找到</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 懒加载工厂函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">lazyLoad</span> = path =&gt; <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &quot;view-[request]-[index]&quot; */</span> <span class="string">`@/components/<span class="subst">$&#123;path&#125;</span>.vue`</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p>（4）路由配置中，仍然直接引入<code>Foo</code>即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/foo&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Foo</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="命名Chunk"><a href="#命名Chunk" class="headerlink" title="命名Chunk"></a>命名Chunk</h2><p>如果想把某个路由下的所有组件都打包在通个异步chunk中，那么需要使用命名chunk（需要Webpack版本2.4+）。</p>
+<p>首先需要在Webpack的<code>output</code>配置项中，可以设置打包出的代码块（chunk）的名称<code>chunkFilename</code>，不设置的话<code>chunkFilename</code>默认使用<code>[id].js</code>（<a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/output/#output-chunkfilename">文档</a>），我们在<code>import</code>中采用的特殊注释注入的<code>webpackChunkName</code>是无法生效的</p>
+<p>此时各个代码块的名字都是默认的<code>id</code>：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRmhjck5KaUNfNW5Bb0VmZVVJZm1tUDZrNUpBaw?x-oss-process=image/format,png"></p>
+<p>想要我们注入的<code>webpackChunkName</code>生效，就需要在Webpack的配置文件<code>webpack.base.conf.js</code>中的<code>output</code>选项中，添加如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;[name].js&#x27;</span>, </span><br><span class="line">    <span class="attr">chunkFilename</span>: <span class="string">&#x27;[name].chunk.js&#x27;</span>, <span class="comment">// 新增</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样设置后，我们利用特殊的注释语法来设置的<code>webpackChunkName</code>就会替换<code>[name]</code>占位符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Foo</span> = (<span class="params"></span>) =&gt; <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &quot;group-foo&quot; */</span> <span class="string">&#x27;./Foo.vue&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Bar</span> = (<span class="params"></span>) =&gt; <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &quot;group-foo&quot; */</span> <span class="string">&#x27;./Bar.vue&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Baz</span> = (<span class="params"></span>) =&gt; <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &quot;group-foo&quot; */</span> <span class="string">&#x27;./Baz.vue&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样三个组件会打打包到同一个<code>chunk</code>中，不会再被分割，也就不会动态加载。</p>
+<p>也可以在<code>/* webpackChunkName: &quot;group-foo&quot; */</code>中使用Webpack提供的内置的<a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/output/#output-filename">模板字符串</a></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRm15MXRvenVORkxmMWZQVWVlQkZpUWtDWDJDTw?x-oss-process=image/format,png"></p>
+<p>一般可以使用<code>/* webpackChunkName: &quot;view-[request]-[index]&quot; */</code>，<code>request</code>并没有在上面的模板中列出来，但是它可以输出我们请求这个模板的路径：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm9sZHpob3UuY24vRmhiTmxzcV81VkFDNGVVQ0VaNDh3WFlwa0pUMA?x-oss-process=image/format,png"></p>
+<p>这样设置对于调试显示信息可能更全一点，要注意的事是，这个<code>webpackChunkName</code>的设置只能通过Webpack内置的模板字符串传入变量，不支持在业务代码中手动传入值，比如说</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 懒加载工厂函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">lazyLoad</span> = (<span class="params">view, str</span>) =&gt; <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">`/* webpackChunkName: &quot;view<span class="subst">$&#123;str&#125;</span>-[request]-[index]&quot; */`</span> <span class="string">`@/components/demos/<span class="subst">$&#123;view&#125;</span>.vue`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样传入<code>str</code>是不能生效的</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>当路由增多时，<code>routes</code>中每个<code>cmponent</code>都需要按照如上的样式实现懒加载，并且在开发环境中使用懒加载，会导致代码更改的热跟新速度变慢，所以需要区分环境来使用路由的懒加载功能</p>
+<p>可以对<code>lazyLoad</code>函数进行优化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">lazyLoad</span> = path =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;development&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> comp = <span class="built_in">require</span>(<span class="string">`@/pages/<span class="subst">$&#123;path&#125;</span>.vue`</span>);</span><br><span class="line">    <span class="keyword">return</span> comp.<span class="property">default</span> || comp</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &quot;view-[request]-[index]&quot; */</span> <span class="string">`@/pages/<span class="subst">$&#123;path&#125;</span>.vue`</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>懒加载完整的Demo在<a target="_blank" rel="noopener" href="https://github.com/duola8789/vue-cli-learning/tree/feat-lazyLoad">这里</a>。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/guide/advanced/lazy-loading.html">路由懒加载@Vue Router</a></li>
+<li><a target="_blank" rel="noopener" href="https://note.youdao.com/">使用import()配合webpack动态导入模块时，如何指定chunk name？@github</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000015904599">「Vue.js」Vue-Router + Webpack 路由懒加载实现@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/output/#output-chunkfilename">output.chunkFilename@webpack</a></li>
+<li><a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/output/#output-filename">output.filename@webpack</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-Router/" rel="tag"># Vue Router</a>
+              <a href="/tags/%E6%87%92%E5%8A%A0%E8%BD%BD/" rel="tag"># 懒加载</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/09/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter03%20%E6%8F%90%E9%AB%98/" rel="prev" title="VueRouter03 提高">
+                  <i class="fa fa-chevron-left"></i> VueRouter03 提高
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/09/23/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JS%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A313%20bind%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="next" title="JS语言理解13 bind函数的实现">
+                  JS语言理解13 bind函数的实现 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

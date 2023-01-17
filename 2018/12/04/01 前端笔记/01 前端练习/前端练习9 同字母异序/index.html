@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Leetcode初级算法练习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端练习09 同字母异序">
+<meta property="og:url" content="https://duola8789.github.io/2018/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A09%20%E5%90%8C%E5%AD%97%E6%AF%8D%E5%BC%82%E5%BA%8F/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Leetcode初级算法练习。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-04T13:46:28.000Z">
+<meta property="article:modified_time" content="2019-02-20T03:23:39.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="练习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A09%20%E5%90%8C%E5%AD%97%E6%AF%8D%E5%BC%82%E5%BA%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A09%20%E5%90%8C%E5%AD%97%E6%AF%8D%E5%BC%82%E5%BA%8F/","path":"2018/12/04/01 前端笔记/01 前端练习/前端练习9 同字母异序/","title":"前端练习09 同字母异序"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端练习09 同字母异序 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B01"><span class="nav-number">2.</span> <span class="nav-text">实现1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B02"><span class="nav-number">3.</span> <span class="nav-text">实现2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B03"><span class="nav-number">4.</span> <span class="nav-text">实现3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A09%20%E5%90%8C%E5%AD%97%E6%AF%8D%E5%BC%82%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="前端练习09 同字母异序 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端练习09 同字母异序
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-04 21:46:28" itemprop="dateCreated datePublished" datetime="2018-12-04T21:46:28+08:00">2018-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-02-20 11:23:39" itemprop="dateModified" datetime="2019-02-20T11:23:39+08:00">2019-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">前端练习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Leetcode初级算法练习。</p>
+<span id="more"></span>
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>同字母异序指的是两个字符串字母种类和字母的数量相同，但是顺序可能不同。</p>
+<p>完成<code>isAnagram</code>，接受两个字符串作为参数，返回<code>true</code>或者<code>false</code>表示这两个字符串是否同字母异序。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">isAnagram</span>(<span class="string">&quot;anagram&quot;</span>, <span class="string">&quot;nagaram&quot;</span>) <span class="comment">// =&gt; return true.</span></span><br><span class="line"><span class="title function_">isAnagram</span>(<span class="string">&quot;rat&quot;</span>, <span class="string">&quot;car&quot;</span>) <span class="comment">// =&gt; return false.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实现1"><a href="#实现1" class="headerlink" title="实现1"></a>实现1</h2><p>我实现的方案还是比较简单的，排序一下在比较就行了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">isAnagram</span> = (<span class="params">str1, str2</span>) =&gt; [...str1].<span class="title function_">sort</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>) === [...str2].<span class="title function_">sort</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>还可以：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">isAnagram</span> = (<span class="params">str1, str2</span>) =&gt;  str1.<span class="property">length</span> === str2.<span class="property">length</span> &amp;&amp; ![...str1].<span class="title function_">find</span>(<span class="function"><span class="params">v</span> =&gt;</span> !str2.<span class="title function_">includes</span>(v)) &amp;&amp; ![...str2].<span class="title function_">find</span>(<span class="function"><span class="params">v</span> =&gt;</span> !str1.<span class="title function_">includes</span>(v));</span><br></pre></td></tr></table></figure>
+<p>还可以使用<code>for</code>循环：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">isAnagram</span> = (<span class="params">str1, str2</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (str1.<span class="property">length</span> !== str2.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> str2Copy = str2;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str1.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!str2Copy.<span class="title function_">includes</span>(str1[i])) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> str2CopyArr = [...str2Copy];</span><br><span class="line">      str2CopyArr.<span class="title function_">splice</span>(str2Copy.<span class="title function_">indexOf</span>(str1[i]), <span class="number">1</span>);</span><br><span class="line">      str2Copy = str2CopyArr.<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> str2Copy.<span class="property">length</span> === <span class="number">0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现2"><a href="#实现2" class="headerlink" title="实现2"></a>实现2</h2><p>在LeetCode上又遇到了这道题，看了大神的代码，自愧不如。</p>
+<p>想要执行用时短，要避免类型转换，所以直接使用了<code>replace</code>方法，这样就可以实现同样字母的替换</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isAnagram = <span class="keyword">function</span> (<span class="params">s, t</span>) &#123;</span><br><span class="line">  <span class="keyword">while</span> (s !== t &amp;&amp; s.<span class="property">length</span> === t.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> reg = <span class="keyword">new</span> <span class="title class_">RegExp</span>(s[<span class="number">0</span>], <span class="string">&#x27;g&#x27;</span>);</span><br><span class="line">    s = s.<span class="title function_">replace</span>(reg, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    t = t.<span class="title function_">replace</span>(reg, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> s === t</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>执行用时116ms，而原先的方法最少都在150ms以上</p>
+<h2 id="实现3"><a href="#实现3" class="headerlink" title="实现3"></a>实现3</h2><p>因为题目中注明了，可以假设字符串只包含小写字母，那收到另外一个题目的其他，也可以对一个常量字符串进行遍历：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isAnagram = <span class="keyword">function</span> (<span class="params">s, t</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(s.<span class="property">length</span> !== t.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> alpha = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyz&#x27;</span>;</span><br><span class="line">  <span class="keyword">let</span> reg;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; alpha.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> letter = alpha[i],</span><br><span class="line">      sIndex = s.<span class="title function_">indexOf</span>(letter),</span><br><span class="line">      tIndex = t.<span class="title function_">indexOf</span>(letter);</span><br><span class="line">    <span class="keyword">if</span> ((sIndex === -<span class="number">1</span> &amp;&amp; tIndex !== -<span class="number">1</span>) || (sIndex !== -<span class="number">1</span> &amp;&amp; tIndex === -<span class="number">1</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      reg = <span class="keyword">new</span> <span class="title class_">RegExp</span>(letter, <span class="string">&#x27;g&#x27;</span>);</span><br><span class="line">      s = s.<span class="title function_">replace</span>(reg, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">      t = t.<span class="title function_">replace</span>(reg, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">      <span class="keyword">if</span> (s === t) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(s.<span class="property">length</span> !== t.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> s === t;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>执行用时104ms。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://scriptoj.mangojuice.top/problems/44">ScriptOJ - #44 同字母异序 </a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BB%83%E4%B9%A0/" rel="tag"># 练习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/04/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A010%20%E8%BF%9E%E7%BB%AD%E5%AD%90%E4%B8%B2%E6%9C%80%E5%A4%A7%E5%92%8C/" rel="prev" title="前端练习10 连续子串最大和">
+                  <i class="fa fa-chevron-left"></i> 前端练习10 连续子串最大和
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/03%20Vue%E6%BA%90%E7%A0%81/Vue%E6%BA%90%E7%A0%8103%20Vue%E4%B8%ADnextTick%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="next" title="Vue源码03 Vue中nextTick的实现">
+                  Vue源码03 Vue中nextTick的实现 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

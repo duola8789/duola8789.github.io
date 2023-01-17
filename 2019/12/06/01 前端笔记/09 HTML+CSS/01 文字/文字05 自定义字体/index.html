@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="自定义字体知识整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文字05 自定义字体">
+<meta property="og:url" content="https://duola8789.github.io/2019/12/06/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/01%20%E6%96%87%E5%AD%97/%E6%96%87%E5%AD%9705%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="自定义字体知识整理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FpJ2zTHxXzTUqFs7rWWTCXqj-HGh">
+<meta property="og:image" content="http://image.oldzhou.cn/FmE0lIKaqhN3RRofITtrrHHfK6vT">
+<meta property="og:image" content="http://image.oldzhou.cn/FkBki4XvLKClo1LoS-UBEb-VrwMP">
+<meta property="og:image" content="http://image.oldzhou.cn/Fke2DnkSfmYdwhTet73GyaCnB-eV">
+<meta property="og:image" content="http://image.oldzhou.cn/FnIbb0CQeXxCK0lEyUBVSn4gR3VQ">
+<meta property="article:published_time" content="2019-12-06T03:14:19.000Z">
+<meta property="article:modified_time" content="2019-12-06T03:14:21.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="font-face">
+<meta property="article:tag" content="字体加密">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FpJ2zTHxXzTUqFs7rWWTCXqj-HGh">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/12/06/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/01%20%E6%96%87%E5%AD%97/%E6%96%87%E5%AD%9705%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/12/06/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/01%20%E6%96%87%E5%AD%97/%E6%96%87%E5%AD%9705%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93/","path":"2019/12/06/01 前端笔记/09 HTML+CSS/01 文字/文字05 自定义字体/","title":"文字05 自定义字体"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>文字05 自定义字体 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">自定义字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">字体类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">实际使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87%E5%AD%97%E4%BD%93%EF%BC%88IconFont%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">自定义图标字体（IconFont）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="nav-number">5.</span> <span class="nav-text">加密自定义字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/12/06/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/09%20HTML+CSS/01%20%E6%96%87%E5%AD%97/%E6%96%87%E5%AD%9705%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="文字05 自定义字体 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文字05 自定义字体
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2019-12-06 11:14:19 / 修改时间：11:14:21" itemprop="dateCreated datePublished" datetime="2019-12-06T11:14:19+08:00">2019-12-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/HTML-CSS/" itemprop="url" rel="index"><span itemprop="name">HTML+CSS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>自定义字体知识整理。</p>
+<span id="more"></span>
+
+<h2 id="自定义字体"><a href="#自定义字体" class="headerlink" title="自定义字体"></a>自定义字体</h2><p>CSS3引入的<code>@font-face</code>，让我们为我们的文本引入自定义字体，指定的字体可以从远程服务器或者用户本地安装的字体加载。<code>@font-face</code>规则不仅仅可以使用在CSS的顶层，还可以用在任何CSS条件组规则中。</p>
+<p>一般我们使用只需要向下面这样定义就可以：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Open Sans&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;/fonts/OpenSans-Regular-webfont.woff2&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;woff2&quot;</span>),</span><br><span class="line">       <span class="built_in">url</span>(<span class="string">&quot;/fonts/OpenSans-Regular-webfont.woff&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;woff&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了上面两个数户型，它还有一些列的属性，来指定字体的具体属性，可以参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/@font-face">MDN的文档</a>。</p>
+<h2 id="字体类型"><a href="#字体类型" class="headerlink" title="字体类型"></a>字体类型</h2><p>常见的字体类型有以下几种：</p>
+<ul>
+<li><code>.ttf</code>：True Type，是Windows和Mac系统最常用的字体格式，它可以任意缩放和旋转不会出现锯齿</li>
+<li><code>.otf</code>：Open Type，是可缩放性的电脑字体类型，是微软与Adobe共同开发用来替代TrueType的新字形</li>
+<li><code>.eot</code>：Embedded Open Type，微软开发的嵌入字体格式</li>
+<li><code>.woff</code>，Web Open Font Format，专门为了We设计的字体格式标准，是对True Type、Open Type等字体格式的封装，并针对网络使用进行了优化</li>
+<li><code>.svg</code>，Scalable Vector Graphics Fonts，使用SVG来呈现字体（<code>.svgz</code>是使用了Gzip压缩的SVG字体）</li>
+</ul>
+<p>目前现代浏览器基本都支持<code>.ttf</code>、<code>otf</code>、<code>woff</code>的字体格式，如果为了保证兼容不同的浏览器，一般会同时指定多个格式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;myFont&#x27;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;myFont.eot&#x27;</span>); <span class="comment">/* IE9 Compat Modes */</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;myFont.eot?#iefix&#x27;</span>) <span class="built_in">format</span>(<span class="string">&#x27;embedded-opentype&#x27;</span>), <span class="comment">/* IE6-IE8 */</span></span><br><span class="line">       <span class="built_in">url</span>(<span class="string">&#x27;myFont.woff&#x27;</span>) <span class="built_in">format</span>(<span class="string">&#x27;woff&#x27;</span>), <span class="comment">/* Modern Browsers */</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h2><p>在字体天下这个网站，随便找到了一个字体<code>PangMenZhengDaoQingSongTi-2.otf</code>下载下来，放到本地目录中。</p>
+<p>因为字体是我随便下载的，只有<code>otf</code>这种格式。</p>
+<p>然后在CSS文件中，首先声明我自定义的字体名和位置：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;Secret Font&#x27;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;../assets/fonts/PangMenZhengDaoQingSongTi-2.otf&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在一个类中使用自定义字体：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.special</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;Secret Font&#x27;</span>, sans-serif; <span class="comment">/* 使用 @font-face 自定义的字体 */</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">40px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<p><img src="http://image.oldzhou.cn/FpJ2zTHxXzTUqFs7rWWTCXqj-HGh"></p>
+<h2 id="自定义图标字体（IconFont）"><a href="#自定义图标字体（IconFont）" class="headerlink" title="自定义图标字体（IconFont）"></a>自定义图标字体（IconFont）</h2><p>在ElementUI中我们经常使用的Icon图标实际上就是使用了自定义字体的技术，实际上它就是把一些简单的图标制作成为了字体，然后让图标变成和文字一样，可以通过CSS去改变颜色、大小等，非常方便。</p>
+<p>比较常用的是阿里巴巴推出的<a target="_blank" rel="noopener" href="https://www.iconfont.cn/">IconFont</a> ，在上面找到我们想要使用的图标之后，有下面几种引用方法：</p>
+<p>（1）直接下载</p>
+<p>直接将图标保存为SVG、PNG等格式，然后在项目中引入，这种引用方式一般适合图标引用很少，且不需要维护的场景，比如做Demo页、活动页等</p>
+<p><img src="http://image.oldzhou.cn/FmE0lIKaqhN3RRofITtrrHHfK6vT"></p>
+<p>（2）unicode引用</p>
+<p>unicode是字体在网页端最原始的应用方式，兼容性好，可以按照字体的方式去动态调整图标大小，颜色。不支持多色，使用时需要首先将选好的图标放到一个项目中，然后拷贝项目下面生成的的<code>font-face</code>：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;iconfont&#x27;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;iconfont.eot&#x27;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&#x27;iconfont.eot?#iefix&#x27;</span>) <span class="built_in">format</span>(<span class="string">&#x27;embedded-opentype&#x27;</span>),</span><br><span class="line">    <span class="built_in">url</span>(<span class="string">&#x27;iconfont.woff&#x27;</span>) <span class="built_in">format</span>(<span class="string">&#x27;woff&#x27;</span>),</span><br><span class="line">    <span class="built_in">url</span>(<span class="string">&#x27;iconfont.ttf&#x27;</span>) <span class="built_in">format</span>(<span class="string">&#x27;truetype&#x27;</span>),</span><br><span class="line">    <span class="built_in">url</span>(<span class="string">&#x27;iconfont.svg#iconfont&#x27;</span>) <span class="built_in">format</span>(<span class="string">&#x27;svg&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在CSS定义使用IconFont的样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.iconfont</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;iconfont&quot;</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  -webkit-<span class="attribute">font-smoothing</span>: antialiased;</span><br><span class="line">  -webkit-text-stroke-<span class="attribute">width</span>: <span class="number">0.2px</span>;</span><br><span class="line">  -moz-osx-<span class="attribute">font-smoothing</span>: grayscale;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后找到图标对应的字体unicode编码，它指定的文字在我们自定义字体中对应的不是一个文字，而是一个图标，所以就能将这个图标应用于页面了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;iconfont&quot;</span>&gt;</span><span class="symbol">&amp;#x33;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>（3）font-class引用</p>
+<p>这种方式使用时的一个不方便之处就是，unicode码不直观，语义不明确，所以可以使用font-class来引入。</p>
+<p>它本质上和上一种方式的引用是相同的，只是系统帮我们在CSS中定义了图标的unicode对应的CSS类，所以需要先引入项目下面生成的CSS代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//at.alicdn.com/t/font_8d5l8fzk5b87iudi.css</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以直接使用图标的类名来引用图标了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;iconfont icon-xxx&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>（4）symbol引用</p>
+<p>这种引用方式实际上和自定义字体没什么关系了，它实际上是通过SVG来引入，做了一个SVG的集合，它支持多色图标，并且通过一些技巧让我们仍然可以通过<code>font-size</code>和<code>color</code>来调整样式。</p>
+<p>但是它兼容性较差，不支持IE9之前的浏览器，并且浏览器渲染SVG的性能比较差。</p>
+<p>引入的时候需要拷贝项目下的JavaScript代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js</span><br></pre></td></tr></table></figure>
+
+<p>然后加入通用CSS代码，引入一次即可：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-class">.icon</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">width</span>: <span class="number">1em</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">height</span>: <span class="number">1em</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">vertical-align</span>: -<span class="number">0.15em</span>;</span></span><br><span class="line"><span class="language-css">    fill: currentColor;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后挑选类名，通过<code>&lt;svg&gt;</code>和<code>&lt;use&gt;</code>标签引入图标：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">use</span> <span class="attr">xlink:href</span>=<span class="string">&quot;#icon-xxx&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">use</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="加密自定义字体"><a href="#加密自定义字体" class="headerlink" title="加密自定义字体"></a>加密自定义字体</h2><p>打开大众点评的网站，随表找一家店铺，复制它的评论数：</p>
+<p><img src="http://image.oldzhou.cn/FkBki4XvLKClo1LoS-UBEb-VrwMP"></p>
+<p>复制的结果竟然是：<code></code></p>
+<p>再打开控制台，找到对应的HTML代码：</p>
+<p><img src="http://image.oldzhou.cn/Fke2DnkSfmYdwhTet73GyaCnB-eV"></p>
+<p>在控制台也是乱码。查看网页的源代码，可以看出数字对应的是一个unicode编码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">d</span> <span class="attr">class</span>=<span class="string">&quot;num&quot;</span>&gt;</span><span class="symbol">&amp;#xf72e;</span><span class="tag">&lt;/<span class="name">d</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它有一个<code>num</code>的类：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.num</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-num&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果将这个类取消，那么页面上的数字也都会出现乱码。一切的秘密都是在这个类上。</p>
+<p>这个类就是我们上面提到的自定义字体，在大众点评的静态资源中，找到了一份样式文件，就定义了这个字体：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;PingFangSC-Regular-hours&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b355749.eot&quot;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b355749.eot?#iefix&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;embedded-opentype&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b355749.woff&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.hours</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-hours&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;PingFangSC-Regular-address&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/aa7e2f36.eot&quot;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/aa7e2f36.eot?#iefix&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;embedded-opentype&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/aa7e2f36.woff&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.address</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-address&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;PingFangSC-Regular-dishname&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/53426607.eot&quot;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/53426607.eot?#iefix&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;embedded-opentype&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/53426607.woff&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dishname</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-dishname&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;PingFangSC-Regular-review&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/52e0505f.eot&quot;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/52e0505f.eot?#iefix&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;embedded-opentype&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/52e0505f.woff&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.review</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-review&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;PingFangSC-Regular-num&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b355749.eot&quot;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b355749.eot?#iefix&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;embedded-opentype&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/0b355749.woff&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.num</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-num&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;PingFangSC-Regular-shopdesc&quot;</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/aa7e2f36.eot&quot;</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/aa7e2f36.eot?#iefix&quot;</span>) <span class="built_in">format</span>(<span class="string">&quot;embedded-opentype&quot;</span>), <span class="built_in">url</span>(<span class="string">&quot;//s3plus.meituan.net/v1/mss_73a511b8f91f43d0bdae92584ea6330b/font/aa7e2f36.woff&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.shopdesc</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Regular-shopdesc&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出它定义了多个自定义字体，并且为不同的类加载不同的字体，数字的类是<code>.num</code>，它对应的自定义字体就是<code>PingFangSC-Regular-num</code></p>
+<p>它做的这一切都是为了防爬虫，因为对于大众点评来说它的这些数据就是它的核心资产，如果被网络爬虫爬走，那是巨大损失，它的优势也就不复存在。所以大众点评和众多的网络爬虫制造者之间展开了一场异常艰苦的攻防战。</p>
+<p>它使用了自定义字体，但是还不足以达到上面的效果，它使用了加密自定义字体技巧，这是一种CSS加密方式，是一种应用广泛的反爬技术。</p>
+<p>字体加密的原理是，用凯撒加密的方式将明文（下图的原文）替换为密文（下图的阴书），加密的密钥（也就是下图字验）就是上面<code>font-face</code>声明的自定义字体，加密好之后，HTML源码中是密文，使用自定义字体作为密钥进行CSS解密，渲染在页面上的就是解密后的正常的明文了</p>
+<p><img src="http://image.oldzhou.cn/FnIbb0CQeXxCK0lEyUBVSn4gR3VQ"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/@font-face">@font-face@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.iconfont.cn/help/detail?helptype=code">帮助中心@IconFont</a></li>
+<li><a target="_blank" rel="noopener" href="https://imweb.io/topic/5a016f791f0e50753869bfa3">自定义字体@IMWeb前端博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/details/id-264404/">字体加密 | 字体加密初认识@商业新知</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/68768086">python爬虫反爬 | 对方是如何丧心病狂的通过 css 加密让你爬不到数据的@知乎</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/font-face/" rel="tag"># font-face</a>
+              <a href="/tags/%E5%AD%97%E4%BD%93%E5%8A%A0%E5%AF%86/" rel="tag"># 字体加密</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/05/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS67%20%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E8%B4%B4%E6%9D%BF/" rel="prev" title="JS67 复制到剪贴板">
+                  <i class="fa fa-chevron-left"></i> JS67 复制到剪贴板
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/11/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/08%20%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%8020%20HTTP2/" rel="next" title="网络基础20 HTTP2">
+                  网络基础20 HTTP2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

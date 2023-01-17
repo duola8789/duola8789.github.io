@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="也是面试时比较常遇到的React的问题之一。了解了之后还是能够加深对React的理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React提高04 对虚拟DOM和加载过程的理解">
+<meta property="og:url" content="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="也是面试时比较常遇到的React的问题之一。了解了之后还是能够加深对React的理解。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1814354-4bf62e54553a32b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="http://image.oldzhou.cn/WX20180507-180427.jpg">
+<meta property="og:image" content="http://image.oldzhou.cn/6d64b0b7889e7f020bb020aea5947a09_hd.jpg">
+<meta property="article:published_time" content="2019-01-25T08:05:43.000Z">
+<meta property="article:modified_time" content="2019-05-11T14:11:14.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="坑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1814354-4bf62e54553a32b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/","path":"2019/01/25/01 前端笔记/03 React/React02 提高/React提高04 对虚拟DOM和加载过程的理解/","title":"React提高04 对虚拟DOM和加载过程的理解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React提高04 对虚拟DOM和加载过程的理解 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React%E8%99%9A%E6%8B%9FDOM%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">React虚拟DOM的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React%E4%BD%95%E6%97%B6%E5%B0%86%E8%99%9A%E6%8B%9FDOM%E6%B8%B2%E6%9F%93%E4%B8%BA%E7%9C%9F%E5%AE%9EDOM"><span class="nav-number">2.</span> <span class="nav-text">React何时将虚拟DOM渲染为真实DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React%E4%B8%8D%E8%83%BDsetState%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">React不能setState的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8EsetState%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">对于setState的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%99%9A%E6%8B%9FDOM%E6%AF%94%E5%8E%9F%E7%94%9FDOM%E6%80%A7%E8%83%BD%E6%9B%B4%E9%AB%98"><span class="nav-number">5.</span> <span class="nav-text">为什么虚拟DOM比原生DOM性能更高</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diff%E7%AE%97%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">diff算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React提高04 对虚拟DOM和加载过程的理解 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React提高04 对虚拟DOM和加载过程的理解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-25 16:05:43" itemprop="dateCreated datePublished" datetime="2019-01-25T16:05:43+08:00">2019-01-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-05-11 22:11:14" itemprop="dateModified" datetime="2019-05-11T22:11:14+08:00">2019-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>也是面试时比较常遇到的React的问题之一。了解了之后还是能够加深对React的理解。</p>
+<span id="more"></span>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1814354-4bf62e54553a32b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="image"></p>
+<h2 id="React虚拟DOM的理解"><a href="#React虚拟DOM的理解" class="headerlink" title="React虚拟DOM的理解"></a>React虚拟DOM的理解</h2><p>（1）用JavaScript对象结构表示DOM树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中</p>
+<p>（2）当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异</p>
+<p>（3）把2所记录的差异应用到步骤1所构建的真正的DOM树上，视图就更新了</p>
+<p>虚拟DOM本质上就是在JS和DOM之间做了一个缓存。可以类比CPU和硬盘，既然硬盘这么慢，我们就在它们之间加个缓存：既然DOM这么慢，我们就在JS和DOM之间加个缓存。CPU（JS）只操作内存（虚拟DOM），最后的时候再把变更写入硬盘（DOM）。</p>
+<p>虚拟DOM是用JS的对象结构模拟出HTML中DOM的结构，批量的增删改查，由于直接操作的是JS对象，所以速度要比操作真实DOM要快，最后更新到真正的DOM中</p>
+<p>虚拟DOM构建的对象，除了DOM相关属性，还包括了React自身需要的属性，比如<code>ref</code>，<code>key</code>等，大概如下结构：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">className</span>: <span class="string">&#x27;xxx&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: [&#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;span&#x27;</span>,</span><br><span class="line">      <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">children</span>: [<span class="string">&#x27;CLICK ME&#x27;</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">ref</span>: <span class="attr">key</span>:</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Form</span>,</span><br><span class="line">      <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">children</span>: []</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">ref</span>: <span class="attr">key</span>:</span><br><span class="line">    &#125;] | <span class="title class_">Element</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="attr">ref</span>: <span class="string">&#x27;xxx&#x27;</span>,</span><br><span class="line">  <span class="attr">key</span>: <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="React何时将虚拟DOM渲染为真实DOM"><a href="#React何时将虚拟DOM渲染为真实DOM" class="headerlink" title="React何时将虚拟DOM渲染为真实DOM"></a>React何时将虚拟DOM渲染为真实DOM</h2><p><code>render</code>这个步骤就是React组件挂载的步骤</p>
+<blockquote>
+<p>React组件挂载：将组件渲染，并构建DOM元素然后插入页面的过程</p>
+</blockquote>
+<p><code>render</code>的步骤是创建虚拟DOM，挂载组件，</p>
+<p>在<code>render</code>之后，将这个虚拟DOM树真正渲染成一个DOM树，插入了页面，可以认为是在<code>componentDidMount</code>这个步骤完成的，该方法被调用时，已经渲染出真实的DOM</p>
+<p>在组件存在期，<code>componentDidUpdate</code>与<code>componentDidMount</code>类似，在组件被重新渲染后，此方法被调用，真实DOM已经渲染完成</p>
+<h2 id="React不能setState的步骤"><a href="#React不能setState的步骤" class="headerlink" title="React不能setState的步骤"></a>React不能setState的步骤</h2><p><code>shouldComponentUpdate</code>和<code>componentWillUpdate</code>就会造成循环调用，使得浏览器内存占满后崩溃</p>
+<h2 id="对于setState的理解"><a href="#对于setState的理解" class="headerlink" title="对于setState的理解"></a>对于<code>setState</code>的理解</h2><p><code>setState</code>是一个异步方法，一个生命周期内的所有<code>setState</code>方法会合并操作。</p>
+<p>在各个生命周期中执行<code>setState</code>：</p>
+<p>（1）在<code>componentWillMount</code>执行<code>setState</code>是无意义的，应该将这里为<code>state</code>的赋值放到<code>constructor</code>中直接作为<code>state</code>的初始值。</p>
+<p>这是因为，组件直挂再一次，在<code>componentWillMount</code>里面<code>setState</code>会但是仅仅会更新<code>state</code>一次，而且会和<code>constructor</code>中的初始化<code>state</code>合并执行。所以这是无意义的<code>setState</code></p>
+<p>（2）在<code>componentDidMount</code>中执行<code>setState</code>会导致组件在初始化的时候就触发了更新，渲染了两遍，应该尽量避免。</p>
+<p>有一些场景，比如在组件DOM渲染完成后获得DOM元素位置或者宽高等等设置为<code>state</code>，会不得在<code>componentDidMount</code>之后<code>setState</code>，但是除了这些必要的时候，都应该尽量避免在<code>componentDidMount</code>里<code>setState</code>。</p>
+<p>（3）在<code>componentWillUnmount</code>中执行<code>setState</code>不会更新<code>state</code>，是不生效而且无意义的。</p>
+<p>（4）<strong>禁止</strong>在<code>shouldComponentUpdate</code>和<code>componentWillUpdate</code>中调用 <code>setState</code>，这会造成循环调用，直至耗光浏览器内存后崩溃。</p>
+<p>在<code>shouldComponentUpdate</code>和<code>componentWillUpdate</code>调用<code>setState</code>会再次触发这两个函数，然后在两个函数又触发了<code>setState</code>，然后再次触发这两个函数，这样就进入了一个不停<code>setState</code>然后不停触发组件更新的死循环里，会导致浏览器内存耗光然后崩溃。</p>
+<p>（5）在<code>componentDidUpdate</code>中执行&#96;setState同样会导致组件刚刚完成更新又要再更新，进入死循环。</p>
+<p>但是在某些特殊情况下，比如说<code>state</code>或者<code>props</code>变化触发了DOM变化，需要重新获取DOM元素宽高时然后更新某个<code>state</code>的时候，就不得不在这个函数里使用<code>setState</code>了。此时一定要给<code>setState</code>设置一个<strong>前提条件</strong>，以避免出现循环渲染的问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">componentWillUpdate</span>(<span class="params">nextProps, nextState, nextContext</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> !== <span class="number">3333</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">      <span class="attr">count</span>: <span class="number">3333</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因此，如非必须，应该尽量避免在本函数里<code>setState</code>。</p>
+<p>（5）在<code>componentWillReceiveProps</code>中可以<code>setState</code>，不会造成二次渲染。由于只有<code>props</code>的变化才会触发<code>componentWillReceiveProps</code>事件，因为在这个事件里<code>setState</code>不会造成不停触发组件更新的死循环，可以放心在这个函数里<code>setState</code>。</p>
+<p><img src="http://image.oldzhou.cn/WX20180507-180427.jpg" alt="WX20180507-180427.jpg"></p>
+<h2 id="为什么虚拟DOM比原生DOM性能更高"><a href="#为什么虚拟DOM比原生DOM性能更高" class="headerlink" title="为什么虚拟DOM比原生DOM性能更高"></a>为什么虚拟DOM比原生DOM性能更高</h2><p>React的基本思维模式是每次有变动就整个重新渲染整个应用，相当于设置 innerHTML，只不过它设置的是内存里面 Virtual-DOM，而不是真实的 DOM。</p>
+<p>React厉害的地方并不是说它比DOM快(这句话本来就是错的)，而是说不管你数据怎么变化，我都可以以最小的代价来更新DOM。方法就是在内存里面用新的数据刷新一个虚拟的DOM数，然以后新旧DOM树进行比较，找出差异，再将差异更新到真正的DOM 树上。</p>
+<p>原生DOM性能低，因为DOM的规范迫使浏览器在实现的时候为每一个DOM元素添加了非常多的属性，然而这其中很多我们都用不到</p>
+<p>而React对虚拟DOM的属性进行了精简，非常轻量化，并且使用了diff的算法，比较前后差异，最后只把变化的部分一次性应用到真实的DOM树</p>
+<blockquote>
+<p>React的变动检查由于是DOM结构层面的，即使是全新的数据，只要最后渲染结果没变，那么就不需要做无用功。</p>
+</blockquote>
+<p>更正确的说法应该是：虚拟DOM不一定比原生DOM性能高，但是让开发者更省心的更新数据。</p>
+<blockquote>
+<p>首先, 虚拟DOM并没有比直接原生操作更快, 所谓”快”是有条件的<br>比如点赞, 数字+1, 直接操作DOM会更快。</p>
+<p>如果你能自己捋请规则, 每回手动操作DOM的时候, 都只改动应该改变的, 那DOM操作永远比虚拟DOM快。</p>
+<p>但如果你的改动勾连的地方很多，而且要保持状态，那虚拟DOM的自动diff无疑会让你省更多心。</p>
+<p>比如一个列表, 列表项有点赞等状态, 回复数量等信息, 有动态新增, 有动态加载, 这时候你要直接操作DOM会很繁琐。</p>
+<p>虚拟DOM的核心在于diff，它自动帮你计算那些应该调整，然后只修改该修改的区域, 省下的不是运行速度这种小速度，而是开发速度&#x2F;维护速度&#x2F;逻辑简练程度等”总体速度”</p>
+</blockquote>
+<h2 id="diff算法"><a href="#diff算法" class="headerlink" title="diff算法"></a>diff算法</h2><p>比较两棵DOM树的差异是Virtual DOM算法最核心的部分，这也是所谓的Virtual DOM 的diff算法。两个树的完全的diff算法是一个时间复杂度为<code>O(n^3)</code>的问题。但是在前端当中，你很少会跨越层级地移动DOM元素。所以Virtual DOM只会对同一个层级的元素进行对比：</p>
+<p><img src="http://image.oldzhou.cn/6d64b0b7889e7f020bb020aea5947a09_hd.jpg" alt="6d64b0b7889e7f020bb020aea5947a09_hd.jpg"></p>
+<p>上面的<code>div</code>只会和同一层级的<code>div</code>对比，第二层级的只会跟第二层级对比。这样算法复杂度就可以达到<code>O(n)</code>。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31809713/answer/53544875">网上都说操作真实 DOM 慢，但测试结果却比 React 更快，为什么？ - 尤雨溪的回答@知乎</a> </li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000009401008?_ea=1922362/*&%5E%25$">react里面的virtual DOM的效率为什么比直接操作DOM更快呢@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29504639/answer/73607810">如何理解虚拟DOM? - 戴嘉华的回答@知乎</a></li>
+<li><a target="_blank" rel="noopener" href="http://varnull.cn/set-state-in-react-component-life-cycle/">React组件生命周期函数里setState调用分析@Simona&amp;Peter</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/%E5%9D%91/" rel="tag"># 坑</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9803%20%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6/" rel="prev" title="React提高03 编写一个组件">
+                  <i class="fa fa-chevron-left"></i> React提高03 编写一个组件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9805%20%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/" rel="next" title="React提高05 高阶组件">
+                  React提高05 高阶组件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

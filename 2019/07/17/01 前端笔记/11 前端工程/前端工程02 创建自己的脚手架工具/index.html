@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前一阵子用Egg做了一个Node服务端项目的重构，发现Egg相比于Koa和Express来说，感觉更适合于现阶段团队的Node开发，因为现在团队Node的代码根本没有任何规范和约定，乱的一坨，所以引入了Node，遵循它的规范，使用它预置的功能，对代码的可维护性提升还是比较大的。 开发完成后，在Egg的基础上增加了一点中间件，配置了一些插件和代码风格控制的配置，将这个模板抽离出来作为团队以后开发No">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端工程02 创建自己的脚手架工具">
+<meta property="og:url" content="https://duola8789.github.io/2019/07/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B02%20%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="前一阵子用Egg做了一个Node服务端项目的重构，发现Egg相比于Koa和Express来说，感觉更适合于现阶段团队的Node开发，因为现在团队Node的代码根本没有任何规范和约定，乱的一坨，所以引入了Node，遵循它的规范，使用它预置的功能，对代码的可维护性提升还是比较大的。 开发完成后，在Egg的基础上增加了一点中间件，配置了一些插件和代码风格控制的配置，将这个模板抽离出来作为团队以后开发No">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-17T07:42:00.000Z">
+<meta property="article:modified_time" content="2019-07-17T07:42:00.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="cli">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/07/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B02%20%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/07/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B02%20%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7/","path":"2019/07/17/01 前端笔记/11 前端工程/前端工程02 创建自己的脚手架工具/","title":"前端工程02 创建自己的脚手架工具"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端工程02 创建自己的脚手架工具 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E4%BA%A4%E4%BA%92"><span class="nav-number">2.</span> <span class="nav-text">控制台交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">拉取模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/07/17/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/11%20%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B02%20%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="前端工程02 创建自己的脚手架工具 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端工程02 创建自己的脚手架工具
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-07-17 15:42:00" itemprop="dateCreated datePublished" datetime="2019-07-17T15:42:00+08:00">2019-07-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">前端工程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>前一阵子用Egg做了一个Node服务端项目的重构，发现Egg相比于Koa和Express来说，感觉更适合于现阶段团队的Node开发，因为现在团队Node的代码根本没有任何规范和约定，乱的一坨，所以引入了Node，遵循它的规范，使用它预置的功能，对代码的可维护性提升还是比较大的。</p>
+<p>开发完成后，在Egg的基础上增加了一点中间件，配置了一些插件和代码风格控制的配置，将这个模板抽离出来作为团队以后开发Node服务的基准模板，放在了Gitlab上。</p>
+<p>原来的时候方法都是直接Clone这个项目，再去更改Git的相关信息等等，不是很方便。所以想试着做一个类似于简易的Vue-Cli这样的工具，能够直接拉取模板，并且直接生成对应的目录，配置一些简单的信息。</p>
+<p>因为要实现的脚手架工具比较简单，没有那么多的配置，实现起来还是比较简单的。下面分几个部分记录自己学习的过程。</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前一阵子用Egg做了一个Node服务端项目的重构，发现Egg相比于Koa和Express来说，感觉更适合于现阶段团队的Node开发，因为现在团队Node的代码根本没有任何规范和约定，乱的一坨，所以引入了Node，遵循它的规范，使用它预置的功能，对代码的可维护性提升还是比较大的。</p>
+<p>开发完成后，在Egg的基础上增加了一点中间件，配置了一些插件和代码风格控制的配置，将这个模板抽离出来作为团队以后开发Node服务的基准模板，放在了Gitlab上。</p>
+<p>原来的时候方法都是直接Clone这个项目，再去更改Git的相关信息等等，不是很方便。所以想试着做一个类似于简易的Vue-Cli这样的工具，能够直接拉取模板，并且直接生成对应的目录，配置一些简单的信息。</p>
+<p>因为要实现的脚手架工具比较简单，没有那么多的配置，实现起来还是比较简单的。下面分几个部分记录自己学习的过程。</p>
+<h2 id="控制台交互"><a href="#控制台交互" class="headerlink" title="控制台交互"></a>控制台交互</h2><p>使用Cli工具，必定要在控制台输入、输出一些相关的信息，可以使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/commander">Commander</a>这个包，它可以接受并解析在控制台输入的参数<code>process.argv</code>，它基本的使用方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">program.<span class="title function_">version</span>(<span class="string">&#x27;0.1.0&#x27;</span>)</span><br><span class="line">  .<span class="title function_">option</span>(<span class="string">&#x27;-i, init [name]&#x27;</span>, <span class="string">&#x27;初始化Egg项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">parse</span>(process.<span class="property">argv</span>);</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的配置，我们就可以通过<code>program.init</code>拿到用户在控制台输入<code>init a</code>时跟在<code>init</code>后面的输入<code>a</code>，我们将<code>a</code>作为模板的目录名</p>
+<p>然后在开始拉取模板之前，我们需要有一个Loading的提示，会更加友好，可以使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/ora">ora</a>这个包，它用来在终端展示loading的图标。我们这里使用的也很简单，开始时展示图标和提示语：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> spinner = <span class="title function_">ora</span>(<span class="string">&#x27;正在拉取Create-Egg-App模板...&#x27;</span>).<span class="title function_">start</span>();</span><br></pre></td></tr></table></figure>
+
+<p>拉取成功或者失败后展示对应的图标和文字：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 成功</span></span><br><span class="line">spinner.<span class="title function_">succeed</span>(<span class="string">&#x27;拉取成功&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 失败</span></span><br><span class="line">spinner.<span class="title function_">fail</span>(<span class="string">&#x27;拉取失败&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>提示的文字我们还希望能带一些颜色，比如成功我们希望是绿色，失败时红色，这样会更加美观，我们就可以使用<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/chalk">chalk</a>这个包，它可以用来在终端中展示各种颜色：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">&#x27;chalk&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> success = chalk.<span class="property">blueBright</span>;</span><br><span class="line"><span class="keyword">const</span> error = chalk.<span class="property">bold</span>.<span class="property">red</span>;</span><br><span class="line"></span><br><span class="line">spinner.<span class="title function_">succeed</span>(<span class="title function_">success</span>(<span class="string">&#x27;拉取成功&#x27;</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="title function_">error</span>(<span class="string">&#x27;请在init后输入目录名&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>准备工作都就绪了，就差最关键的一步了，就是拉取模板了。</p>
+<h2 id="拉取模板"><a href="#拉取模板" class="headerlink" title="拉取模板"></a>拉取模板</h2><p>拉取模板我们也可以借助第三方的包来实现，要使用的就是<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/download-git-repo">download-git-repo</a>这个包了，它可以帮助我们模板代码从各种仓库中拉取下来，它既可以通过SSH协议拉取Github的代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">github:owner/name </span><br><span class="line">owner/name</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接通过HTTPS拉取代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">direct:url</span><br></pre></td></tr></table></figure>
+<p>它接受四个参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">dowanload</span>(url, pathName, opts, callback)</span><br></pre></td></tr></table></figure>
+
+<p>详细的配置还是参考它的文档吧。整个拉取代码的逻辑就基本完成了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (program.<span class="property">init</span> &amp;&amp; <span class="keyword">typeof</span> program.<span class="property">init</span> === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> spinner = <span class="title function_">ora</span>(<span class="string">&#x27;正在拉取Create-Egg-App模板...&#x27;</span>).<span class="title function_">start</span>();</span><br><span class="line">  <span class="title function_">download</span>(templateUrl, program.<span class="property">init</span>, &#123; <span class="attr">clone</span>: <span class="literal">true</span> &#125;, <span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!err) &#123;</span><br><span class="line">      spinner.<span class="title function_">succeed</span>(<span class="title function_">success</span>(<span class="string">&#x27;拉取成功&#x27;</span>));</span><br><span class="line">      <span class="comment">// 更改 package.json 中的 name 和版本号</span></span><br><span class="line">      <span class="title function_">changePackage</span>()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      spinner.<span class="title function_">fail</span>(<span class="string">&#x27;拉取成功&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="title function_">error</span>(<span class="string">&#x27;请在init后输入目录名&#x27;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>还有一点优化在<code>changePackage</code>这个函数中完成了，这个函数会将模板中的<code>package.json</code>的<code>name</code>和<code>version</code>，这个功能使用了原生的Node来实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">changePackage</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  fs.<span class="title function_">readFile</span>(<span class="string">`<span class="subst">$&#123;process.cwd()&#125;</span>/<span class="subst">$&#123;program.init&#125;</span>/package.json`</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="keyword">let</span> _data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(data.<span class="title function_">toString</span>());</span><br><span class="line">    _data.<span class="property">name</span> = program.<span class="property">init</span>;</span><br><span class="line">    _data.<span class="property">version</span> = <span class="string">&#x27;1.0.0&#x27;</span>;</span><br><span class="line">    <span class="keyword">let</span> str = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(_data, <span class="literal">null</span>, <span class="number">4</span>);</span><br><span class="line">    fs.<span class="title function_">writeFile</span>(<span class="string">`<span class="subst">$&#123;process.cwd()&#125;</span>/<span class="subst">$&#123;program.init&#125;</span>/package.json`</span>, str, <span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码基本是Copy第一篇参考文章的，自己的Node并不灵，把这个段代码学习一下。</p>
+<p>首先通过<code>fs.readFile</code>来读取<code>package.json</code>文件，查找文件路径时使用了<code>process.cwd</code>，它表示当前执行Node命令时的文件夹路径名</p>
+<p>Node中海油几个获取路径的方法，可以来看一下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__dirname：    获得当前执行文件所在目录的完整目录名</span><br><span class="line">__filename：   获得当前执行文件的带有完整绝对路径的文件名</span><br><span class="line">process.cwd()：获得当前执行node命令时候的文件夹目录名</span><br><span class="line">./：           不使用require时候与process.cwd()一样，使用require时候与__dirname一样</span><br></pre></td></tr></table></figure>
+
+<p>我们这里使用的是<code>process.cwd()</code>，就是在执行当前的Node命令时的目录下，因为通过<code>program.init</code>新建的目录是在执行Node命令的目录下</p>
+<p>因为<code>package.json</code>文件时JSON格式的，所以可以首先通过<code>data.toString</code>将二进制文件转换为字符串，然后通过<code>JSON.parse()</code>进行解析。</p>
+<p>解析完成后修改相关字段，修改完成后再通过<code>JSON.stringify</code>转换为字符串，它额外接受了两个参数，第二个参数用来在序列化过程中替换序列化的内容，第三个参数用来指定缩进空白字符串。</p>
+<p>序列化完成后，再将内容通过<code>writeFile</code>写会原来的<code>package.json</code>文件。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>使用时为了避免全局安装，使用npx来拉取模板是很好的解决防范。具体使用时分为两种情况，一种是模板在内网的Gitlab上，一种是模板在公网的Github上。</p>
+<p>先来看在Github上，模板的地址是<code>https://github.com/duola8789/create-egg-app-zh</code>，我们先在NPM上注册账户，并通过<code>npm login</code>登陆，然后将<code>egg-cli-zh</code>发布到NPM上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NPM publish</span><br></pre></td></tr></table></figure>
+
+<p>发布成功后，就可以直接使用npx拉取模板了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx egg-cli-zh init [project_name]</span><br></pre></td></tr></table></figure>
+
+<p>但是如果模板在内网的Gitlab上，<code>egg-cli-zh</code>也不能发布到NPM上，那就使用<code>ssh+git</code>来使用即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx git+ssh://git@gitlab/xxx/template.git init [project_name]</span><br></pre></td></tr></table></figure>
+
+<p>至此，一个简易的脚手架工具就完成了。<a target="_blank" rel="noopener" href="https://github.com/duola8789/egg-cli-zh">Egg-Cli-zh脚手架的源代码</a>在这里，<a target="_blank" rel="noopener" href="https://github.com/duola8789/create-egg-app-zh">Create-Egg-App-zh的源码</a>在这里。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5affef28518825426b277530">搭建自己的脚手架—“优雅”生成前端工程@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/download-git-repo">download-git-repo@NPM</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/chalk">chalk@NPM</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/commander">Commander@NPM</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/ora">ora@NPM</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jawil/blog/issues/18">Node.js的__dirname，__filename，process.cwd()，.&#x2F;的一些坑 #18@Github</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">JSON.stringify()@MDN</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cli/" rel="tag"># cli</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/07/11/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A055%20%E5%9B%BE%E7%89%87%E5%AF%B9%E6%AF%94%E6%95%88%E6%9E%9C/" rel="prev" title="前端练习55 图片对比效果">
+                  <i class="fa fa-chevron-left"></i> 前端练习55 图片对比效果
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/24/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9801%20SetState%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA/" rel="next" title="React提高01 SetState的执行时机">
+                  React提高01 SetState的执行时机 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

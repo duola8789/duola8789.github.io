@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Vue router 实现原理学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VueRouter05 实现原理">
+<meta property="og:url" content="https://duola8789.github.io/2018/11/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter05%20%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="Vue router 实现原理学习笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-20T11:30:15.000Z">
+<meta property="article:modified_time" content="2019-09-18T11:31:15.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="Vue Router">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2018/11/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter05%20%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2018/11/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter05%20%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/","path":"2018/11/20/01 前端笔记/04 Vue/04 Vue Router/VueRouter05 实现原理/","title":"VueRouter05 实现原理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VueRouter05 实现原理 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1"><span class="nav-number">2.</span> <span class="nav-text">前端路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">Hash模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">#的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">#的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VueRouter%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.4.</span> <span class="nav-text">VueRouter中的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-History%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">HTML History模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VueRouter%E4%B8%AD%E4%BD%BF%E7%94%A8History%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">VueRouter中使用History模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VueRouter%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">4.2.</span> <span class="nav-text">VueRouter中的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">5.</span> <span class="nav-text">两种模式的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2018/11/20/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/04%20Vue/04%20Vue%20Router/VueRouter05%20%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="VueRouter05 实现原理 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VueRouter05 实现原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-20 19:30:15" itemprop="dateCreated datePublished" datetime="2018-11-20T19:30:15+08:00">2018-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2019-09-18 19:31:15" itemprop="dateModified" datetime="2019-09-18T19:31:15+08:00">2019-09-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Vue router 实现原理学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>在VueRouter中提供了两种模式：</p>
+<ol>
+<li>Hash模式</li>
+<li>History模式</li>
+</ol>
+<p>Hash模式的基础是当URL的<code>#</code>后的参数改变时浏览器不会发送请求</p>
+<p>History模式的基础是<code>pushState</code>和<code>replaceState</code>修改浏览器的历史栈后浏览器不会立即发送请求</p>
+<h2 id="前端路由"><a href="#前端路由" class="headerlink" title="前端路由"></a>前端路由</h2><p>前端路由是通过改变URL，在不重新刷新整体页面的情况下，更新页面视图。</p>
+<p>目前浏览器实现这一功能主要通过两种方式：</p>
+<ol>
+<li>利用URL中的hash值</li>
+<li>利用H5中的<code>history</code>对象</li>
+</ol>
+<h2 id="Hash模式"><a href="#Hash模式" class="headerlink" title="Hash模式"></a>Hash模式</h2><p>vue-router默认使用的是hash模式，使用URL的hash来模拟一个完整的URL，当URL改变时，页面不会重新加载。</p>
+<h3 id="的含义"><a href="#的含义" class="headerlink" title="#的含义"></a><code>#</code>的含义</h3><p><code>#</code>代表网页中的位置，其莜面的字符，就是该位置的标志符号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.example.com/index.html#print</span><br></pre></td></tr></table></figure>
+<p>浏览器读取这个URL周，会自动将<code>print</code>位置滚动至可视区域，对应<code>print</code>位置可以通过两种方法实现：使用锚点<code>&lt;a name=&quot;print&quot;&gt;&lt;/a&gt;</code>或者使用id属性<code>&lt;div id=&quot;print&quot;&gt;&lt;/div&gt;</code></p>
+<h3 id="的特性"><a href="#的特性" class="headerlink" title="#的特性"></a><code>#</code>的特性</h3><p><code>#</code>是用来指导浏览器动作的，对服务器端完全无用，&#x3D;&#x3D;HTTP请求中不包括<code>#</code>及后面的内容字符&#x3D;&#x3D;</p>
+<p>单单改变<code>#</code>后面的部分，只会可能触发浏览器的滚动，&#x3D;&#x3D;不会重新加载网页&#x3D;&#x3D;。</p>
+<p>改变了<code>#</code>后面的部分，&#x3D;&#x3D;都会改变浏览器的访问历史&#x3D;&#x3D;，使用后退按钮，就可以回到上一个位置,这对于Ajax应用程序特别有用，可以用不同的<code>#</code>值，表示不同的访问状态，然后向用户给出可以访问某个状态的链接。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>通过<code>window.location.hash</code>可以读取、写入页面的hash值，读取时，可以用来判断网页状态是否改变；写入时，则会在不重载网页的前提下，创造一条访问历史记录。</p>
+<p>HTML5中增加的<code>onhashchange</code>事件，当<code>#</code>发生变化时，就会触发这个事件</p>
+<h3 id="VueRouter中的实现"><a href="#VueRouter中的实现" class="headerlink" title="VueRouter中的实现"></a>VueRouter中的实现</h3><p>首先构建了<code>HashHistory</code>构造函数，获取页面的hash值</p>
+<p>然后定义了<code>HashHistory.push()</code>方法，当页面的hash值发生变化时，会替换<code>window.location.hash</code>，hash的改变会自动添加到浏览器的访问历史记录中，视图的更新是首先通过<code>Vue.mixin()</code>方法，全局注册一个混合，定义了响应式的<code>_route</code>属性，当<code>_route</code>改变时会触发Vue实例的<code>render</code>方法，更新视图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">$router.push--&gt;HashHistory.push</span><br><span class="line">HashHistory.push--&gt;History.transitionTo</span><br><span class="line">History.transitionTo--&gt;History.updateRoute</span><br><span class="line">History.updateRoute--&gt;app._route=route</span><br><span class="line">app._route=route--&gt;vm.render</span><br></pre></td></tr></table></figure>
+
+<p><code>HashHistory.replace()</code>与<code>push()</code>方法不同之处在于，它并不是将新路由添加到浏览器访问历史栈顶，而是替换掉当前的路由</p>
+<p>上面的<code>VueRouter.push()</code>和<code>VueRouter.replace()</code>是可以在Vue组件的逻辑代码中直接调用的，除此之外在浏览器中，用户还可以直接在浏览器地址栏中输入改变路由，因此还需要监听浏览器地址栏中路由的变化，并具有与通过代码调用相同的响应行为，在HashHistory中这一功能通过<code>setupListeners</code>监听<code>hashchange</code>实现</p>
+<p>详细的源码解读看<a target="_blank" rel="noopener" href="https://juejin.im/post/5b08c9ccf265da0dd527d98d">这篇文章</a>。</p>
+<h2 id="HTML-History模式"><a href="#HTML-History模式" class="headerlink" title="HTML History模式"></a>HTML History模式</h2><p>History interface是浏览器历史记录栈提供的接口，通过<code>back()</code>，<code>forward()</code>，<code>go()</code>等方法，我们可以读取浏览器历史记录栈的信息，进行各种跳转操作。</p>
+<p><code>history.pushState()</code>和<code>history.replaceState()</code>方法，分别可以添加和修改历史记录条目。这些方法通常与<code>window.onpopstate</code>配合使用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="property">history</span>.<span class="title function_">pushState</span>(stateObject,title,url)</span><br><span class="line"><span class="variable language_">window</span>.<span class="property">history</span>.<span class="title function_">replaceState</span>(stateObject,title,url)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>stateObject</code>：当浏览器跳转到新的状态时，将触发<code>popState</code>事件，该事件将携带这个<code>stateObject</code>参数的副本</li>
+<li><code>title</code>：所添加记录的标题</li>
+<li><code>url</code>：所添加记录的url(可选的)</li>
+</ul>
+<p><code>pushState</code>和<code>replaceState</code>两种方法的共同特点：&#x3D;&#x3D;当调用修改浏览器历史栈后，虽然当前url改变了，但浏览器不会立即发送请求该url&#x3D;&#x3D;，这就为单页应用前端路由，更新视图但不重新请求页面提供了基础。</p>
+<h3 id="VueRouter中使用History模式"><a href="#VueRouter中使用History模式" class="headerlink" title="VueRouter中使用History模式"></a>VueRouter中使用History模式</h3><p>VueRouter也提供了Hsitory模式，利用的是H5中的<code>history</code>对象和事件，只需要在新建VueRouter的实例时传入<code>mode</code>参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>,</span><br><span class="line">  <span class="attr">routes</span>: [...]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这种模式下页面的URL就像正常的url，例如<code>http://yoursite.com/user/id</code></p>
+<p>这种模式需要后台配置支持，如果后台没有正确的配置，当用户在浏览器直接访问<code>http://oursite.com/user/id</code>就会返回404，所以需要在服务端增加一个覆盖所有情况的候选资源：如果URL匹配不到任何静态资源，则应该返回同一个<code>index.html</code>页面，这个页面就是app依赖的页面。</p>
+<p>注意：</p>
+<p>这么做以后，服务器就不再返回404错误页面，因为对于所有路径都会返回<code>index.html</code>文件。为了避免这种情况，应该在Vue应用里面覆盖所有的路由情况，然后在给出一个404页面。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>,</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;*&#x27;</span>, <span class="attr">component</span>: <span class="title class_">NotFoundComponent</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="VueRouter中的实现-1"><a href="#VueRouter中的实现-1" class="headerlink" title="VueRouter中的实现"></a>VueRouter中的实现</h3><p>代码结构以及更新视图的逻辑与hash模式基本类似，只不过将对<code>window.location.hash</code>直接进行赋值或者调用<code>window.location.replace()</code>改为了调用<code>history.pushState()</code>和<code>history.replaceState()</code>方法。</p>
+<h2 id="两种模式的比较"><a href="#两种模式的比较" class="headerlink" title="两种模式的比较"></a>两种模式的比较</h2><p>一般的需求场景中，Hash模式与History模式是差不多的，根据MDN的介绍，调用<code>history.pushState()</code>相比于直接修改Hash主要有以下优势：</p>
+<ol>
+<li><code>pushState</code>设置的新url可以是与当前url同源的任意url,而hash只可修改<code>#</code>后面的部分，故只可设置与当前同文档的url</li>
+<li><code>pushState</code>设置的新url可以与当前url一模一样，这样也会把记录添加到栈中，而Hash设置的新值必须与原来不一样才会触发记录添加到栈中</li>
+<li><code>pushState</code>通过<code>stateObject</code>可以添加任意类型的数据记录中，而Hash只可添加短字符串</li>
+<li><code>pushState</code>可额外设置<code>title</code>属性供后续使用</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5b08c9ccf265da0dd527d98d">vue-router原理剖析@掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/guide/essentials/history-mode.html#html5-history-%E6%A8%A1%E5%BC%8F">History模式@Vue Router</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号@阮一峰的网络日志</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-Router/" rel="tag"># Vue Router</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/18/05%20%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/04%20Docker/Docker04%20Docker%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="prev" title="Docker04 Docker最佳实践">
+                  <i class="fa fa-chevron-left"></i> Docker04 Docker最佳实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS53%20%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/" rel="next" title="JS53 判断变量类型">
+                  JS53 判断变量类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

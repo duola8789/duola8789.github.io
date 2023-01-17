@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ES10&#x2F;ES2019还只是一个草案，但是大多数功能在新版本的Chrome中已经实现了。 虽然ES6还没有掌握全，但是还是要紧跟时代，了解一下JavaScript的发展趋势吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS60 ES10的新特性简介">
+<meta property="og:url" content="https://duola8789.github.io/2019/02/28/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS60%20ES10%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="ES10&#x2F;ES2019还只是一个草案，但是大多数功能在新版本的Chrome中已经实现了。 虽然ES6还没有掌握全，但是还是要紧跟时代，了解一下JavaScript的发展趋势吧">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-02-28T09:55:34.000Z">
+<meta property="article:modified_time" content="2019-02-28T09:55:34.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="ES10">
+<meta property="article:tag" content="ES2019">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/02/28/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS60%20ES10%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E4%BB%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/02/28/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS60%20ES10%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E4%BB%8B/","path":"2019/02/28/01 前端笔记/02 JavaScript/JS60 ES10的新特性简介/","title":"JS60 ES10的新特性简介"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JS60 ES10的新特性简介 | 不负时光</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BigInt"><span class="nav-number">1.</span> <span class="nav-text">BigInt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-prototype-matchAll"><span class="nav-number">2.</span> <span class="nav-text">String.prototype.matchAll()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%AF%BC%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">动态导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-prototype-flat-depth"><span class="nav-number">4.</span> <span class="nav-text">Array.prototype.flat(depth)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-prototype-flatMap-callback"><span class="nav-number">5.</span> <span class="nav-text">Array.prototype.flatMap(callback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-fromEntries-iterable"><span class="nav-number">6.</span> <span class="nav-text">Object.fromEntries(iterable)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-prototype-trimStart-%E5%92%8C-96-96-String-prototype-trimEnd-96"><span class="nav-number">7.</span> <span class="nav-text">String.prototype.trimStart()和&#96;&#96;String.prototype.trimEnd()&#96;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#globalThis%E5%AF%B9%E8%B1%A1"><span class="nav-number">8.</span> <span class="nav-text">globalThis对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol-prototype-description"><span class="nav-number">9.</span> <span class="nav-text">Symbol.prototype.description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hashbang%E8%AF%AD%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">Hashbang语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">11.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/02/28/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/JS60%20ES10%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JS60 ES10的新特性简介 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS60 ES10的新特性简介
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-28 17:55:34" itemprop="dateCreated datePublished" datetime="2019-02-28T17:55:34+08:00">2019-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>ES10&#x2F;ES2019还只是一个草案，但是大多数功能在新版本的Chrome中已经实现了。</p>
+<p>虽然ES6还没有掌握全，但是还是要紧跟时代，了解一下JavaScript的发展趋势吧</p>
+<span id="more"></span>
+
+<h2 id="BigInt"><a href="#BigInt" class="headerlink" title="BigInt"></a>BigInt</h2><p>BigInt是第七种原始类型，用来标识超出JavaScript最大安全整数之外的数字</p>
+<blockquote>
+<p>在之前，JavaScript的数字是使用的是双精度浮点数数据类型，可以表示的最大安全整数是<code>2^53-1</code>，也就是<code>9007199254740991</code>，可以使用<code>Number.MAX_SAFE_INTEGER</code>来表示，如果超出这个范围指挥所未定为<code>Number.MAX_SAFE_INTEGER + 1</code></p>
+</blockquote>
+<p>现在使用BigInt就可以表示这个范围之外的整数值，有两种方式创建：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">10n</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">BigInt</span>(<span class="number">10n</span>);</span><br><span class="line"><span class="keyword">let</span> c = <span class="title class_">BigInt</span>(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> a; <span class="comment">// &quot;bigint&quot;</span></span><br><span class="line">a === b; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="String-prototype-matchAll"><a href="#String-prototype-matchAll" class="headerlink" title="String.prototype.matchAll()"></a><code>String.prototype.matchAll()</code></h2><p>使用这个方法对字符串进行匹配时，不必再为正则表达式添加<code>g</code>，直接进行全局查找，返回一个迭代器对象（可以使用<code>for...of</code>遍历）</p>
+<p>但是目前Chrome(70.0.3538.77)的实现好像有一些问题，实现的效果与<code>match</code>是相同的，只是返回的不是一个数组，而是一个迭代器对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&#x27;a1a2&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> b = a.<span class="title function_">matchAll</span>(<span class="regexp">/a./</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> match <span class="keyword">of</span> b) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(match)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 实际结果</span></span><br><span class="line"><span class="comment">// [&quot;a1&quot;, index: 0, input: &quot;a1a2&quot;, groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 预期结果</span></span><br><span class="line">[<span class="string">&quot;a1&quot;</span>, <span class="attr">index</span>: <span class="number">0</span>, <span class="attr">input</span>: <span class="string">&quot;a1a2&quot;</span>, <span class="attr">groups</span>: <span class="literal">undefined</span>]</span><br><span class="line">[<span class="string">&quot;a2&quot;</span>, <span class="attr">index</span>: <span class="number">2</span>, <span class="attr">input</span>: <span class="string">&quot;a1a2&quot;</span>, <span class="attr">groups</span>: <span class="literal">undefined</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="动态导入"><a href="#动态导入" class="headerlink" title="动态导入"></a>动态导入</h2><p>现在的<code>import</code>是静态加载，不能将<code>import</code>放在条件语句中，这就导致无法在运行时家在模块（Node的<code>require</code>是运行时加载模块）</p>
+<p>现在的提案中使用<code>import()</code>方法完成动态加载，返回一个Promise对象，是一个异步加载的方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">btn.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="variable language_">module</span> = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&#x27;./api/button-click.js&#x27;</span>);</span><br><span class="line">  <span class="variable language_">module</span>.<span class="title function_">clickEvent</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Array-prototype-flat-depth"><a href="#Array-prototype-flat-depth" class="headerlink" title="Array.prototype.flat(depth)"></a><code>Array.prototype.flat(depth)</code></h2><p>对数组扁平化，可以传入参数指定递归的深度，默认深度为1</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [[<span class="number">1</span>], [<span class="number">2</span>, [<span class="number">3</span>]]]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = a.<span class="title function_">flat</span>()</span><br><span class="line"><span class="comment">// [1, 2, Array(1)]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = b.<span class="title function_">flat</span>()</span><br><span class="line"><span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>细节参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat">MDN</a></p>
+<h2 id="Array-prototype-flatMap-callback"><a href="#Array-prototype-flatMap-callback" class="headerlink" title="Array.prototype.flatMap(callback)"></a><code>Array.prototype.flatMap(callback)</code></h2><p>对数组每个元素使用映射函数<code>callback</code>进行处理，然后将结果扁平化为一个新数组，扁平化的效果与深度为1的<code>flat</code>方法相同。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">arr1.<span class="title function_">map</span>(<span class="function"><span class="params">x</span> =&gt;</span> [x * <span class="number">2</span>]); </span><br><span class="line"><span class="comment">// [[2], [4], [6], [8]]</span></span><br><span class="line"></span><br><span class="line">arr1.<span class="title function_">flatMap</span>(<span class="function"><span class="params">x</span> =&gt;</span> [x * <span class="number">2</span>]);</span><br><span class="line"><span class="comment">// [2, 4, 6, 8]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 只会将 flatMap 中的函数返回的数组 “压平” 一层</span></span><br><span class="line">arr1.<span class="title function_">flatMap</span>(<span class="function"><span class="params">x</span> =&gt;</span> [[x * <span class="number">2</span>]]);</span><br><span class="line"><span class="comment">// [[2], [4], [6], [8]]</span></span><br></pre></td></tr></table></figure>
+
+<p>细节参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#%E8%AF%AD%E6%B3%95">MDN</a></p>
+<h2 id="Object-fromEntries-iterable"><a href="#Object-fromEntries-iterable" class="headerlink" title="Object.fromEntries(iterable)"></a><code>Object.fromEntries(iterable)</code></h2><p>将键值对列表<code>iterable</code>转换为一个对象，这个<code>iterable</code>列表需要是一个可迭代对象，返回一个新对象</p>
+<p>实际上就是<code>Object.entries()</code>的逆向操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123; apple : <span class="number">10</span>, orange : <span class="number">20</span>, banana : <span class="number">30</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> entries = <span class="title class_">Object</span>.<span class="title function_">entries</span>(obj);</span><br><span class="line"><span class="comment">// [Array(2), Array(2), Array(2)]</span></span><br><span class="line"><span class="comment">// 0: (2) [&quot;apple&quot;, 10]</span></span><br><span class="line"> <span class="comment">// 1: (2) [&quot;orange&quot;, 20]</span></span><br><span class="line"> <span class="comment">// 2: (2) [&quot;banana&quot;, 30]</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">let</span> fromEntries = <span class="title class_">Object</span>.<span class="title function_">fromEntries</span>(entries);</span><br><span class="line"><span class="comment">// &#123; apple: 10, orange: 20, banana: 30 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>目前最新版本的Chorme浏览器还不支持（只有Firefox支持）</p>
+<p>细节参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries">MDN</a></p>
+<h2 id="String-prototype-trimStart-和-96-96-String-prototype-trimEnd-96"><a href="#String-prototype-trimStart-和-96-96-String-prototype-trimEnd-96" class="headerlink" title="String.prototype.trimStart()和&#96;&#96;String.prototype.trimEnd()&#96;"></a><code>String.prototype.trimStart()</code>和&#96;&#96;String.prototype.trimEnd()&#96;</h2><p>别名是<code>String.prototype.trimLeft()</code>和&#96;&#96;String.prototype.trimRight()&#96;，分别删除开头&#x2F;结尾的空格</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;     hello       &#x27;</span></span><br><span class="line"></span><br><span class="line">str.<span class="title function_">trimStart</span>()</span><br><span class="line"><span class="comment">// &quot;hello       &quot;</span></span><br><span class="line">str.<span class="title function_">trimLeft</span>()</span><br><span class="line"><span class="comment">// &quot;hello       &quot;</span></span><br><span class="line"></span><br><span class="line">str.<span class="title function_">trimEnd</span>()</span><br><span class="line"><span class="comment">// &quot;     hello&quot;</span></span><br><span class="line">str.<span class="title function_">trimRight</span>()</span><br><span class="line"><span class="comment">// &quot;     hello&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>细节参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft">MDN</a></p>
+<h2 id="globalThis对象"><a href="#globalThis对象" class="headerlink" title="globalThis对象"></a><code>globalThis</code>对象</h2><p>在JavaScript中，不同的宿主环境提供了不同的全局对象，在Web中是<code>window</code>或者<code>self</code>，在Node中是<code>global</code>。</p>
+<p>新的提案中规定的<code>globalThis</code>对象可以无视环境，直接获取当前的全局对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 浏览器中</span></span><br><span class="line">globalThis</span><br><span class="line"><span class="comment">// Window &#123;postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window,…&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-global/blob/master/spec.md">提案详情在这里</a>。</p>
+<h2 id="Symbol-prototype-description"><a href="#Symbol-prototype-description" class="headerlink" title="Symbol.prototype.description"></a><code>Symbol.prototype.description</code></h2><p>一个只读属性，用来返回声明Symbol对象时的描述符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> symbol = <span class="title class_">Symbol</span>(<span class="string">&#x27;hello&#x27;</span>);</span><br><span class="line"><span class="comment">// symbol.description;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hashbang语法"><a href="#Hashbang语法" class="headerlink" title="Hashbang语法"></a>Hashbang语法</h2><p>制定了一个解释器，统一了JavaScript在服务器端的执行方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ./index.js</span><br><span class="line"></span><br><span class="line"># 代替</span><br><span class="line">$ node index.js</span><br></pre></td></tr></table></figure>
+
+<p>这块我不太理解，我认为如果标准化之后，是不是以为着在服务器端执行时不再显示的需要Node环境，而是默认可以在系统中执行JS文件了？</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>还有一些内部实现的优化和改进，比如<code>JSON.stringify</code>对特殊字符的处理、<code>sort</code>方法的稳定性等</p>
+<p>还有实现<code>#</code>私有成员的提案，看<a target="_blank" rel="noopener" href="https://medium.freecodecamp.org/the-complete-guide-to-es10-features-5fd0feb9513a">原文</a>吧。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.freecodecamp.org/the-complete-guide-to-es10-features-5fd0feb9513a">The Complete Guide to ES10 Features@freecodecamp</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018311280">ES10 特性的完整指南@segmentfault</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER">Number.MAX_SAFE_INTEGER@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat">Array.prototype.flat()@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap#%E8%AF%AD%E6%B3%95">Array.prototype.flatMap()@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries">Object.fromEntries()@MDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft">String.prototype.trimLeft()@MDN</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ES10/" rel="tag"># ES10</a>
+              <a href="/tags/ES2019/" rel="tag"># ES2019</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/26/03%20%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/02%20%E7%9F%A5%E4%B9%8ELive/%E7%9F%A5%E4%B9%8Elive10%20%E5%A6%82%E4%BD%95%E4%BF%AE%E8%BD%A6%E5%85%BB%E8%BD%A6%E6%89%8D%E6%9B%B4%E7%9C%81%E9%92%B1/" rel="prev" title="知乎live10 如何修车养车才更省钱">
+                  <i class="fa fa-chevron-left"></i> 知乎live10 如何修车养车才更省钱
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/01/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9808%20Create%20React%20App/" rel="next" title="React提高08 Create React App">
+                  React提高08 Create React App <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
