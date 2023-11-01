@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="KMP算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法基础06 KMP算法">
+<meta property="og:url" content="https://duola8789.github.io/2021/06/29/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/05%20%E7%AE%97%E6%B3%95/01%20%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%8006%20KMP%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="KMP算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://note.youdao.com/yws/res/159339/WEBRESOURCEcb36fc0d72f569a13129ab05a92b1dcf">
+<meta property="og:image" content="https://note.youdao.com/yws/res/6/WEBRESOURCE99beef716f233c10b5dd7ca849a1cd26">
+<meta property="og:image" content="https://note.youdao.com/yws/res/f/WEBRESOURCEf0d3cafd9644599b8ec956185b4f6aaf">
+<meta property="og:image" content="https://note.youdao.com/yws/res/c/WEBRESOURCEacc3a6d4dae64ff95c652c07e9c3e14c">
+<meta property="og:image" content="https://note.youdao.com/yws/res/5/WEBRESOURCE49a189ec4fd41fcccb4baf1cbe2c8ea5">
+<meta property="og:image" content="https://note.youdao.com/yws/res/5/WEBRESOURCE49a189ec4fd41fcccb4baf1cbe2c8ea5">
+<meta property="og:image" content="https://note.youdao.com/yws/res/d/WEBRESOURCE0124439db12ea8d0a16c61caac309efd">
+<meta property="og:image" content="https://note.youdao.com/yws/res/4/WEBRESOURCEac74d194c066485dd4e5edb75d5db794">
+<meta property="og:image" content="https://note.youdao.com/yws/res/6/WEBRESOURCE3a582b1e996ab62b3b0fb34cfe5000c6">
+<meta property="og:image" content="https://note.youdao.com/yws/res/9/WEBRESOURCE3b92dd7b496b5a43c1e1d5bfeaddc1e9">
+<meta property="og:image" content="https://note.youdao.com/yws/res/0/WEBRESOURCE6248b1eae7059d7d4f4a262b46d41740">
+<meta property="article:published_time" content="2021-06-29T03:09:49.000Z">
+<meta property="article:modified_time" content="2023-11-01T03:10:13.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="KMP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://note.youdao.com/yws/res/159339/WEBRESOURCEcb36fc0d72f569a13129ab05a92b1dcf">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2021/06/29/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/05%20%E7%AE%97%E6%B3%95/01%20%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%8006%20KMP%E7%AE%97%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2021/06/29/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/05%20%E7%AE%97%E6%B3%95/01%20%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%8006%20KMP%E7%AE%97%E6%B3%95/","path":"2021/06/29/01 前端笔记/05 算法/01 算法基础/算法基础06 KMP算法/","title":"算法基础06 KMP算法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>算法基础06 KMP算法 | 不负时光</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?383801e819a170224708308b7b4411a5"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KMP%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">KMP算法思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">匹配过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KMP%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">KMP的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BAnext%E6%95%B0%E7%BB%84"><span class="nav-number">5.</span> <span class="nav-text">构建next数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0"><span class="nav-number">8.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">212</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">282</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/zhouhaozhouhao" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;zhouhaozhouhao" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.douban.com/people/aisheishei2011" title="Douban → https:&#x2F;&#x2F;www.douban.com&#x2F;people&#x2F;aisheishei2011" rel="noopener me" target="_blank"><i class="fa fa-book fa-fw"></i>Douban</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2021/06/29/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/05%20%E7%AE%97%E6%B3%95/01%20%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%8006%20KMP%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="算法基础06 KMP算法 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法基础06 KMP算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-29 11:09:49" itemprop="dateCreated datePublished" datetime="2021-06-29T11:09:49+08:00">2021-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-01 11:10:13" itemprop="dateModified" datetime="2023-11-01T11:10:13+08:00">2023-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>KMP算法</p>
+<span id="more"></span>
+<p>[TOC]</p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/">LeetCode的第28题，实现<code>strStr()</code></a>，实现字符串的匹配，实际上就是实现一个JS的<code>indexOf</code>函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> haystack = <span class="string">&#x27;hello&#x27;</span>, needle = <span class="string">&#x27;ll&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">strStr</span>(haystack, needle); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> haystack = <span class="string">&#x27;aaaaa&#x27;</span>, needle = <span class="string">&#x27;bba&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">strStr</span>(haystack, needle); <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> haystack = <span class="string">&#x27;&#x27;</span>, needle = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">strStr</span>(haystack, needle); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<p>这道题目可以用暴力算法，逐个移动起始位置来进行匹配实现，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strStr = <span class="keyword">function</span> (<span class="params">haystack, needle</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!needle) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> len1 = haystack.<span class="property">length</span>,</span><br><span class="line">    len2 = needle.<span class="property">length</span>,</span><br><span class="line">    len = len1 - len2;</span><br><span class="line">  <span class="keyword">let</span> found = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= len; i++) &#123;</span><br><span class="line">    found = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; len2; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (haystack[i + j] !== needle[j]) &#123;</span><br><span class="line">        found = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (found) &#123;</span><br><span class="line">      <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>暴力算法的时间复杂度是<code>$&#123;O((n - m) * m)&#125;$</code>，想要降低算法复杂度，就需要使用KMP算法来进行字符串匹配</p>
+<h1 id="KMP算法思路"><a href="#KMP算法思路" class="headerlink" title="KMP算法思路"></a>KMP算法思路</h1><p>KMP是字符串匹配的最常用的算法之一，它的作用就是：如何快速在原字符串中找到匹配字符串，KMP的算法复杂度是<code>$&#123;O(m + n)&#125;$</code>。它之所以能够降低复杂度，是因为能够在『非完全匹配』的过程中提取到有效信息进行复用，减少重复匹配的消耗，提高效率</p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">阮一峰的博客</a>讲解的很好，但是思路与下面<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/solution/shua-chuan-lc-shuang-bai-po-su-jie-fa-km-tb86/">宫水三叶</a>的思考角度有一点不一样，下面主要记录的是宫水三叶的思考角度</p>
+<h1 id="匹配过程"><a href="#匹配过程" class="headerlink" title="匹配过程"></a>匹配过程</h1><p>假设原字符串是<code>abeababeabf</code>，匹配串为<code>abeabf</code>：</p>
+<p><img src="https://note.youdao.com/yws/res/159339/WEBRESOURCEcb36fc0d72f569a13129ab05a92b1dcf" alt="image"></p>
+<p>（1）先逐个进行比较，找到第一个匹配的位置，继续向下进行，直到出现第一个不匹配的位置（红标）：</p>
+<p><img src="https://note.youdao.com/yws/res/6/WEBRESOURCE99beef716f233c10b5dd7ca849a1cd26" alt="image"></p>
+<p>（2）如果是暴力匹配的话，会将原字符串的指针移动到本次『发起点』的下一个位置<code>b</code>，匹配串的指针移动到其实位置，继续尝试匹配，如果发现对不上，原串的指针会继续向后移动</p>
+<p><img src="https://note.youdao.com/yws/res/f/WEBRESOURCEf0d3cafd9644599b8ec956185b4f6aaf" alt="image"></p>
+<p>这样虽然可行，但是效率很差，因为需要把搜索位置移动到已经比较过的位置，再重新比较一遍。而实际上，当<code>a</code>与<code>f</code>不匹配时，已经知道前面的刘个字符是<code>abeab</code>。</p>
+<p>KMP的思想就是设法利用这个已知信息，不要把搜索位置移回已经比较过的位置，而是继续向后移动，这样就提高了效率</p>
+<p>如果利用已知信息呢？需要针对搜索出，计算出一张『部分匹配表』（Partial Match Table），我们在代码称作<code>next</code>数组，数组中的每个位置的就是匹配串对应下标应该跳转的目标位置</p>
+<pre><code>// next数组
+[0, 0, 0, 1, 2, 0]
+</code></pre>
+<p>这张表的计算后面会再介绍，这里先用起来</p>
+<p>（3）利用这张表，发现匹配串的<code>f</code>不匹配了，它对应的<code>next[j - 1]</code>值是<code>2</code>，所以将匹配串的指针移动到<code>2</code>，继续进行匹配：</p>
+<p><img src="https://note.youdao.com/yws/res/c/WEBRESOURCEacc3a6d4dae64ff95c652c07e9c3e14c" alt="image"></p>
+<p>（4）跳转到下一个匹配位置后，尝试匹配，返现<code>a</code>和<code>e</code>对不上，继续从<code>next</code>数组中寻找跳转位置，<code>next[j - 1]</code>值是<code>0</code>，这样只能回到字符串的起始位置进行匹配</p>
+<p><img src="https://note.youdao.com/yws/res/5/WEBRESOURCE49a189ec4fd41fcccb4baf1cbe2c8ea5" alt="image"></p>
+<p>（5）继续匹配，匹配成功</p>
+<h1 id="KMP的原理"><a href="#KMP的原理" class="headerlink" title="KMP的原理"></a>KMP的原理</h1><p>KMP之所以更快，主要是因为原串指针不会进行回溯，这意味着，随着匹配过程的进行，原串指针不断右移，本质上是在不断地否决一些不可能的方案</p>
+<p>当我们的原串指针从<code>i</code>位置移动到<code>j</code>位置，不仅仅代表着原串下标范围为<code>[i, j)</code>的字符与匹配串匹配或者不匹配，更是在否决那些以原串下标范围为<code>[i, j)</code>的『匹配发起点』的子集</p>
+<h1 id="构建next数组"><a href="#构建next数组" class="headerlink" title="构建next数组"></a>构建<code>next</code>数组</h1><p>上面的过程中，忽略了一个步骤，就是<code>next</code>数组的构建。这个构建过程的时间复杂度是<code>$&#123;O(m)&#125;$</code></p>
+<p>（1）假设有匹配串<code>aaabbab</code>，定义两个指针，<code>i</code>（红色）和<code>j</code>（黑色），<code>j</code>从<code>0</code>位置开始，<code>i</code>从<code>1</code>位置开始</p>
+<p><img src="https://note.youdao.com/yws/res/5/WEBRESOURCE49a189ec4fd41fcccb4baf1cbe2c8ea5" alt="image"></p>
+<p>（2）如果<code>p[i] === p[j]</code>，那么<code>next[i] = j + 1</code>，<code>i</code>和<code>j</code>同时向后移动，这个过程一直循环进行</p>
+<p><img src="https://note.youdao.com/yws/res/d/WEBRESOURCE0124439db12ea8d0a16c61caac309efd" alt="image"></p>
+<p>（3）移动到此时，<code>p[i] !== p[j]</code>，那么将<code>j</code>指向前一位置的<code>next</code>数组对应的值，即<code>j = next[j - 1]</code>，循环这个过程，直到<code>p[i] === p[j]</code>或者<code>j === 0</code></p>
+<p>（4）如果<code>j === 0</code>，<code>p[i]</code>和<code>p[j]</code>仍不相等，那么<code>next[i] = 0</code>，<code>i</code>向后移动，<code>j</code>不动</p>
+<p><img src="https://note.youdao.com/yws/res/4/WEBRESOURCEac74d194c066485dd4e5edb75d5db794" alt="image"></p>
+<p>（5）继续上述过程，此时<code>j === 0</code>，<code>p[i]</code>和<code>p[j]</code>仍不相等，所以<code>next[i]</code>一直为<code>0</code>，<code>i</code>指针后移，直到<code>b</code>再次出现</p>
+<p><img src="https://note.youdao.com/yws/res/6/WEBRESOURCE3a582b1e996ab62b3b0fb34cfe5000c6" alt="image"></p>
+<p>（6）继续，<code>p[i]</code>和<code>p[j]</code>相等，那么<code>next[i] = 1</code>，<code>i</code>和<code>j</code>同时前进</p>
+<p><img src="https://note.youdao.com/yws/res/9/WEBRESOURCE3b92dd7b496b5a43c1e1d5bfeaddc1e9" alt="image"></p>
+<p>（7）<code>i</code>移动到了最后一位，此时<code>p[i]</code>和<code>p[j]</code>不等，给<code>j</code>赋值<code>next[j - 1]</code>，即<code>j</code>为<code>0</code>，时<code>p[i]</code>和<code>p[j]</code>仍不等，所以<code>next[i]</code>为<code>0</code>，循环结束</p>
+<p><img src="https://note.youdao.com/yws/res/0/WEBRESOURCE6248b1eae7059d7d4f4a262b46d41740" alt="image"></p>
+<p>至此循环完成</p>
+<p>这个部分的代码实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">genNext</span>(<span class="params">pattern</span>) &#123;</span><br><span class="line">  <span class="comment">// 第一位填充 0</span></span><br><span class="line">  <span class="keyword">const</span> next = [<span class="number">0</span>],</span><br><span class="line">    len = pattern.<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 预处理 next 数组, 数组长度为匹配串的长度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="comment">// 匹配不成功的话, j 向后退</span></span><br><span class="line">    <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; pattern[j] !== pattern[i]) &#123;</span><br><span class="line">      j = next[j - <span class="number">1</span>] || <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 相等了</span></span><br><span class="line">    <span class="keyword">if</span> (pattern[j] === pattern[i]) &#123;</span><br><span class="line">      j += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    next[i] = j;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">strStr</span>(<span class="params">haystack, needle</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!needle) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> next = [<span class="number">0</span>],</span><br><span class="line">    len1 = haystack.<span class="property">length</span>,</span><br><span class="line">    len2 = needle.<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 预处理 next 数组, 数组长度为匹配串的长度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>, i = <span class="number">1</span>; i &lt; len2; i++) &#123;</span><br><span class="line">    <span class="comment">// 匹配不成功的话, j 向后退</span></span><br><span class="line">    <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; needle[i] !== needle[j]) &#123;</span><br><span class="line">      j = next[j - <span class="number">1</span>] || <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (needle[j] === needle[i]) &#123;</span><br><span class="line">      j += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    next[i] = j;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 真正的匹配过程开始</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; len1; i++) &#123;</span><br><span class="line">    <span class="comment">// 匹配不成功，匹配串移动到 next 数组存储的位置</span></span><br><span class="line">    <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; haystack[i] !== needle[j]) &#123;</span><br><span class="line">      j = next[j - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 匹配成功，j 向前走</span></span><br><span class="line">    <span class="keyword">if</span> (haystack[i] === needle[j]) &#123;</span><br><span class="line">      j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 整一段匹配成功，直接返回下标</span></span><br><span class="line">    <span class="keyword">if</span> (j === len2) &#123;</span><br><span class="line">      <span class="keyword">return</span> i - len2 + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>个人感觉KMP算法还是挺复杂的，但是它的应用还是比较广泛的，理解之后，记住它，相当于大脑里有了一个时间复杂度为<code>$&#123;O(n)&#125;$</code>的API可以使用，用来返回匹配串在原串的位置</p>
+<p>所以，理解一下，背住</p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-repeating-substring/solutions/1943410/zui-da-zhong-fu-zi-zi-fu-chuan-by-leetco-r4cp/">这道题目</a>也可以用KMP算法解决</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/solution/shua-chuan-lc-shuang-bai-po-su-jie-fa-km-tb86/">【宫水三叶】简单题学 KMP 算法@LeetCode</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html/">字符串匹配的KMP算法@阮一峰的网络日志</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/KMP/" rel="tag"># KMP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/19/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/15%20TypeScript/TS09%20unknow%E4%B8%8Eany/" rel="prev" title="TS09 unknow与any">
+                  <i class="fa fa-chevron-left"></i> TS09 unknow与any
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/26/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/02%20JavaScript/01%20%E8%AF%AD%E8%A8%80%E7%90%86%E8%A7%A3/JavaScript%E4%B8%AD%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86/" rel="next" title="JavaScript中循环依赖的处理">
+                  JavaScript中循环依赖的处理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"duola8789/duola8789.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

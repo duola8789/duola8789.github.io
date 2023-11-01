@@ -114,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E7%BB%84%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">与二进制数组的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">Buffer构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">类的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7-x2F-%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">实例属性&#x2F;方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E7%BB%84%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">与二进制数组的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">Buffer构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">类的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7-%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">实例属性&#x2F;方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -129,7 +129,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">211</span>
+          <span class="site-state-item-count">212</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -140,7 +140,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">281</span>
+        <span class="site-state-item-count">282</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -264,7 +264,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i1 = <span class="keyword">new</span> <span class="title class_">Buffer</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> i2 = <span class="keyword">new</span> <span class="title class_">Buffer</span>(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> i3 = <span class="keyword">new</span> <span class="title class_">Buffer</span>(<span class="string">&#x27;World&#x27;</span>);</span><br><span class="line"><span class="title class_">Buffer</span>.<span class="title function_">concat</span>([i1, i2, i3]).<span class="title function_">toString</span>()</span><br><span class="line"><span class="comment">// &#x27;Hello World&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>可以接受第二个参数，指定合并后的Buffer对象的总长度</p>
-<h2 id="实例属性-x2F-方法"><a href="#实例属性-x2F-方法" class="headerlink" title="实例属性&#x2F;方法"></a>实例属性&#x2F;方法</h2><p>（1）<code>length</code>，返回Buffer对象所占据的内存涨肚，与Buffer对象内容无关</p>
+<h2 id="实例属性-方法"><a href="#实例属性-方法" class="headerlink" title="实例属性&#x2F;方法"></a>实例属性&#x2F;方法</h2><p>（1）<code>length</code>，返回Buffer对象所占据的内存涨肚，与Buffer对象内容无关</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">buf = <span class="keyword">new</span> <span class="title class_">Buffer</span>(<span class="number">1234</span>);</span><br><span class="line">buf.<span class="property">length</span> <span class="comment">// 1234</span></span><br><span class="line"></span><br><span class="line">buf.<span class="title function_">write</span>(<span class="string">&quot;some string&quot;</span>, <span class="number">0</span>, <span class="string">&quot;ascii&quot;</span>);</span><br><span class="line">buf.<span class="property">length</span> <span class="comment">// 1234</span></span><br></pre></td></tr></table></figure>
 <p>上面<code>length</code>返回值总是Buffer对象的空间长度，内容的长度通过<code>Buffer.byteLength</code>来获取</p>
 <p><code>length</code>属性是可写的，但是会导致意外，不建议使用，如果想修改Buffer对象的长度，建议使用<code>slice</code>方法返回新的Buffer对象</p>
