@@ -174,8 +174,8 @@ site_state: true
 social:
   GitHub: https://github.com/duola8789 ||fab fa-github
   E-Mail: mailto:duola8789@126.com || fa fa-envelope
-  Weibo: https://weibo.com/zhouhaozhouhao || fab fa-weibo
-  Douban: https://www.douban.com/people/aisheishei2011 || fa fa-book
+  #Weibo: https://weibo.com/zhouhaozhouhao || fab fa-weibo
+  #Douban: https://www.douban.com/people/aisheishei2011 || fa fa-book
   #GitHub: https://github.com/yourname || fab fa-github
   #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
   #Weibo: https://weibo.com/yourname || fab fa-weibo
