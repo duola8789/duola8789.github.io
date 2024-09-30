@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo-new.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"duola8789.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="会不会 有一天 时间真的能倒退退回 你的我的回不去的 悠悠的岁月">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端之路">
+<meta property="og:url" content="https://duola8789.github.io/2019/01/11/hello-world/index.html">
+<meta property="og:site_name" content="不负时光">
+<meta property="og:description" content="会不会 有一天 时间真的能倒退退回 你的我的回不去的 悠悠的岁月">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://duola8789.github.io/images/hello-world-2.jpg">
+<meta property="og:image" content="https://duola8789.github.io/images/hello-world-cloud.jpeg">
+<meta property="og:image" content="https://duola8789.github.io/images/hello-world-window.jpg">
+<meta property="og:image" content="https://duola8789.github.io/images/2024.09.30-1.png">
+<meta property="og:image" content="https://duola8789.github.io/images/2024.09.30-2.jpg">
+<meta property="article:published_time" content="2019-01-11T00:42:14.000Z">
+<meta property="article:modified_time" content="2023-01-17T09:17:46.000Z">
+<meta property="article:author" content="多啦大薯片">
+<meta property="article:tag" content="感想">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://duola8789.github.io/images/hello-world-2.jpg">
+
+
+<link rel="canonical" href="https://duola8789.github.io/2019/01/11/hello-world/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://duola8789.github.io/2019/01/11/hello-world/","path":"2019/01/11/hello-world/","title":"前端之路"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端之路 | 不负时光</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?383801e819a170224708308b7b4411a5"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">不负时光</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年回头望，笑我还不快跟上</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="http://www.oldzhou.cn/pages/page1.html" rel="section" target="_blank"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2016-12-05"><span class="nav-number">1.</span> <span class="nav-text">2016.12.05</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2018-03-07"><span class="nav-number">2.</span> <span class="nav-text">2018.03.07</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2019-01-11"><span class="nav-number">3.</span> <span class="nav-text">2019.01.11</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-19"><span class="nav-number">4.</span> <span class="nav-text">2021.05.19</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2023-01-17"><span class="nav-number">5.</span> <span class="nav-text">2023.01.17</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2023-06-01"><span class="nav-number">6.</span> <span class="nav-text">2023.06.01</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2023-11-27"><span class="nav-number">7.</span> <span class="nav-text">2023.11.27</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-03-07"><span class="nav-number">8.</span> <span class="nav-text">2024.03.07</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-09-30"><span class="nav-number">9.</span> <span class="nav-text">2024.09.30</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="多啦大薯片"
+      src="/images/avatar3.png">
+  <p class="site-author-name" itemprop="name">多啦大薯片</p>
+  <div class="site-description" itemprop="description">欲买桂花同载酒，终不似，少年游</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">283</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/duola8789" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;duola8789" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:duola8789@126.com" title="E-Mail → mailto:duola8789@126.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/01/11/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="前端之路 | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端之路
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-11 08:42:14" itemprop="dateCreated datePublished" datetime="2019-01-11T08:42:14+08:00">2019-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-17 17:17:46" itemprop="dateModified" datetime="2023-01-17T17:17:46+08:00">2023-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%81%B6%E5%B0%94%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">偶尔记录</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="/images/hello-world-2.jpg"></p>
+<p>会不会 有一天 时间真的能倒退<br>退回 你的我的回不去的 悠悠的岁月</p>
+<span id="more"></span>
+
+<h1 id="2016-12-05"><a href="#2016-12-05" class="headerlink" title="2016.12.05"></a>2016.12.05</h1><p>将自己的轨迹强行换到另外一条道路，到现在很矛盾，既有成就感，感觉自己掌握了很多东西，而且在学习的时候乐在其中，又很焦虑，因为前端的千变万化，新的框架层出不穷，版本升级绵延不绝。</p>
+<p>痛并快乐着。</p>
+<p>由于有了几年的工作经历，我知道学习和实际工作之间的差别。所以在自学过程中非常注意从实际项目的角度出发，在网上寻找、通过论坛发问，实际的工作过程是怎样的，将实际的工作能力提高。</p>
+<p>转行最难的一是坚持，二是得不到认可。<br>我坚持到了现在，下一步呢就是坚持下去，<span style="color: red">坚持</span>到得到认可。</p>
+<h1 id="2018-03-07"><a href="#2018-03-07" class="headerlink" title="2018.03.07"></a>2018.03.07</h1><p>一年多了，在简单科技这一年我充满感激。能够转行成功有自己的努力，也有运气使然。明天就要去网易入职，不知道大公司会是什么样子，不知道未来是什么样子，可以预见的只有自己还有很多东西要学，很长的路要走。继续坚持下去吧。</p>
+<h1 id="2019-01-11"><a href="#2019-01-11" class="headerlink" title="2019.01.11"></a>2019.01.11</h1><p>这一年，尤其是最近几个月，焦虑更加严重了。互联网经济寒冬，公司业务的停滞，几次面试的失败，年龄的增大，让我的焦虑与日俱增。我总是觉得自己的时间宝贵，因为转行让我的前些年的时间全部白费，所以我渴望快速的成长。但是到现在，成长的速度赶不上年龄和外界对你的要求的增长速度。不知道未来会怎样，不知道下一站在哪里。</p>
+<h1 id="2021-05-19"><a href="#2021-05-19" class="headerlink" title="2021.05.19"></a>2021.05.19</h1><p>有了一点新的感想，按照计划一步一步来吧，沉着一点，少点焦虑，多点坚定。</p>
+<p>来百度快两年了，百感交集。工作上没什么进步，代码能力不见什么提高，生活一片狼藉。好在也在慢慢恢复正常的节奏。但是岁数越来越大，身边的同事都比自己小，看着年轻能力有强的年轻人，光是焦虑好像已经没用了。</p>
+<p>有时候也想，把房子卖了，回到小县城，聊聊度过此生。</p>
+<p>也只是想想而已。</p>
+<p>还能拼的动，还能坚持。</p>
+<p>拼荆斩棘，奔赴未来。</p>
+<h1 id="2023-01-17"><a href="#2023-01-17" class="headerlink" title="2023.01.17"></a>2023.01.17</h1><p>来灵犀一年多了，从来没这么累过，工作事情很多，压力很大，下班很晚。再加上小孩子的事情，每天睡眠严重不足。</p>
+<p>但是生活还算充实、平静。总是能够重归平静。</p>
+<p>CSDN的博客，10月份被注销了，持续了两个多月，还是不想继续用CSDN了，没有意义，注销了就注销了吧，要做一个成熟的人，生活还是踏实一点好。</p>
+<p>三观不同的人，同事，都不要做朋友，不要往一起硬凑，没有意义。</p>
+<p>把时间放在值得的事情上吧。</p>
+<p>隐隐约约的感觉，最近可能遇到了职业生涯上的一个机会，参加了一些培训，但是其实还是很模糊，往哪里走，顺势而为吧。</p>
+<h1 id="2023-06-01"><a href="#2023-06-01" class="headerlink" title="2023.06.01"></a>2023.06.01</h1><p>收到了一封邮件的回复。有点意外，但是还是要好好工作~</p>
+<p>还是要塌下心，把手头上的事情做好</p>
+<p>儿童节快乐，简单快乐，无忧无虑~</p>
+<p>你看外面的云，很好看</p>
+<p><img src="/images/hello-world-cloud.jpeg"></p>
+<h1 id="2023-11-27"><a href="#2023-11-27" class="headerlink" title="2023.11.27"></a>2023.11.27</h1><p>半年又快过去了，外面天空的云真好看</p>
+<h1 id="2024-03-07"><a href="#2024-03-07" class="headerlink" title="2024.03.07"></a>2024.03.07</h1><p>换工位啦，是一个靠窗的工位，很开心。一切都会更好的</p>
+<p><img src="/images/hello-world-window.jpg"></p>
+<h1 id="2024-09-30"><a href="#2024-09-30" class="headerlink" title="2024.09.30"></a>2024.09.30</h1><p>听到了一首好听的歌，看到了好看的云，却不知道分享给谁</p>
+<p><img src="/images/2024.09.30-1.png"><br><img src="/images/2024.09.30-2.jpg"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%84%9F%E6%83%B3/" rel="tag"># 感想</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/18/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A022%20%E6%95%B0%E7%BB%84%E5%B1%95%E5%B9%B3/" rel="prev" title="前端练习22 数组展平">
+                  <i class="fa fa-chevron-left"></i> 前端练习22 数组展平
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/14/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/01%20%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A047%20%E8%87%AA%E5%8A%A8%E7%BB%91%E5%AE%9A%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95/" rel="next" title="前端练习47 自动绑定实例方法">
+                  前端练习47 自动绑定实例方法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">多啦大薯片</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"duola8789/duola8789.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
