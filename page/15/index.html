@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -162,6 +162,94 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/06/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9831%20JS%E4%B8%AD%E7%9A%84%E6%97%A5%E6%9C%9F%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar3.png">
+      <meta itemprop="name" content="多啦大薯片">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负时光">
+      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 不负时光">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9831%20JS%E4%B8%AD%E7%9A%84%E6%97%A5%E6%9C%9F%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">零散专题31 JS中的日期对象</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2019-06-03 23:19:34 / 修改时间：23:19:38" itemprop="dateCreated datePublished" datetime="2019-06-03T23:19:34+08:00">2019-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近做一个重构的业务，使用到了Mongo数据库，在接口中需要返回数据的的更新时间。之前数据库中都使用了时间戳记录时间，返给前端的数据直接使用时间戳进行格式化，并且查询条件也是由时间戳进行比对。</p>
+<p>没想到，做数据写入接口的同事，将这个字段由时间戳改为了使用Mongo自带的标准的日期格式：<code>ISODate(&quot;2016-01-01T00:00:00Z&quot;)</code></p>
+<p>突然发现自己一时间对JS中的日期对象、对时间的各种表示方法并没有一个比较清晰的脉络。所以想用一点时间对这块知识做一个梳理、总结。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/06/03/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/07%20%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%98/%E9%9B%B6%E6%95%A3%E4%B8%93%E9%A2%9831%20JS%E4%B8%AD%E7%9A%84%E6%97%A5%E6%9C%9F%E5%AF%B9%E8%B1%A1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -920,98 +1008,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/05/12/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React01%20%E5%9F%BA%E7%A1%80/React%E5%9F%BA%E7%A1%8011%20React%E4%B8%AD%E5%88%9D%E5%A7%8B%E5%8C%96state%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://duola8789.github.io/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar3.png">
-      <meta itemprop="name" content="多啦大薯片">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="不负时光">
-      <meta itemprop="description" content="欲买桂花同载酒，终不似，少年游">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 不负时光">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">React提高04 对虚拟DOM和加载过程的理解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-01-25 16:05:43" itemprop="dateCreated datePublished" datetime="2019-01-25T16:05:43+08:00">2019-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2019-05-11 22:11:14" itemprop="dateModified" datetime="2019-05-11T22:11:14+08:00">2019-05-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>也是面试时比较常遇到的React的问题之一。了解了之后还是能够加深对React的理解。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/01/25/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/03%20React/React02%20%E6%8F%90%E9%AB%98/React%E6%8F%90%E9%AB%9804%20%E5%AF%B9%E8%99%9A%E6%8B%9FDOM%E5%92%8C%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
