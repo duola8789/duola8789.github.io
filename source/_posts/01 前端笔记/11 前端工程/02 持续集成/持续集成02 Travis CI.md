@@ -38,7 +38,7 @@ Travis要求项目下面，必须有一个`.travis.yml`文件，且必须提交�
 
 ```YAML
 # 指定默认运行环境
-language: node_js 
+language: node_js
 
 ## 指定 node 版本
 node_js:
@@ -129,7 +129,7 @@ Node项目的`install`和`script`都有默认脚本，可以省略：
 notifications:
   email:
     recipients:
-      - duola8789@126.com
+      - xxxxx@126.com
   slack:
     on_success: never
     on_failure: always
@@ -226,7 +226,7 @@ deploy:
 notifications:
   email:
     recipients:
-      - duola8789@126.com
+      - xxxxx@126.com
   slack:
     on_success: never
     on_failure: always
@@ -299,10 +299,10 @@ cache:
     - node_modules
 
 before_install:
-  - git config --global user.name "zh"
-  - git config --global user.email "duola8789@126.com"
+  - git config --global user.name "xxx"
+  - git config --global user.email "xxxx@126.com"
   - npm install -g hexo-cli
-  - export HEXO_DEPLOYER_REPO=https://$github_token@github.com/duola8789/duola8789.github.io.git
+  - export HEXO_DEPLOYER_REPO=https://$github_token@github.com/*****.github.io.git
 
 script:
   - npm run deploy
